@@ -1,0 +1,13 @@
+
+# ignore an entire directory
+.vs/
+bin/
+obj/
+!bin/FTD2XX_NET.dll
+!bin/FTD2XX_NET.xml
+
+# ignore a file type
+#*.json
+
+# add an exception (using !) to the preceding rule to track a specific file
+#!package.json
