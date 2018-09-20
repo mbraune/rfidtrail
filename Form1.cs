@@ -108,5 +108,49 @@ namespace trail01
                 }
             }
         }
+
+        private void buttonOpen1_Click(object sender, EventArgs e)
+        {
+            // open first device in list
+            //ftStatus = myFtdiDevice.OpenBySerialNumber(ftdiDeviceList[0].SerialNumber);
+            ftStatus = myFtdiDevice.OpenBySerialNumber(sensors[0]);
+            if (ftStatus != FTDI.FT_STATUS.FT_OK)
+            {
+                // Wait for a key press
+                Console.WriteLine("Failed to open device (error " + ftStatus.ToString() + ")");
+                Console.ReadKey();
+                return;
+            }
+
+            UInt32 numBytesAvailable = 0;
+
+            //while (true)
+            {
+                ftStatus = myFtdiDevice.GetRxBytesAvailable(ref numBytesAvailable);
+                if (ftStatus != FTDI.FT_STATUS.FT_OK)
+                {
+                    Console.WriteLine("Failed to get number of bytes available to read (error " + ftStatus.ToString() + ")");
+                    Console.ReadKey();
+                    //break;
+                }
+
+                if (numBytesAvailable > 0)
+                {
+                    string readData = "";
+                    UInt32 numBytesRead = 0;
+                    byte[] dataBuffer = new byte[1024];
+
+                    // TODO: check so you don't over your buffer.
+                    ftStatus = myFtdiDevice.Read(out readData, numBytesAvailable, ref numBytesRead);
+
+                    //ProcessData(readData);
+                    ListViewItem itm;
+                    itm = new ListViewItem(readData);
+                    listView2.Items.Add(itm);
+                }
+                //Thread.Sleep(10000); // Sleep 10 seconds.
+            }
+            ftStatus = myFtdiDevice.Close();
+        }
     }
 }

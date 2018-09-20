@@ -33,6 +33,8 @@
             this.buttonDevices = new System.Windows.Forms.Button();
             this.listView1 = new System.Windows.Forms.ListView();
             this.labelFtdiStatus = new System.Windows.Forms.Label();
+            this.buttonOpen1 = new System.Windows.Forms.Button();
+            this.listView2 = new System.Windows.Forms.ListView();
             this.SuspendLayout();
             // 
             // labelVersion
@@ -86,11 +88,32 @@
             this.labelFtdiStatus.Text = "...";
             this.labelFtdiStatus.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
             // 
+            // buttonOpen1
+            // 
+            this.buttonOpen1.Location = new System.Drawing.Point(34, 354);
+            this.buttonOpen1.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
+            this.buttonOpen1.Name = "buttonOpen1";
+            this.buttonOpen1.Size = new System.Drawing.Size(101, 35);
+            this.buttonOpen1.TabIndex = 43;
+            this.buttonOpen1.Text = "OpenFirst";
+            this.buttonOpen1.UseVisualStyleBackColor = true;
+            this.buttonOpen1.Click += new System.EventHandler(this.buttonOpen1_Click);
+            // 
+            // listView2
+            // 
+            this.listView2.Location = new System.Drawing.Point(34, 428);
+            this.listView2.Name = "listView2";
+            this.listView2.Size = new System.Drawing.Size(516, 160);
+            this.listView2.TabIndex = 44;
+            this.listView2.UseCompatibleStateImageBehavior = false;
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(9F, 20F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(725, 834);
+            this.Controls.Add(this.listView2);
+            this.Controls.Add(this.buttonOpen1);
             this.Controls.Add(this.labelFtdiStatus);
             this.Controls.Add(this.listView1);
             this.Controls.Add(this.labelDeviceCount);
@@ -110,6 +133,8 @@
         private System.Windows.Forms.Button buttonDevices;
         private System.Windows.Forms.ListView listView1;
         private System.Windows.Forms.Label labelFtdiStatus;
+        private System.Windows.Forms.Button buttonOpen1;
+        private System.Windows.Forms.ListView listView2;
     }
 }
 
