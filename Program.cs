@@ -24,4 +24,35 @@ namespace trail01
             Application.Run(new Form1());
         }
     }
+
+
+    /// <summary>
+    /// Contains global variables for project.
+    /// </summary>
+    static class PortList
+    {
+        static List<string> _portList;  // static list instance
+
+        static PortList()
+        {
+            //
+            // Allocate the list.
+            //
+            _portList = new List<string>();
+        }
+
+        public static void Record(string value)
+        {
+            //
+            // Record this value in the list.
+            //
+            _portList.Add(value);
+        }
+
+        public static List<string> GetContent()
+        {
+            return _portList;
+        }
+    }
+
 }
