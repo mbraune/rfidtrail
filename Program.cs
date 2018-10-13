@@ -25,33 +25,91 @@ namespace trail01
         }
     }
 
+    public static class FileLogger
+    {
+        static string filePath = "D:\\work\\RFTrail_Log.txt";
+        public static void Log(string message, bool bAddTime)
+        {
+            if (bAddTime)
+            {
+                DateTime now = DateTime.Now;
+                string sTime = String.Format("{0:yyyy.MM.dd HH:mm:ss}", now);
+                message = sTime + " ; " + message;
+            }
+            using (StreamWriter streamWriter = new StreamWriter(filePath, true))
+            {
+                streamWriter.WriteLine(message);
+                streamWriter.Close();
+            }
+        }
+    }
+
+    public struct FtdiDevice
+    {
+        public string s_id { get; private set; }
+        public string s_com { get; private set; }
+
+        public FtdiDevice(string devid, string com) : this()
+        {
+            this.s_id  = devid;
+            this.s_com = com;
+        }
+    }
 
     /// <summary>
     /// Contains global variables for project.
     /// </summary>
-    static class PortList
+    static class DeviceList
     {
-        static List<string> _portList;  // static list instance
+        static List<FtdiDevice> _devList;     // static list instance
+        static List<bool>       _statusList;  // static list instance
 
-        static PortList()
+        static DeviceList()
         {
-            //
-            // Allocate the list.
-            //
-            _portList = new List<string>();
+            // Allocate the lists
+            _devList    = new List<FtdiDevice>();
+            _statusList = new List<bool>();
         }
 
-        public static void Record(string value)
+        public static void Clear()
         {
-            //
+            _devList.Clear();
+            _statusList.Clear();
+        }
+
+        public static void Record(FtdiDevice value)
+        {
             // Record this value in the list.
-            //
-            _portList.Add(value);
+            _devList.Add(value);
+            _statusList.Add(false);
         }
 
-        public static List<string> GetContent()
+        public static List<FtdiDevice> GetContent()
         {
-            return _portList;
+            return _devList;
+        }
+
+        public static int Count()
+        {
+            return _devList.Count;
+        }
+
+        public static string GetDevId(string ComPort)
+        {
+            FtdiDevice ftdev = _devList.Find(x => x.s_com == ComPort);
+            return ftdev.s_id;
+        }
+
+        public static List<bool> GetStatus()
+        {
+            return _statusList;
+        }
+
+        public static void SetStatus(string ComPort, bool stat)
+        {
+            FtdiDevice ftdev = _devList.Find(x => x.s_com == ComPort);
+            int idx = _devList.IndexOf(ftdev);
+            _statusList[idx] = stat;
         }
     }
 

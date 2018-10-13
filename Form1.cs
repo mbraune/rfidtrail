@@ -10,8 +10,8 @@ using System.Windows.Forms;
 using System.Diagnostics;
 using System.Management;
 using System.Text.RegularExpressions;
+using System.IO.Ports;
 
-//using FTD2XX_NET;
 
 namespace trail01
 {
@@ -31,20 +31,18 @@ namespace trail01
     };
 
 
-
     public partial class Form1 : Form
     {
         // list of known sensors --> move to config/device.ini
         public readonly string[] sensors = { "A107BOUE", "A107BOUF", "gamma", "delta", "echo" };
 
-        UInt32 ftdiDeviceCount = 0;
-        //FTDI.FT_STATUS ftStatus = FTDI.FT_STATUS.FT_OK;
-
-        // Create new instance of the FTDI device class
-        //FTDI myFtdiDevice = new FTDI();
+        public SerialPort _serialPort0;
+        public SerialPort _serialPort1; 
+        public SerialPort _serialPort2; 
+        public SerialPort _serialPort3; 
+        public SerialPort _serialPort4; 
 
         int nEvents = 0;
-
 
         public Form1()
         {
@@ -54,6 +52,12 @@ namespace trail01
             Version v = System.Reflection.Assembly.GetExecutingAssembly().GetName().Version;
             // write out the whole version number
             labelVersion.Text = "version " + v.ToString();
+
+            _serialPort0 = new SerialPort();
+            _serialPort1 = new SerialPort();
+            _serialPort2 = new SerialPort();
+            _serialPort3 = new SerialPort();
+            _serialPort4 = new SerialPort();
 
             backgroundWorker1.WorkerReportsProgress = true;
             backgroundWorker1.WorkerSupportsCancellation = true;
@@ -81,23 +85,17 @@ namespace trail01
 
             //Add column header
             listView1.Columns.Add("SerialNumber", 100);
-            listView1.Columns.Add("Com Port", 60);
-            listView1.Columns.Add("Active", 160);
+            listView1.Columns.Add("Com Port", 80);
         }
-
-        private void buttonCom_Click(object sender, EventArgs e)
-        {
-            //var usbDevices = GetUSBDevices();
-        }
-
 
         private void buttonDevices_Click(object sender, EventArgs e)
         {
             Trace.WriteLine("Click Devices");
 
-            // listview löschen
+            // reset all
             listView1.Items.Clear();
-            ftdiDeviceCount = 0;
+            DeviceList.Clear();
+            closeAllPorts();
 
             var searcher = new ManagementObjectSearcher("Select * from Win32_PnPEntity");
             var coll = searcher.Get();
@@ -129,125 +127,89 @@ namespace trail01
                     arr[1] = port;
                     itm = new ListViewItem(arr);
                     listView1.Items.Add(itm);
-                    ftdiDeviceCount ++;
+                    FtdiDevice ftdev = new FtdiDevice(devid, port);
+                    DeviceList.Record(ftdev);
                 }
             }
 
-            if (ftdiDeviceCount > 0)
+            if (DeviceList.Count() > 0)
                 labelDeviceCount.BackColor = Color.FromName("blanchedalmond");
             else labelDeviceCount.BackColor = Color.FromName("OrangeRed");
-            labelDeviceCount.Text = ftdiDeviceCount.ToString();
+            labelDeviceCount.Text = DeviceList.Count().ToString();
 
             coll.Dispose();
-
-#if false
-            // Determine the number of FTDI devices connected to the machine
-            ftStatus = myFtdiDevice.GetNumberOfDevices(ref ftdiDeviceCount);
-
-            if (ftStatus == FTDI.FT_STATUS.FT_OK)
-            {
-                if (ftdiDeviceCount > 0)
-                    labelDeviceCount.BackColor = Color.FromName("blanchedalmond");
-                else labelDeviceCount.BackColor = Color.FromName("OrangeRed");
-                labelDeviceCount.Text = ftdiDeviceCount.ToString();
-            }
-            else
-            {
-                labelDeviceCount.BackColor = Color.FromName("OrangeRed");
-                labelDeviceCount.Text = "ftdi Error ";
-            }
-
-            if (ftdiDeviceCount == 0) return;
-
-            // listview löschen
-            listView1.Items.Clear();
-
-            // Device Liste anzeigen
-            // Allocate storage for device info list
-            FTDI.FT_DEVICE_INFO_NODE[] ftdiDeviceList = new FTDI.FT_DEVICE_INFO_NODE[ftdiDeviceCount];
-
-            // Populate our device list
-            ftStatus = myFtdiDevice.GetDeviceList(ftdiDeviceList);
-
-            if (ftStatus == FTDI.FT_STATUS.FT_OK)
-            {
-                string[] arr = new string[5];
-                ListViewItem itm;
-                for (UInt32 i = 0; i < ftdiDeviceCount; i++)
-                {
-                    arr[0] = ftdiDeviceList[i].SerialNumber.ToString();
-                    arr[1] = ftdiDeviceList[i].LocId.ToString();
-                    arr[2] = ftdiDeviceList[i].Description.ToString();
-                    itm = new ListViewItem(arr);
-                    listView1.Items.Add(itm);
-                }
-            }
-#endif
         }
 
         private void buttonOpen1_Click(object sender, EventArgs e)
         {
-            for (int zeile = 0; zeile < listView1.Items.Count; zeile++)
+            for (var i = 0; i < DeviceList.Count(); i++)
             {
-                for (int spalte = 0; spalte < listView1.Columns.Count; spalte++)
+                switch (i)
                 {
-                    textBox1.Text += listView1.Items[zeile].SubItems[spalte].ToString() + "\n";
+                    case 0:
+                        if (openPort(0, _serialPort0)) {
+                            label0.Text = "open";
+                            label0.BackColor = Color.FromName("PaleGreen");
+                        }
+                        break;
+                    case 1:
+                        if (openPort(1, _serialPort1)) {
+                            label1.Text = "open";
+                            label1.BackColor = Color.FromName("PaleGreen");
+                        }
+                        break;
+                    case 2:
+                        if (openPort(2, _serialPort2)) {
+                            label2.Text = "open";
+                            label2.BackColor = Color.FromName("PaleGreen");
+                        }
+                        break;
+                    case 3:
+                        if (openPort(3, _serialPort3)) {
+                            label3.Text = "open";
+                            label3.BackColor = Color.FromName("PaleGreen");
+                        }
+                        break;
+                    case 4:
+                        if (openPort(4, _serialPort4))
+                        {
+                            label4.Text = "open";
+                            label4.BackColor = Color.FromName("PaleGreen");
+                        }
+                        break;
+
+                    default:
+                        break;
                 }
             }
-
-            // open first device in list
-            //ftStatus = myFtdiDevice.OpenBySerialNumber(ftdiDeviceList[0].SerialNumber);
-            /*ftStatus = myFtdiDevice.OpenBySerialNumber(sensors[0]);
-            if (ftStatus != FTDI.FT_STATUS.FT_OK)
-            {
-                // Wait for a key press
-                Console.WriteLine("Failed to open device (error " + ftStatus.ToString() + ")");
-                Console.ReadKey();
-                return;
-            }
-
-            UInt32 numBytesAvailable = 0;
-
-            for(int i=0; i<10; i++)
-            {
-                ftStatus = myFtdiDevice.GetRxBytesAvailable(ref numBytesAvailable);
-                if (ftStatus != FTDI.FT_STATUS.FT_OK)
-                {
-                    Console.WriteLine("Failed to get number of bytes available to read (error " + ftStatus.ToString() + ")");
-                    Console.ReadKey();
-                    //break;
-                }
-
-                if (numBytesAvailable > 0)
-                {
-                    string readData = "";
-                    UInt32 numBytesRead = 0;
-                    byte[] dataBuffer = new byte[1024];
-
-                    // TODO: check so you don't over your buffer.
-                    ftStatus = myFtdiDevice.Read(out readData, numBytesAvailable, ref numBytesRead);
-
-                    //ProcessData(readData);
-                    // show ts
-                    DateTime now = DateTime.Now;
-                    //String timeStamp = GetTimestamp(DateTime.Now);
-                    textBox1.Text = now + "     ";
-                    // show sensor_id
-                    textBox1.Text += sensors[0];
-                    // show dta
-                    textBox1.Text += "     " + readData;
-                }
-
-                System.Threading.Thread.Sleep(100); // Sleep 1 seconds.
-            }
-            ftStatus = myFtdiDevice.Close();
-            */
         }
 
+        private bool openPort(int idx, SerialPort port)
+        {
+            if (! port.IsOpen)
+            {
+                port.PortName = (DeviceList.GetContent()[idx].s_com);
+                port.BaudRate = 9600;
+                port.ReadTimeout = 200;
+                port.Open();
+                return true;
+            }
+                return false;
+        }
 
-        private void backgroundWorker1_DoWork(object sender, DoWorkEventArgs e)
+        private void closeAllPorts()
+        {
+            _serialPort0.Close();   label0.Text = "--"; label0.BackColor = Color.FromName("LightSteelBlue");
+            _serialPort1.Close();   label1.Text = "--"; label1.BackColor = Color.FromName("LightSteelBlue");
+            _serialPort2.Close();   label2.Text = "--"; label2.BackColor = Color.FromName("LightSteelBlue");
+            _serialPort3.Close();   label3.Text = "--"; label3.BackColor = Color.FromName("LightSteelBlue");
+            _serialPort4.Close();   label4.Text = "--"; label4.BackColor = Color.FromName("LightSteelBlue");
+        }
+
+        private void backgroundWorker0_DoWork(object sender, DoWorkEventArgs e)
         {
             BackgroundWorker worker = sender as BackgroundWorker;
+            string sMsg = string.Empty;
 
             while (true)
             {
@@ -259,10 +221,93 @@ namespace trail01
                 else
                 {
                     // Perform a time consuming operation and report progress.
-                    System.Threading.Thread.Sleep(500);
+                    System.Threading.Thread.Sleep(200);
+                    string sTmp = string.Empty; ;
 
-                    DateTime now = DateTime.Now;
-                    worker.ReportProgress(0, now + "  STRING MIT ID UND CID");
+                    try
+                    {
+                        sTmp = _serialPort0.ReadExisting();
+                    }
+                    catch (TimeoutException) { }
+
+                    if (sTmp.Length > 0)
+                    {
+                        sTmp = sTmp.TrimEnd('\r');
+                        sMsg += sTmp;
+
+                        if (sMsg.Length > 15)
+                        {
+                            string log;
+                            log = DeviceList.GetDevId(_serialPort0.PortName);
+                            log += " ; " + sMsg;
+                            FileLogger.Log(log, true);
+                            sMsg = string.Empty;
+                        }
+                    }
+                }
+            }
+        }
+
+        private void backgroundWorker0_ProgressChanged(object sender, ProgressChangedEventArgs e)
+        {
+            resultLabel.Text = (e.UserState + "USER STATE   evnts " + nEvents++);
+            // add event to EventLog
+        }
+
+        private void backgroundWorker0_RunWorkerCompleted(object sender, RunWorkerCompletedEventArgs e)
+        {
+            if (e.Cancelled == true)
+            {
+                resultLabel.Text = "Canceled!";
+            }
+            else if (e.Error != null)
+            {
+                resultLabel.Text = "Error: " + e.Error.Message;
+            }
+            else
+            {
+                resultLabel.Text = "Done!";
+            }
+        }
+
+        private void backgroundWorker1_DoWork(object sender, DoWorkEventArgs e)
+        {
+            BackgroundWorker worker = sender as BackgroundWorker;
+            string sMsg = string.Empty;
+
+            while (true)
+            {
+                if (worker.CancellationPending == true)
+                {
+                    e.Cancel = true;
+                    break;
+                }
+                else
+                {
+                    // Perform a time consuming operation and report progress.
+                    System.Threading.Thread.Sleep(200);
+                    string sTmp = string.Empty; ;
+
+                    try
+                    {
+                        sTmp = _serialPort1.ReadExisting();
+                    }
+                    catch (TimeoutException) { }
+
+                    if (sTmp.Length > 0)
+                    {
+                        sTmp = sTmp.TrimEnd('\r');
+                        sMsg += sTmp;
+
+                        if (sMsg.Length > 15)
+                        {
+                            string log;
+                            log = DeviceList.GetDevId(_serialPort1.PortName);
+                            log += " ; " + sMsg;
+                            FileLogger.Log(log, true);
+                            sMsg = string.Empty;
+                        }
+                    }
                 }
             }
         }
@@ -291,41 +336,106 @@ namespace trail01
             }
         }
 
+        private void backgroundWorker2_DoWork(object sender, DoWorkEventArgs e)
+        {
+            BackgroundWorker worker = sender as BackgroundWorker;
+            string sMsg = string.Empty;
+
+            while (true)
+            {
+                if (worker.CancellationPending == true)
+                {
+                    e.Cancel = true;
+                    break;
+                }
+                else
+                {
+                    // Perform a time consuming operation and report progress.
+                    System.Threading.Thread.Sleep(200);
+                    string sTmp = string.Empty; ;
+
+                    try
+                    {
+                        sTmp = _serialPort2.ReadExisting();
+                    }
+                    catch (TimeoutException) { }
+
+                    if (sTmp.Length > 0)
+                    {
+                        sTmp = sTmp.TrimEnd('\r');
+                        sMsg += sTmp;
+
+                        if (sMsg.Length > 15)
+                        {
+                            string log;
+                            log = DeviceList.GetDevId(_serialPort2.PortName);
+                            log += " ; " + sMsg;
+                            FileLogger.Log(log, true);
+                            sMsg = string.Empty;
+                        }
+                    }
+                }
+            }
+        }
+
+        private void backgroundWorker2_ProgressChanged(object sender, ProgressChangedEventArgs e)
+        {
+            resultLabel.Text = (e.UserState + "USER STATE   evnts " + nEvents++);
+            // add event to EventLog
+        }
+
+        private void backgroundWorker2_RunWorkerCompleted(object sender, RunWorkerCompletedEventArgs e)
+        {
+            if (e.Cancelled == true)
+            {
+                resultLabel.Text = "Canceled!";
+            }
+            else if (e.Error != null)
+            {
+                resultLabel.Text = "Error: " + e.Error.Message;
+            }
+            else
+            {
+                resultLabel.Text = "Done!";
+            }
+        }
+
         private void startAsyncButton_Click(object sender, EventArgs e)
         {
+            if (backgroundWorker0.IsBusy != true)
+            {
+                // Start the asynchronous operation.
+                backgroundWorker0.RunWorkerAsync();
+            }
             if (backgroundWorker1.IsBusy != true)
             {
                 // Start the asynchronous operation.
                 backgroundWorker1.RunWorkerAsync();
             }
+            if (backgroundWorker2.IsBusy != true)
+            {
+                // Start the asynchronous operation.
+                backgroundWorker2.RunWorkerAsync();
+            }
         }
 
         private void cancelAsyncButton_Click(object sender, EventArgs e)
         {
+            if (backgroundWorker0.WorkerSupportsCancellation == true)
+            {
+                backgroundWorker0.CancelAsync();
+            }
             if (backgroundWorker1.WorkerSupportsCancellation == true)
             {
-                // Cancel the asynchronous operation.
                 backgroundWorker1.CancelAsync();
+            }
+            if (backgroundWorker2.WorkerSupportsCancellation == true)
+            {
+                backgroundWorker2.CancelAsync();
             }
         }
 
 
     }
-
-    /*class USBDeviceInfo
-    {
-        public USBDeviceInfo(string deviceID, string pnpDeviceID, string description, string name)
-        {
-            this.DeviceID = deviceID;
-            this.PnpDeviceID = pnpDeviceID;
-            this.Description = description;
-            this.Description = name;
-        }
-        public string DeviceID { get; private set; }
-        public string PnpDeviceID { get; private set; }
-        public string Description { get; private set; }
-        public string Caption { get; private set; }
-    }*/
-
 
 }
