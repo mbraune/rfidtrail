@@ -27,7 +27,8 @@ namespace trail01
 
     public static class FileLogger
     {
-        static string filePath = "D:\\work\\RFTrail_Log.txt";
+        public static string filePath; // = "D:\\work\\RFTrail_Log.txt";
+
         public static void Log(string message, bool bAddTime)
         {
             if (bAddTime)
@@ -42,17 +43,27 @@ namespace trail01
                 streamWriter.Close();
             }
         }
+
+        public static void Reset()
+        {
+            string sPath = "rf_trail_";
+            DateTime now = DateTime.Now;
+            string sTime = String.Format("{0:yyyy_MM_dd_HHmmss}", now);
+            filePath = sPath + sTime + ".txt";
+        }
     }
 
-    public struct FtdiDevice
+    public class FtdiDevice
     {
-        public string s_id { get; private set; }
-        public string s_com { get; private set; }
+        public string s_id    { get; set; }
+        public string s_com   { get; set; }
+        public bool   bActive { get; set; }
 
-        public FtdiDevice(string devid, string com) : this()
+        public FtdiDevice(string com, string devid, bool bAct)
         {
-            this.s_id  = devid;
-            this.s_com = com;
+            s_id = devid;
+            s_com = com;
+            bActive = bAct;
         }
     }
 
@@ -62,26 +73,22 @@ namespace trail01
     static class DeviceList
     {
         static List<FtdiDevice> _devList;     // static list instance
-        static List<bool>       _statusList;  // static list instance
 
         static DeviceList()
         {
-            // Allocate the lists
+            // Allocate the list
             _devList    = new List<FtdiDevice>();
-            _statusList = new List<bool>();
         }
 
         public static void Clear()
         {
             _devList.Clear();
-            _statusList.Clear();
         }
 
         public static void Record(FtdiDevice value)
         {
             // Record this value in the list.
             _devList.Add(value);
-            _statusList.Add(false);
         }
 
         public static List<FtdiDevice> GetContent()
@@ -100,17 +107,11 @@ namespace trail01
             return ftdev.s_id;
         }
 
-        public static List<bool> GetStatus()
-        {
-            return _statusList;
-        }
-
         public static void SetStatus(string ComPort, bool stat)
         {
             FtdiDevice ftdev = _devList.Find(x => x.s_com == ComPort);
             int idx = _devList.IndexOf(ftdev);
-            _statusList[idx] = stat;
+            _devList[idx].bActive = stat;
         }
     }
-
 }

@@ -33,9 +33,6 @@ namespace trail01
 
     public partial class Form1 : Form
     {
-        // list of known sensors --> move to config/device.ini
-        public readonly string[] sensors = { "A107BOUE", "A107BOUF", "gamma", "delta", "echo" };
-
         public SerialPort _serialPort0;
         public SerialPort _serialPort1; 
         public SerialPort _serialPort2; 
@@ -127,7 +124,7 @@ namespace trail01
                     arr[1] = port;
                     itm = new ListViewItem(arr);
                     listView1.Items.Add(itm);
-                    FtdiDevice ftdev = new FtdiDevice(devid, port);
+                    FtdiDevice ftdev = new FtdiDevice(port, devid, false);
                     DeviceList.Record(ftdev);
                 }
             }
@@ -188,10 +185,12 @@ namespace trail01
         {
             if (! port.IsOpen)
             {
-                port.PortName = (DeviceList.GetContent()[idx].s_com);
+                string scom = (DeviceList.GetContent()[idx].s_com);
+                port.PortName = scom;
                 port.BaudRate = 9600;
                 port.ReadTimeout = 200;
                 port.Open();
+                DeviceList.SetStatus(scom, true);
                 return true;
             }
                 return false;
@@ -204,12 +203,15 @@ namespace trail01
             _serialPort2.Close();   label2.Text = "--"; label2.BackColor = Color.FromName("LightSteelBlue");
             _serialPort3.Close();   label3.Text = "--"; label3.BackColor = Color.FromName("LightSteelBlue");
             _serialPort4.Close();   label4.Text = "--"; label4.BackColor = Color.FromName("LightSteelBlue");
+            for (var i = 0; i < DeviceList.Count(); i++)
+                DeviceList.SetStatus(DeviceList.GetContent()[i].s_com, false);
         }
 
         private void backgroundWorker0_DoWork(object sender, DoWorkEventArgs e)
         {
             BackgroundWorker worker = sender as BackgroundWorker;
             string sMsg = string.Empty;
+            int    nCnt = 0;
 
             while (true)
             {
@@ -224,8 +226,7 @@ namespace trail01
                     System.Threading.Thread.Sleep(200);
                     string sTmp = string.Empty; ;
 
-                    try
-                    {
+                    try {
                         sTmp = _serialPort0.ReadExisting();
                     }
                     catch (TimeoutException) { }
@@ -242,17 +243,14 @@ namespace trail01
                             log += " ; " + sMsg;
                             FileLogger.Log(log, true);
                             sMsg = string.Empty;
+                            label0.Text = (++nCnt).ToString();
                         }
                     }
                 }
             }
         }
 
-        private void backgroundWorker0_ProgressChanged(object sender, ProgressChangedEventArgs e)
-        {
-            resultLabel.Text = (e.UserState + "USER STATE   evnts " + nEvents++);
-            // add event to EventLog
-        }
+        private void backgroundWorker0_ProgressChanged(object sender, ProgressChangedEventArgs e) {}
 
         private void backgroundWorker0_RunWorkerCompleted(object sender, RunWorkerCompletedEventArgs e)
         {
@@ -274,6 +272,7 @@ namespace trail01
         {
             BackgroundWorker worker = sender as BackgroundWorker;
             string sMsg = string.Empty;
+            int nCnt = 0;
 
             while (true)
             {
@@ -306,19 +305,14 @@ namespace trail01
                             log += " ; " + sMsg;
                             FileLogger.Log(log, true);
                             sMsg = string.Empty;
+                            label1.Text = (++nCnt).ToString();
                         }
                     }
                 }
             }
         }
 
-        private void backgroundWorker1_ProgressChanged(object sender, ProgressChangedEventArgs e)
-        {
-            ///resultLabel.Text = (e.ProgressPercentage.ToString() + "%");
-            resultLabel.Text = (e.UserState + "USER STATE   evnts " + nEvents++);
-
-            // add event to EventLog
-        }
+        private void backgroundWorker1_ProgressChanged(object sender, ProgressChangedEventArgs e) {}
 
         private void backgroundWorker1_RunWorkerCompleted(object sender, RunWorkerCompletedEventArgs e)
         {
@@ -340,6 +334,7 @@ namespace trail01
         {
             BackgroundWorker worker = sender as BackgroundWorker;
             string sMsg = string.Empty;
+            int nCnt = 0;
 
             while (true)
             {
@@ -372,17 +367,14 @@ namespace trail01
                             log += " ; " + sMsg;
                             FileLogger.Log(log, true);
                             sMsg = string.Empty;
+                            label2.Text = (++nCnt).ToString();
                         }
                     }
                 }
             }
         }
 
-        private void backgroundWorker2_ProgressChanged(object sender, ProgressChangedEventArgs e)
-        {
-            resultLabel.Text = (e.UserState + "USER STATE   evnts " + nEvents++);
-            // add event to EventLog
-        }
+        private void backgroundWorker2_ProgressChanged(object sender, ProgressChangedEventArgs e) {}
 
         private void backgroundWorker2_RunWorkerCompleted(object sender, RunWorkerCompletedEventArgs e)
         {
@@ -402,40 +394,38 @@ namespace trail01
 
         private void startAsyncButton_Click(object sender, EventArgs e)
         {
-            if (backgroundWorker0.IsBusy != true)
-            {
-                // Start the asynchronous operation.
-                backgroundWorker0.RunWorkerAsync();
-            }
-            if (backgroundWorker1.IsBusy != true)
-            {
-                // Start the asynchronous operation.
-                backgroundWorker1.RunWorkerAsync();
-            }
-            if (backgroundWorker2.IsBusy != true)
-            {
-                // Start the asynchronous operation.
-                backgroundWorker2.RunWorkerAsync();
-            }
+            FileLogger.Reset();
+            resultLabel.Text = FileLogger.filePath;
+
+            if(DeviceList.Count()>0)
+                if ((DeviceList.GetContent()[0].bActive == true) && (backgroundWorker0.IsBusy != true)) {
+                    backgroundWorker0.RunWorkerAsync();
+                }
+            if(DeviceList.Count()>1)
+                if ((DeviceList.GetContent()[1].bActive == true) && (backgroundWorker1.IsBusy != true)) {
+                    backgroundWorker1.RunWorkerAsync();
+                }
+            if (DeviceList.Count() > 2)
+                if ((DeviceList.GetContent()[2].bActive == true) && (backgroundWorker2.IsBusy != true)) {
+                    backgroundWorker2.RunWorkerAsync();
+                }
+            if (DeviceList.Count() > 3)
+                if ((DeviceList.GetContent()[3].bActive == true) && (backgroundWorker3.IsBusy != true)) {
+                    backgroundWorker2.RunWorkerAsync();
+                }
         }
 
         private void cancelAsyncButton_Click(object sender, EventArgs e)
         {
-            if (backgroundWorker0.WorkerSupportsCancellation == true)
-            {
+            if (backgroundWorker0.WorkerSupportsCancellation == true) {
                 backgroundWorker0.CancelAsync();
             }
-            if (backgroundWorker1.WorkerSupportsCancellation == true)
-            {
+            if (backgroundWorker1.WorkerSupportsCancellation == true) {
                 backgroundWorker1.CancelAsync();
             }
-            if (backgroundWorker2.WorkerSupportsCancellation == true)
-            {
+            if (backgroundWorker2.WorkerSupportsCancellation == true) {
                 backgroundWorker2.CancelAsync();
             }
         }
-
-
     }
-
 }

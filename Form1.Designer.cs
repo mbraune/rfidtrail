@@ -118,7 +118,6 @@
             this.backgroundWorker0.DoWork += new System.ComponentModel.DoWorkEventHandler(this.backgroundWorker0_DoWork);
             this.backgroundWorker0.ProgressChanged += new System.ComponentModel.ProgressChangedEventHandler(this.backgroundWorker0_ProgressChanged);
             this.backgroundWorker0.RunWorkerCompleted += new System.ComponentModel.RunWorkerCompletedEventHandler(this.backgroundWorker0_RunWorkerCompleted);
-
             // 
             // backgroundWorker1
             // 
@@ -154,6 +153,18 @@
             this.cancelAsyncButton.Text = "Cancel";
             this.cancelAsyncButton.UseVisualStyleBackColor = true;
             this.cancelAsyncButton.Click += new System.EventHandler(this.cancelAsyncButton_Click);
+            // 
+            // label0
+            // 
+            this.label0.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
+            this.label0.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label0.Location = new System.Drawing.Point(451, 85);
+            this.label0.Margin = new System.Windows.Forms.Padding(6, 0, 6, 0);
+            this.label0.Name = "label0";
+            this.label0.Size = new System.Drawing.Size(89, 26);
+            this.label0.TabIndex = 52;
+            this.label0.Text = "...";
+            this.label0.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
             // 
             // label1
             // 
@@ -203,18 +214,6 @@
             this.label4.Text = "...";
             this.label4.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
             // 
-            // label0
-            // 
-            this.label0.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
-            this.label0.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label0.Location = new System.Drawing.Point(451, 85);
-            this.label0.Margin = new System.Windows.Forms.Padding(6, 0, 6, 0);
-            this.label0.Name = "label0";
-            this.label0.Size = new System.Drawing.Size(89, 26);
-            this.label0.TabIndex = 52;
-            this.label0.Text = "...";
-            this.label0.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
-            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(9F, 18F);
@@ -236,7 +235,7 @@
             this.Font = new System.Drawing.Font("Microsoft Sans Serif", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.Margin = new System.Windows.Forms.Padding(4);
             this.Name = "Form1";
-            this.Text = "Form1";
+            this.Text = "Track RFID";
             this.Load += new System.EventHandler(this.Form1_Load);
             this.ResumeLayout(false);
             this.PerformLayout();
