@@ -30,6 +30,14 @@ namespace trail01
         }
     };
 
+    enum MachineState
+    {
+        PowerOff    = 0,
+        Initialized = 5,
+        PortsOpen   = 10,
+        Running     = 15,
+    }
+
 
     public partial class Form1 : Form
     {
@@ -39,7 +47,36 @@ namespace trail01
         public SerialPort _serialPort3; 
         public SerialPort _serialPort4; 
 
-        int nEvents = 0;
+        MachineState state = MachineState.PowerOff;
+
+        private void SetState(MachineState _state)
+        {
+            switch (_state)
+            {
+                case MachineState.PowerOff:
+                    // reset all
+                    emptyAllDevicesLabel();
+                    DeviceList.Clear();
+                    closeAllPorts();
+                    startAsyncButton.BackColor = Color.FromName("Gray");
+                    cancelAsyncButton.Enabled = false;
+                    buttonDevices.Enabled = true;
+                    break;
+                case MachineState.Initialized:
+                    buttonDevices.Enabled = false;
+                    buttonOpen.Enabled = true;
+                    break;
+                case MachineState.PortsOpen:
+                    buttonOpen.Enabled = false;
+                    startAsyncButton.Enabled = true;
+                    break;
+                case MachineState.Running:
+                    startAsyncButton.BackColor = Color.FromName("PaleGreen");
+                    startAsyncButton.Enabled = false;
+                    cancelAsyncButton.Enabled = true;
+                    break;
+            }
+        }
 
         public Form1()
         {
@@ -68,6 +105,7 @@ namespace trail01
             }
             catch (Exception e)
             {
+                Trace.WriteLine(e.Message);
                 return string.Empty;
             }
         }
@@ -75,25 +113,12 @@ namespace trail01
         private void Form1_Load(object sender, EventArgs e)
         {
             Trace.TraceInformation("Form1_Load");
-
-            listView1.View = View.Details;
-            listView1.GridLines = true;
-            listView1.FullRowSelect = true;
-
-            //Add column header
-            listView1.Columns.Add("SerialNumber", 100);
-            listView1.Columns.Add("Com Port", 80);
+            SetState(MachineState.PowerOff);
         }
 
         private void buttonDevices_Click(object sender, EventArgs e)
         {
             Trace.WriteLine("Click Devices");
-
-            // reset all
-            listView1.Items.Clear();
-            DeviceList.Clear();
-            closeAllPorts();
-
             var searcher = new ManagementObjectSearcher("Select * from Win32_PnPEntity");
             var coll = searcher.Get();
 
@@ -103,28 +128,19 @@ namespace trail01
                 if (((string)o["DeviceID"]).Contains("FTDIBUS"))
                 {
                     Console.WriteLine((string)o["Name"]);
-                    //Console.WriteLine((string)o["Description"]);
-
                     // extract COM Port
                     string device = (string)o["DeviceID"];
                     Trace.WriteLine("found" + device);
                     string pattern = "(.*PID_6001\\+)";
                     string sTmp = Regex.Replace(device, pattern, String.Empty);
-                    string devid = sTmp.Substring(0, 8);
+                    string devid = sTmp.Substring(0, 4);  // serial number is S001, S002, ..
                     string port = GetVCP_COMPort(o);
                     Trace.WriteLine("found devid " + devid + "  at " + port);
                     //Console.WriteLine((string)o["DeviceID"]);
                     //Console.WriteLine((string)o["PNPDeviceID"]);
                     //Console.WriteLine("VCP ComPort " + GetVCP_COMPort(o));
 
-                    // append to list 
-                    string[] arr = new string[4];
-                    ListViewItem itm;
-                    arr[0] = devid;
-                    arr[1] = port;
-                    itm = new ListViewItem(arr);
-                    listView1.Items.Add(itm);
-                    FtdiDevice ftdev = new FtdiDevice(port, devid, false);
+                    FtdiDevice ftdev = new FtdiDevice(devid, port, false);
                     DeviceList.Record(ftdev);
                 }
             }
@@ -134,7 +150,56 @@ namespace trail01
             else labelDeviceCount.BackColor = Color.FromName("OrangeRed");
             labelDeviceCount.Text = DeviceList.Count().ToString();
 
+            for (var i = 0; i < DeviceList.Count(); i++)
+            {
+                switch (i)
+                {
+                    case 0:
+                        labelNum0.Text = DeviceList.GetContent()[i].s_id;
+                        labelPort0.Text = DeviceList.GetContent()[i].s_com;
+                        break;
+                    case 1:
+                        labelNum1.Text = DeviceList.GetContent()[i].s_id;
+                        labelPort1.Text = DeviceList.GetContent()[i].s_com;
+                        break;
+                    case 2:
+                        labelNum2.Text = DeviceList.GetContent()[i].s_id;
+                        labelPort2.Text = DeviceList.GetContent()[i].s_com;
+                        break;
+                    case 3:
+                        labelNum3.Text = DeviceList.GetContent()[i].s_id;
+                        labelPort3.Text = DeviceList.GetContent()[i].s_com;
+                        break;
+                    case 4:
+                        labelNum4.Text = DeviceList.GetContent()[i].s_id;
+                        labelPort4.Text = DeviceList.GetContent()[i].s_com;
+                        break;
+                    case 5:
+                        labelNum5.Text = DeviceList.GetContent()[i].s_id;
+                        labelPort5.Text = DeviceList.GetContent()[i].s_com;
+                        break;
+                    case 6:
+                        labelNum6.Text = DeviceList.GetContent()[i].s_id;
+                        labelPort6.Text = DeviceList.GetContent()[i].s_com;
+                        break;
+                    case 7:
+                        labelNum7.Text = DeviceList.GetContent()[i].s_id;
+                        labelPort7.Text = DeviceList.GetContent()[i].s_com;
+                        break;
+                    case 8:
+                        labelNum8.Text = DeviceList.GetContent()[i].s_id;
+                        labelPort8.Text = DeviceList.GetContent()[i].s_com;
+                        break;
+                    case 9:
+                        labelNum9.Text = DeviceList.GetContent()[i].s_id;
+                        labelPort9.Text = DeviceList.GetContent()[i].s_com;
+                        break;
+                    default:
+                        break;
+                }
+            }
             coll.Dispose();
+            SetState(MachineState.Initialized);
         }
 
         private void buttonOpen1_Click(object sender, EventArgs e)
@@ -145,33 +210,27 @@ namespace trail01
                 {
                     case 0:
                         if (openPort(0, _serialPort0)) {
-                            label0.Text = "open";
-                            label0.BackColor = Color.FromName("PaleGreen");
+                            label0.BackColor = Color.FromName("LightSteelBlue");
                         }
                         break;
                     case 1:
                         if (openPort(1, _serialPort1)) {
-                            label1.Text = "open";
-                            label1.BackColor = Color.FromName("PaleGreen");
+                            label1.BackColor = Color.FromName("LightSteelBlue");
                         }
                         break;
                     case 2:
                         if (openPort(2, _serialPort2)) {
-                            label2.Text = "open";
-                            label2.BackColor = Color.FromName("PaleGreen");
+                            label2.BackColor = Color.FromName("LightSteelBlue");
                         }
                         break;
                     case 3:
                         if (openPort(3, _serialPort3)) {
-                            label3.Text = "open";
-                            label3.BackColor = Color.FromName("PaleGreen");
+                            label3.BackColor = Color.FromName("LightSteelBlue");
                         }
                         break;
                     case 4:
-                        if (openPort(4, _serialPort4))
-                        {
-                            label4.Text = "open";
-                            label4.BackColor = Color.FromName("PaleGreen");
+                        if (openPort(4, _serialPort4)) {
+                            label4.BackColor = Color.FromName("LightSteelBlue");
                         }
                         break;
 
@@ -179,7 +238,62 @@ namespace trail01
                         break;
                 }
             }
+            SetState(MachineState.PortsOpen);
         }
+
+        private void startAsyncButton_Click(object sender, EventArgs e)
+        {
+            FileLogger.Reset();
+            resultLabel.Text = FileLogger.filePath;
+
+            if (DeviceList.Count() > 0)
+                if ((DeviceList.GetContent()[0].bActive == true) && (backgroundWorker0.IsBusy != true))
+                {
+                    label0.BackColor = Color.FromName("LightGreen");
+                    backgroundWorker0.RunWorkerAsync();
+                }
+            if (DeviceList.Count() > 1)
+                if ((DeviceList.GetContent()[1].bActive == true) && (backgroundWorker1.IsBusy != true))
+                {
+                    label1.BackColor = Color.FromName("LightGreen");
+                    backgroundWorker1.RunWorkerAsync();
+                }
+            if (DeviceList.Count() > 2)
+                if ((DeviceList.GetContent()[2].bActive == true) && (backgroundWorker2.IsBusy != true))
+                {
+                    label2.BackColor = Color.FromName("LightGreen");
+                    backgroundWorker2.RunWorkerAsync();
+                }
+            if (DeviceList.Count() > 3)
+                if ((DeviceList.GetContent()[3].bActive == true) && (backgroundWorker3.IsBusy != true))
+                {
+                    label3.BackColor = Color.FromName("LightGreen");
+                    backgroundWorker3.RunWorkerAsync();
+                }
+
+            SetState(MachineState.Running);
+        }
+
+        private void cancelAsyncButton_Click(object sender, EventArgs e)
+        {
+            if (backgroundWorker0.WorkerSupportsCancellation == true)
+            {
+                backgroundWorker0.CancelAsync();
+            }
+            if (backgroundWorker1.WorkerSupportsCancellation == true)
+            {
+                backgroundWorker1.CancelAsync();
+            }
+            if (backgroundWorker2.WorkerSupportsCancellation == true)
+            {
+                backgroundWorker2.CancelAsync();
+            }
+
+            SetState(MachineState.PowerOff);
+        }
+
+        // end buttons
+        //
 
         private bool openPort(int idx, SerialPort port)
         {
@@ -198,13 +312,65 @@ namespace trail01
 
         private void closeAllPorts()
         {
-            _serialPort0.Close();   label0.Text = "--"; label0.BackColor = Color.FromName("LightSteelBlue");
-            _serialPort1.Close();   label1.Text = "--"; label1.BackColor = Color.FromName("LightSteelBlue");
-            _serialPort2.Close();   label2.Text = "--"; label2.BackColor = Color.FromName("LightSteelBlue");
-            _serialPort3.Close();   label3.Text = "--"; label3.BackColor = Color.FromName("LightSteelBlue");
-            _serialPort4.Close();   label4.Text = "--"; label4.BackColor = Color.FromName("LightSteelBlue");
+            _serialPort0.Close(); label0.Text = "--"; label0.BackColor = Color.FromName("Gray");
+            _serialPort1.Close(); label1.Text = "--"; label1.BackColor = Color.FromName("Gray");
+            _serialPort2.Close(); label2.Text = "--"; label2.BackColor = Color.FromName("Gray");
+            _serialPort3.Close(); label3.Text = "--"; label3.BackColor = Color.FromName("Gray");
+            _serialPort4.Close(); label4.Text = "--"; label4.BackColor = Color.FromName("Gray");
             for (var i = 0; i < DeviceList.Count(); i++)
                 DeviceList.SetStatus(DeviceList.GetContent()[i].s_com, false);
+        }
+
+        private void emptyAllDevicesLabel()
+        {
+            for (var i = 0; i < DeviceList.Count(); i++)
+            {
+                switch (i)
+                {
+                    case 0:
+                        labelNum0.Text = "";
+                        labelPort0.Text = "";
+                        break;
+                    case 1:
+                        labelNum1.Text = "";
+                        labelPort1.Text = "";
+                        break;
+                    case 2:
+                        labelNum2.Text = "";
+                        labelPort2.Text = "";
+                        break;
+                    case 3:
+                        labelNum3.Text = "";
+                        labelPort3.Text = "";
+                        break;
+                    case 4:
+                        labelNum4.Text = "";
+                        labelPort4.Text = "";
+                        break;
+                    case 5:
+                        labelNum5.Text = "";
+                        labelPort5.Text = "";
+                        break;
+                    case 6:
+                        labelNum6.Text = "";
+                        labelPort6.Text = "";
+                        break;
+                    case 7:
+                        labelNum7.Text = "";
+                        labelPort7.Text = "";
+                        break;
+                    case 8:
+                        labelNum8.Text = "";
+                        labelPort8.Text = "";
+                        break;
+                    case 9:
+                        labelNum9.Text = "";
+                        labelPort9.Text = "";
+                        break;
+                    default:
+                        break;
+                }
+            }
         }
 
         private void backgroundWorker0_DoWork(object sender, DoWorkEventArgs e)
@@ -392,40 +558,6 @@ namespace trail01
             }
         }
 
-        private void startAsyncButton_Click(object sender, EventArgs e)
-        {
-            FileLogger.Reset();
-            resultLabel.Text = FileLogger.filePath;
 
-            if(DeviceList.Count()>0)
-                if ((DeviceList.GetContent()[0].bActive == true) && (backgroundWorker0.IsBusy != true)) {
-                    backgroundWorker0.RunWorkerAsync();
-                }
-            if(DeviceList.Count()>1)
-                if ((DeviceList.GetContent()[1].bActive == true) && (backgroundWorker1.IsBusy != true)) {
-                    backgroundWorker1.RunWorkerAsync();
-                }
-            if (DeviceList.Count() > 2)
-                if ((DeviceList.GetContent()[2].bActive == true) && (backgroundWorker2.IsBusy != true)) {
-                    backgroundWorker2.RunWorkerAsync();
-                }
-            if (DeviceList.Count() > 3)
-                if ((DeviceList.GetContent()[3].bActive == true) && (backgroundWorker3.IsBusy != true)) {
-                    backgroundWorker2.RunWorkerAsync();
-                }
-        }
-
-        private void cancelAsyncButton_Click(object sender, EventArgs e)
-        {
-            if (backgroundWorker0.WorkerSupportsCancellation == true) {
-                backgroundWorker0.CancelAsync();
-            }
-            if (backgroundWorker1.WorkerSupportsCancellation == true) {
-                backgroundWorker1.CancelAsync();
-            }
-            if (backgroundWorker2.WorkerSupportsCancellation == true) {
-                backgroundWorker2.CancelAsync();
-            }
-        }
     }
 }
