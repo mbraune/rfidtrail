@@ -5,6 +5,7 @@ using System.Threading.Tasks;
 using System.Windows.Forms;
 using System.Diagnostics;
 using System.IO;
+using System.Threading;
 
 namespace trail01
 {
@@ -28,9 +29,11 @@ namespace trail01
     public static class FileLogger
     {
         public static string filePath; // = "D:\\work\\RFTrail_Log.txt";
+        static ReaderWriterLock rwl = new ReaderWriterLock();
 
         public static void Log(string message, bool bAddTime)
         {
+            rwl.AcquireWriterLock(Timeout.Infinite);
             if (bAddTime)
             {
                 DateTime now = DateTime.Now;
@@ -42,6 +45,7 @@ namespace trail01
                 streamWriter.WriteLine(message);
                 streamWriter.Close();
             }
+            rwl.ReleaseWriterLock();
         }
 
         public static void Reset()

@@ -32,7 +32,6 @@ namespace trail01
         {
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Form1));
             this.labelVersion = new System.Windows.Forms.Label();
-            this.labelDeviceCount = new System.Windows.Forms.Label();
             this.buttonDevices = new System.Windows.Forms.Button();
             this.buttonOpen = new System.Windows.Forms.Button();
             this.resultLabel = new System.Windows.Forms.Label();
@@ -41,6 +40,11 @@ namespace trail01
             this.backgroundWorker2 = new System.ComponentModel.BackgroundWorker();
             this.backgroundWorker3 = new System.ComponentModel.BackgroundWorker();
             this.backgroundWorker4 = new System.ComponentModel.BackgroundWorker();
+            this.backgroundWorker5 = new System.ComponentModel.BackgroundWorker();
+            this.backgroundWorker6 = new System.ComponentModel.BackgroundWorker();
+            this.backgroundWorker7 = new System.ComponentModel.BackgroundWorker();
+            this.backgroundWorker8 = new System.ComponentModel.BackgroundWorker();
+            this.backgroundWorker9 = new System.ComponentModel.BackgroundWorker();
             this.startAsyncButton = new System.Windows.Forms.Button();
             this.cancelAsyncButton = new System.Windows.Forms.Button();
             this.labelNum0 = new System.Windows.Forms.Label();
@@ -68,29 +72,24 @@ namespace trail01
             this.label2 = new System.Windows.Forms.Label();
             this.label3 = new System.Windows.Forms.Label();
             this.label4 = new System.Windows.Forms.Label();
+            this.label5 = new System.Windows.Forms.Label();
+            this.label6 = new System.Windows.Forms.Label();
+            this.label7 = new System.Windows.Forms.Label();
+            this.label8 = new System.Windows.Forms.Label();
+            this.label9 = new System.Windows.Forms.Label();
+
             this.SuspendLayout();
             // 
             // labelVersion
             // 
             this.labelVersion.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.labelVersion.Location = new System.Drawing.Point(350, 60);
+            this.labelVersion.Location = new System.Drawing.Point(360, 60);
             this.labelVersion.Margin = new System.Windows.Forms.Padding(6, 0, 6, 0);
             this.labelVersion.Name = "labelVersion";
-            this.labelVersion.Size = new System.Drawing.Size(190, 26);
+            this.labelVersion.Size = new System.Drawing.Size(140, 26);
             this.labelVersion.TabIndex = 38;
             this.labelVersion.Text = "version";
-            this.labelVersion.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
-            // 
-            // labelDeviceCount
-            // 
-            this.labelDeviceCount.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
-            this.labelDeviceCount.Location = new System.Drawing.Point(110, 16);
-            this.labelDeviceCount.Margin = new System.Windows.Forms.Padding(6, 0, 6, 0);
-            this.labelDeviceCount.Name = "labelDeviceCount";
-            this.labelDeviceCount.Size = new System.Drawing.Size(40, 26);
-            this.labelDeviceCount.TabIndex = 40;
-            this.labelDeviceCount.Text = "...";
-            this.labelDeviceCount.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
+            this.labelVersion.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             // 
             // buttonDevices
             // 
@@ -108,7 +107,7 @@ namespace trail01
             // 
             this.buttonOpen.Enabled = false;
             this.buttonOpen.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.buttonOpen.Location = new System.Drawing.Point(250, 16);
+            this.buttonOpen.Location = new System.Drawing.Point(220, 16);
             this.buttonOpen.Margin = new System.Windows.Forms.Padding(6, 7, 6, 7);
             this.buttonOpen.Name = "buttonOpen";
             this.buttonOpen.Size = new System.Drawing.Size(90, 26);
@@ -120,13 +119,13 @@ namespace trail01
             // resultLabel
             // 
             this.resultLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.resultLabel.Location = new System.Drawing.Point(350, 110);
+            this.resultLabel.Location = new System.Drawing.Point(360, 110);
             this.resultLabel.Margin = new System.Windows.Forms.Padding(6, 0, 6, 0);
             this.resultLabel.Name = "resultLabel";
-            this.resultLabel.Size = new System.Drawing.Size(190, 26);
+            this.resultLabel.Size = new System.Drawing.Size(100, 52);
             this.resultLabel.TabIndex = 45;
             this.resultLabel.Text = "resultFile";
-            this.resultLabel.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
+            this.resultLabel.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             // 
             // backgroundWorker0
             // 
@@ -145,6 +144,53 @@ namespace trail01
             this.backgroundWorker2.DoWork += new System.ComponentModel.DoWorkEventHandler(this.backgroundWorker2_DoWork);
             this.backgroundWorker2.ProgressChanged += new System.ComponentModel.ProgressChangedEventHandler(this.backgroundWorker2_ProgressChanged);
             this.backgroundWorker2.RunWorkerCompleted += new System.ComponentModel.RunWorkerCompletedEventHandler(this.backgroundWorker2_RunWorkerCompleted);
+            // 
+            // backgroundWorker3
+            // 
+            this.backgroundWorker3.DoWork += new System.ComponentModel.DoWorkEventHandler(this.backgroundWorker3_DoWork);
+            this.backgroundWorker3.ProgressChanged += new System.ComponentModel.ProgressChangedEventHandler(this.backgroundWorker3_ProgressChanged);
+            this.backgroundWorker3.RunWorkerCompleted += new System.ComponentModel.RunWorkerCompletedEventHandler(this.backgroundWorker3_RunWorkerCompleted);
+            // 
+            // backgroundWorker4
+            // 
+            this.backgroundWorker4.DoWork += new System.ComponentModel.DoWorkEventHandler(this.backgroundWorker4_DoWork);
+            this.backgroundWorker4.ProgressChanged += new System.ComponentModel.ProgressChangedEventHandler(this.backgroundWorker4_ProgressChanged);
+            this.backgroundWorker4.RunWorkerCompleted += new System.ComponentModel.RunWorkerCompletedEventHandler(this.backgroundWorker4_RunWorkerCompleted);
+            // 
+            // backgroundWorker5
+            // 
+            this.backgroundWorker5.DoWork += new System.ComponentModel.DoWorkEventHandler(this.backgroundWorker5_DoWork);
+            this.backgroundWorker5.ProgressChanged += new System.ComponentModel.ProgressChangedEventHandler(this.backgroundWorker5_ProgressChanged);
+            this.backgroundWorker5.RunWorkerCompleted += new System.ComponentModel.RunWorkerCompletedEventHandler(this.backgroundWorker5_RunWorkerCompleted);
+            // 
+            // backgroundWorker6
+            // 
+            this.backgroundWorker6.DoWork += new System.ComponentModel.DoWorkEventHandler(this.backgroundWorker6_DoWork);
+            this.backgroundWorker6.ProgressChanged += new System.ComponentModel.ProgressChangedEventHandler(this.backgroundWorker6_ProgressChanged);
+            this.backgroundWorker6.RunWorkerCompleted += new System.ComponentModel.RunWorkerCompletedEventHandler(this.backgroundWorker6_RunWorkerCompleted);
+            // 
+            // backgroundWorker7
+            // 
+            this.backgroundWorker7.DoWork += new System.ComponentModel.DoWorkEventHandler(this.backgroundWorker7_DoWork);
+            this.backgroundWorker7.ProgressChanged += new System.ComponentModel.ProgressChangedEventHandler(this.backgroundWorker7_ProgressChanged);
+            this.backgroundWorker7.RunWorkerCompleted += new System.ComponentModel.RunWorkerCompletedEventHandler(this.backgroundWorker7_RunWorkerCompleted);
+            // 
+            // backgroundWorker8
+            // 
+            this.backgroundWorker8.DoWork += new System.ComponentModel.DoWorkEventHandler(this.backgroundWorker8_DoWork);
+            this.backgroundWorker8.ProgressChanged += new System.ComponentModel.ProgressChangedEventHandler(this.backgroundWorker8_ProgressChanged);
+            this.backgroundWorker8.RunWorkerCompleted += new System.ComponentModel.RunWorkerCompletedEventHandler(this.backgroundWorker8_RunWorkerCompleted);
+            // 
+            // backgroundWorker9
+            // 
+            this.backgroundWorker9.DoWork += new System.ComponentModel.DoWorkEventHandler(this.backgroundWorker9_DoWork);
+            this.backgroundWorker9.ProgressChanged += new System.ComponentModel.ProgressChangedEventHandler(this.backgroundWorker9_ProgressChanged);
+            this.backgroundWorker9.RunWorkerCompleted += new System.ComponentModel.RunWorkerCompletedEventHandler(this.backgroundWorker9_RunWorkerCompleted);
+
+
+
+
+
             // 
             // startAsyncButton
             // 
@@ -412,7 +458,7 @@ namespace trail01
             // 
             this.label0.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
             this.label0.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label0.Location = new System.Drawing.Point(250, 60);
+            this.label0.Location = new System.Drawing.Point(220, 60);
             this.label0.Margin = new System.Windows.Forms.Padding(6, 0, 6, 0);
             this.label0.Name = "label0";
             this.label0.Size = new System.Drawing.Size(89, 26);
@@ -424,7 +470,7 @@ namespace trail01
             // 
             this.label1.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
             this.label1.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label1.Location = new System.Drawing.Point(250, 86);
+            this.label1.Location = new System.Drawing.Point(220, 86);
             this.label1.Margin = new System.Windows.Forms.Padding(6, 0, 6, 0);
             this.label1.Name = "label1";
             this.label1.Size = new System.Drawing.Size(89, 26);
@@ -436,7 +482,7 @@ namespace trail01
             // 
             this.label2.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
             this.label2.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label2.Location = new System.Drawing.Point(250, 112);
+            this.label2.Location = new System.Drawing.Point(220, 112);
             this.label2.Margin = new System.Windows.Forms.Padding(6, 0, 6, 0);
             this.label2.Name = "label2";
             this.label2.Size = new System.Drawing.Size(89, 26);
@@ -448,7 +494,7 @@ namespace trail01
             // 
             this.label3.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
             this.label3.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label3.Location = new System.Drawing.Point(250, 138);
+            this.label3.Location = new System.Drawing.Point(220, 138);
             this.label3.Margin = new System.Windows.Forms.Padding(6, 0, 6, 0);
             this.label3.Name = "label3";
             this.label3.Size = new System.Drawing.Size(89, 26);
@@ -460,7 +506,7 @@ namespace trail01
             // 
             this.label4.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
             this.label4.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label4.Location = new System.Drawing.Point(250, 164);
+            this.label4.Location = new System.Drawing.Point(220, 164);
             this.label4.Margin = new System.Windows.Forms.Padding(6, 0, 6, 0);
             this.label4.Name = "label4";
             this.label4.Size = new System.Drawing.Size(89, 26);
@@ -468,11 +514,72 @@ namespace trail01
             this.label4.Text = "...";
             this.label4.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
             // 
+            // label5
+            // 
+            this.label5.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
+            this.label5.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label5.Location = new System.Drawing.Point(220, 190);
+            this.label5.Margin = new System.Windows.Forms.Padding(6, 0, 6, 0);
+            this.label5.Name = "label5";
+            this.label5.Size = new System.Drawing.Size(89, 26);
+            this.label5.TabIndex = 52;
+            this.label5.Text = "...";
+            this.label5.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
+            // 
+            // label6
+            // 
+            this.label6.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
+            this.label6.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label6.Location = new System.Drawing.Point(220, 216);
+            this.label6.Margin = new System.Windows.Forms.Padding(6, 0, 6, 0);
+            this.label6.Name = "label6";
+            this.label6.Size = new System.Drawing.Size(89, 26);
+            this.label6.TabIndex = 52;
+            this.label6.Text = "...";
+            this.label6.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
+            // 
+            // label7
+            // 
+            this.label7.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
+            this.label7.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label7.Location = new System.Drawing.Point(220, 242);
+            this.label7.Margin = new System.Windows.Forms.Padding(6, 0, 6, 0);
+            this.label7.Name = "label7";
+            this.label7.Size = new System.Drawing.Size(89, 26);
+            this.label7.TabIndex = 52;
+            this.label7.Text = "...";
+            this.label7.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
+            // 
+            // label8
+            // 
+            this.label8.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
+            this.label8.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label8.Location = new System.Drawing.Point(220, 268);
+            this.label8.Margin = new System.Windows.Forms.Padding(6, 0, 6, 0);
+            this.label8.Name = "label8";
+            this.label8.Size = new System.Drawing.Size(89, 26);
+            this.label8.TabIndex = 52;
+            this.label8.Text = "...";
+            this.label8.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
+            // 
+            // label9
+            // 
+            this.label9.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
+            this.label9.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label9.Location = new System.Drawing.Point(220, 294);
+            this.label9.Margin = new System.Windows.Forms.Padding(6, 0, 6, 0);
+            this.label9.Name = "label9";
+            this.label9.Size = new System.Drawing.Size(89, 26);
+            this.label9.TabIndex = 52;
+            this.label9.Text = "...";
+            this.label9.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
+
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(14F, 29F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(556, 396);
+            this.ClientSize = new System.Drawing.Size(500, 390);
             this.Controls.Add(this.labelNum0);
             this.Controls.Add(this.labelNum1);
             this.Controls.Add(this.labelNum2);
@@ -498,11 +605,15 @@ namespace trail01
             this.Controls.Add(this.label2);
             this.Controls.Add(this.label3);
             this.Controls.Add(this.label4);
+            this.Controls.Add(this.label5);
+            this.Controls.Add(this.label6);
+            this.Controls.Add(this.label7);
+            this.Controls.Add(this.label8);
+            this.Controls.Add(this.label9);
             this.Controls.Add(this.cancelAsyncButton);
             this.Controls.Add(this.startAsyncButton);
             this.Controls.Add(this.resultLabel);
             this.Controls.Add(this.buttonOpen);
-            this.Controls.Add(this.labelDeviceCount);
             this.Controls.Add(this.buttonDevices);
             this.Controls.Add(this.labelVersion);
             this.Font = new System.Drawing.Font("Microsoft Sans Serif", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
@@ -511,13 +622,11 @@ namespace trail01
             this.Text = "Track RFID";
             this.Load += new System.EventHandler(this.Form1_Load);
             this.ResumeLayout(false);
-
         }
 
         #endregion
 
         private System.Windows.Forms.Label labelVersion;
-        private System.Windows.Forms.Label labelDeviceCount;
         private System.Windows.Forms.Button buttonDevices;
         private System.Windows.Forms.Button buttonOpen;
         private System.Windows.Forms.Label resultLabel;
@@ -548,12 +657,21 @@ namespace trail01
         private System.Windows.Forms.Label label2;
         private System.Windows.Forms.Label label3;
         private System.Windows.Forms.Label label4;
-
+        private System.Windows.Forms.Label label5;
+        private System.Windows.Forms.Label label6;
+        private System.Windows.Forms.Label label7;
+        private System.Windows.Forms.Label label8;
+        private System.Windows.Forms.Label label9;
         private System.ComponentModel.BackgroundWorker backgroundWorker0;
         private System.ComponentModel.BackgroundWorker backgroundWorker1;
         private System.ComponentModel.BackgroundWorker backgroundWorker2;
         private System.ComponentModel.BackgroundWorker backgroundWorker3;
         private System.ComponentModel.BackgroundWorker backgroundWorker4;
+        private System.ComponentModel.BackgroundWorker backgroundWorker5;
+        private System.ComponentModel.BackgroundWorker backgroundWorker6;
+        private System.ComponentModel.BackgroundWorker backgroundWorker7;
+        private System.ComponentModel.BackgroundWorker backgroundWorker8;
+        private System.ComponentModel.BackgroundWorker backgroundWorker9;
     }
 }
 

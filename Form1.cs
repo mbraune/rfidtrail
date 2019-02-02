@@ -42,12 +42,17 @@ namespace trail01
     public partial class Form1 : Form
     {
         public SerialPort _serialPort0;
-        public SerialPort _serialPort1; 
-        public SerialPort _serialPort2; 
-        public SerialPort _serialPort3; 
-        public SerialPort _serialPort4; 
+        public SerialPort _serialPort1;
+        public SerialPort _serialPort2;
+        public SerialPort _serialPort3;
+        public SerialPort _serialPort4;
+        public SerialPort _serialPort5;
+        public SerialPort _serialPort6;
+        public SerialPort _serialPort7;
+        public SerialPort _serialPort8;
+        public SerialPort _serialPort9;
 
-        MachineState state = MachineState.PowerOff;
+        //MachineState state = MachineState.PowerOff;
 
         private void SetState(MachineState _state)
         {
@@ -84,7 +89,6 @@ namespace trail01
 
             // get the version object for this assembly
             Version v = System.Reflection.Assembly.GetExecutingAssembly().GetName().Version;
-            // write out the whole version number
             labelVersion.Text = "version " + v.ToString();
 
             _serialPort0 = new SerialPort();
@@ -92,6 +96,11 @@ namespace trail01
             _serialPort2 = new SerialPort();
             _serialPort3 = new SerialPort();
             _serialPort4 = new SerialPort();
+            _serialPort5 = new SerialPort();
+            _serialPort6 = new SerialPort();
+            _serialPort7 = new SerialPort();
+            _serialPort8 = new SerialPort();
+            _serialPort9 = new SerialPort();
 
             backgroundWorker1.WorkerReportsProgress = true;
             backgroundWorker1.WorkerSupportsCancellation = true;
@@ -144,11 +153,6 @@ namespace trail01
                     DeviceList.Record(ftdev);
                 }
             }
-
-            if (DeviceList.Count() > 0)
-                labelDeviceCount.BackColor = Color.FromName("blanchedalmond");
-            else labelDeviceCount.BackColor = Color.FromName("OrangeRed");
-            labelDeviceCount.Text = DeviceList.Count().ToString();
 
             for (var i = 0; i < DeviceList.Count(); i++)
             {
@@ -233,6 +237,31 @@ namespace trail01
                             label4.BackColor = Color.FromName("LightSteelBlue");
                         }
                         break;
+                    case 5:
+                        if (openPort(5, _serialPort5)) {
+                            label5.BackColor = Color.FromName("LightSteelBlue");
+                        }
+                        break;
+                    case 6:
+                        if (openPort(6, _serialPort6)) {
+                            label6.BackColor = Color.FromName("LightSteelBlue");
+                        }
+                        break;
+                    case 7:
+                        if (openPort(7, _serialPort7)) {
+                            label7.BackColor = Color.FromName("LightSteelBlue");
+                        }
+                        break;
+                    case 8:
+                        if (openPort(8, _serialPort8)) {
+                            label8.BackColor = Color.FromName("LightSteelBlue");
+                        }
+                        break;
+                    case 9:
+                        if (openPort(9, _serialPort9)) {
+                            label9.BackColor = Color.FromName("LightSteelBlue");
+                        }
+                        break;
 
                     default:
                         break;
@@ -247,28 +276,54 @@ namespace trail01
             resultLabel.Text = FileLogger.filePath;
 
             if (DeviceList.Count() > 0)
-                if ((DeviceList.GetContent()[0].bActive == true) && (backgroundWorker0.IsBusy != true))
-                {
+                if ((DeviceList.GetContent()[0].bActive == true) && (backgroundWorker0.IsBusy != true)) {
                     label0.BackColor = Color.FromName("LightGreen");
                     backgroundWorker0.RunWorkerAsync();
                 }
             if (DeviceList.Count() > 1)
-                if ((DeviceList.GetContent()[1].bActive == true) && (backgroundWorker1.IsBusy != true))
-                {
+                if ((DeviceList.GetContent()[1].bActive == true) && (backgroundWorker1.IsBusy != true)) {
                     label1.BackColor = Color.FromName("LightGreen");
                     backgroundWorker1.RunWorkerAsync();
                 }
             if (DeviceList.Count() > 2)
-                if ((DeviceList.GetContent()[2].bActive == true) && (backgroundWorker2.IsBusy != true))
-                {
+                if ((DeviceList.GetContent()[2].bActive == true) && (backgroundWorker2.IsBusy != true)) {
                     label2.BackColor = Color.FromName("LightGreen");
                     backgroundWorker2.RunWorkerAsync();
                 }
             if (DeviceList.Count() > 3)
-                if ((DeviceList.GetContent()[3].bActive == true) && (backgroundWorker3.IsBusy != true))
-                {
+                if ((DeviceList.GetContent()[3].bActive == true) && (backgroundWorker3.IsBusy != true)) {
                     label3.BackColor = Color.FromName("LightGreen");
                     backgroundWorker3.RunWorkerAsync();
+                }
+            if (DeviceList.Count() > 4)
+                if ((DeviceList.GetContent()[4].bActive == true) && (backgroundWorker4.IsBusy != true)) {
+                    label4.BackColor = Color.FromName("LightGreen");
+                    backgroundWorker4.RunWorkerAsync();
+                }
+            if (DeviceList.Count() > 5)
+                if ((DeviceList.GetContent()[5].bActive == true) && (backgroundWorker5.IsBusy != true)) {
+                    label5.BackColor = Color.FromName("LightGreen");
+                    backgroundWorker5.RunWorkerAsync();
+                }
+            if (DeviceList.Count() > 6)
+                if ((DeviceList.GetContent()[6].bActive == true) && (backgroundWorker6.IsBusy != true)) {
+                    label6.BackColor = Color.FromName("LightGreen");
+                    backgroundWorker6.RunWorkerAsync();
+                }
+            if (DeviceList.Count() > 7)
+                if ((DeviceList.GetContent()[7].bActive == true) && (backgroundWorker7.IsBusy != true)) {
+                    label7.BackColor = Color.FromName("LightGreen");
+                    backgroundWorker7.RunWorkerAsync();
+                }
+            if (DeviceList.Count() > 8)
+                if ((DeviceList.GetContent()[8].bActive == true) && (backgroundWorker8.IsBusy != true)) {
+                    label8.BackColor = Color.FromName("LightGreen");
+                    backgroundWorker8.RunWorkerAsync();
+                }
+            if (DeviceList.Count() > 9)
+                if ((DeviceList.GetContent()[9].bActive == true) && (backgroundWorker9.IsBusy != true)) {
+                    label9.BackColor = Color.FromName("LightGreen");
+                    backgroundWorker9.RunWorkerAsync();
                 }
 
             SetState(MachineState.Running);
@@ -276,24 +331,42 @@ namespace trail01
 
         private void cancelAsyncButton_Click(object sender, EventArgs e)
         {
-            if (backgroundWorker0.WorkerSupportsCancellation == true)
-            {
+            if (backgroundWorker0.WorkerSupportsCancellation == true) {
                 backgroundWorker0.CancelAsync();
             }
-            if (backgroundWorker1.WorkerSupportsCancellation == true)
-            {
+            if (backgroundWorker1.WorkerSupportsCancellation == true) {
                 backgroundWorker1.CancelAsync();
             }
-            if (backgroundWorker2.WorkerSupportsCancellation == true)
-            {
+            if (backgroundWorker2.WorkerSupportsCancellation == true) {
                 backgroundWorker2.CancelAsync();
+            }
+            if (backgroundWorker3.WorkerSupportsCancellation == true) {
+                backgroundWorker3.CancelAsync();
+            }
+            if (backgroundWorker4.WorkerSupportsCancellation == true) {
+                backgroundWorker4.CancelAsync();
+            }
+            if (backgroundWorker5.WorkerSupportsCancellation == true) {
+                backgroundWorker5.CancelAsync();
+            }
+            if (backgroundWorker6.WorkerSupportsCancellation == true) {
+                backgroundWorker6.CancelAsync();
+            }
+            if (backgroundWorker7.WorkerSupportsCancellation == true) {
+                backgroundWorker7.CancelAsync();
+            }
+            if (backgroundWorker8.WorkerSupportsCancellation == true) {
+                backgroundWorker8.CancelAsync();
+            }
+            if (backgroundWorker9.WorkerSupportsCancellation == true) {
+                backgroundWorker9.CancelAsync();
             }
 
             SetState(MachineState.PowerOff);
         }
 
         // end buttons
-        //
+        //#########################################################################
 
         private bool openPort(int idx, SerialPort port)
         {
@@ -303,7 +376,15 @@ namespace trail01
                 port.PortName = scom;
                 port.BaudRate = 9600;
                 port.ReadTimeout = 200;
-                port.Open();
+                try
+                {
+                    port.Open();
+                }
+                catch (Exception ex)
+                {
+                    Trace.WriteLine("Error opening my port: {0}", ex.Message);
+                    return false;
+                }
                 DeviceList.SetStatus(scom, true);
                 return true;
             }
@@ -317,6 +398,11 @@ namespace trail01
             _serialPort2.Close(); label2.Text = "--"; label2.BackColor = Color.FromName("Gray");
             _serialPort3.Close(); label3.Text = "--"; label3.BackColor = Color.FromName("Gray");
             _serialPort4.Close(); label4.Text = "--"; label4.BackColor = Color.FromName("Gray");
+            _serialPort5.Close(); label5.Text = "--"; label5.BackColor = Color.FromName("Gray");
+            _serialPort6.Close(); label6.Text = "--"; label6.BackColor = Color.FromName("Gray");
+            _serialPort7.Close(); label7.Text = "--"; label7.BackColor = Color.FromName("Gray");
+            _serialPort8.Close(); label8.Text = "--"; label8.BackColor = Color.FromName("Gray");
+            _serialPort9.Close(); label9.Text = "--"; label9.BackColor = Color.FromName("Gray");
             for (var i = 0; i < DeviceList.Count(); i++)
                 DeviceList.SetStatus(DeviceList.GetContent()[i].s_com, false);
         }
@@ -390,12 +476,16 @@ namespace trail01
                 {
                     // Perform a time consuming operation and report progress.
                     System.Threading.Thread.Sleep(200);
-                    string sTmp = string.Empty; ;
+                    string sTmp = string.Empty;
 
                     try {
                         sTmp = _serialPort0.ReadExisting();
                     }
                     catch (TimeoutException) { }
+
+                    // debug
+                    //sTmp = "serialPort0_debug";
+                    // end debug
 
                     if (sTmp.Length > 0)
                     {
@@ -459,6 +549,11 @@ namespace trail01
                     }
                     catch (TimeoutException) { }
 
+                    // debug
+                    //System.Threading.Thread.Sleep(13);
+                    //sTmp = "serialPort1_debug";
+                    // end debug
+
                     if (sTmp.Length > 0)
                     {
                         sTmp = sTmp.TrimEnd('\r');
@@ -521,6 +616,12 @@ namespace trail01
                     }
                     catch (TimeoutException) { }
 
+                    // debug
+                    //System.Threading.Thread.Sleep(37);
+                    //sTmp = "serialPort2_debug";
+                    // end debug
+
+
                     if (sTmp.Length > 0)
                     {
                         sTmp = sTmp.TrimEnd('\r');
@@ -558,6 +659,448 @@ namespace trail01
             }
         }
 
+        private void backgroundWorker3_DoWork(object sender, DoWorkEventArgs e)
+        {
+            BackgroundWorker worker = sender as BackgroundWorker;
+            string sMsg = string.Empty;
+            int nCnt = 0;
 
+            while (true)
+            {
+                if (worker.CancellationPending == true)
+                {
+                    e.Cancel = true;
+                    break;
+                }
+                else
+                {
+                    // Perform a time consuming operation and report progress.
+                    System.Threading.Thread.Sleep(200);
+                    string sTmp = string.Empty; ;
+
+                    try
+                    {
+                        sTmp = _serialPort3.ReadExisting();
+                    }
+                    catch (TimeoutException) { }
+
+                    // debug
+                    //System.Threading.Thread.Sleep(51);
+                    //sTmp = "serialPort3_debug";
+                    // end debug
+
+                    if (sTmp.Length > 0)
+                    {
+                        sTmp = sTmp.TrimEnd('\r');
+                        sMsg += sTmp;
+
+                        if (sMsg.Length > 15)
+                        {
+                            string log;
+                            log = DeviceList.GetDevId(_serialPort3.PortName);
+                            log += " ; " + sMsg;
+                            FileLogger.Log(log, true);
+                            sMsg = string.Empty;
+                            label3.Text = (++nCnt).ToString();
+                        }
+                    }
+                }
+            }
+        }
+
+        private void backgroundWorker3_ProgressChanged(object sender, ProgressChangedEventArgs e) { }
+
+        private void backgroundWorker3_RunWorkerCompleted(object sender, RunWorkerCompletedEventArgs e)
+        {
+            if (e.Cancelled == true)
+            {
+                resultLabel.Text = "Canceled!";
+            }
+            else if (e.Error != null)
+            {
+                resultLabel.Text = "Error: " + e.Error.Message;
+            }
+            else
+            {
+                resultLabel.Text = "Done!";
+            }
+        }
+
+        private void backgroundWorker4_DoWork(object sender, DoWorkEventArgs e)
+        {
+            BackgroundWorker worker = sender as BackgroundWorker;
+            string sMsg = string.Empty;
+            int nCnt = 0;
+
+            while (true)
+            {
+                if (worker.CancellationPending == true)
+                {
+                    e.Cancel = true;
+                    break;
+                }
+                else
+                {
+                    // Perform a time consuming operation and report progress.
+                    System.Threading.Thread.Sleep(200);
+                    string sTmp = string.Empty; ;
+
+                    try
+                    {
+                        sTmp = _serialPort4.ReadExisting();
+                    }
+                    catch (TimeoutException) { }
+
+                    // debug
+                    //System.Threading.Thread.Sleep(29);
+                    //sTmp = "serialPort4_debug";
+                    // end debug
+
+                    if (sTmp.Length > 0)
+                    {
+                        sTmp = sTmp.TrimEnd('\r');
+                        sMsg += sTmp;
+
+                        if (sMsg.Length > 15)
+                        {
+                            string log;
+                            log = DeviceList.GetDevId(_serialPort4.PortName);
+                            log += " ; " + sMsg;
+                            FileLogger.Log(log, true);
+                            sMsg = string.Empty;
+                            label4.Text = (++nCnt).ToString();
+                        }
+                    }
+                }
+            }
+        }
+
+        private void backgroundWorker4_ProgressChanged(object sender, ProgressChangedEventArgs e) { }
+
+        private void backgroundWorker4_RunWorkerCompleted(object sender, RunWorkerCompletedEventArgs e)
+        {
+            if (e.Cancelled == true)
+            {
+                resultLabel.Text = "Canceled!";
+            }
+            else if (e.Error != null)
+            {
+                resultLabel.Text = "Error: " + e.Error.Message;
+            }
+            else
+            {
+                resultLabel.Text = "Done!";
+            }
+        }
+
+        private void backgroundWorker5_DoWork(object sender, DoWorkEventArgs e)
+        {
+            BackgroundWorker worker = sender as BackgroundWorker;
+            string sMsg = string.Empty;
+            int nCnt = 0;
+
+            while (true)
+            {
+                if (worker.CancellationPending == true)
+                {
+                    e.Cancel = true;
+                    break;
+                }
+                else
+                {
+                    // Perform a time consuming operation and report progress.
+                    System.Threading.Thread.Sleep(200);
+                    string sTmp = string.Empty; ;
+
+                    try
+                    {
+                        sTmp = _serialPort5.ReadExisting();
+                    }
+                    catch (TimeoutException) { }
+
+                    if (sTmp.Length > 0)
+                    {
+                        sTmp = sTmp.TrimEnd('\r');
+                        sMsg += sTmp;
+
+                        if (sMsg.Length > 15)
+                        {
+                            string log;
+                            log = DeviceList.GetDevId(_serialPort5.PortName);
+                            log += " ; " + sMsg;
+                            FileLogger.Log(log, true);
+                            sMsg = string.Empty;
+                            label5.Text = (++nCnt).ToString();
+                        }
+                    }
+                }
+            }
+        }
+
+        private void backgroundWorker5_ProgressChanged(object sender, ProgressChangedEventArgs e) { }
+
+        private void backgroundWorker5_RunWorkerCompleted(object sender, RunWorkerCompletedEventArgs e)
+        {
+            if (e.Cancelled == true)
+            {
+                resultLabel.Text = "Canceled!";
+            }
+            else if (e.Error != null)
+            {
+                resultLabel.Text = "Error: " + e.Error.Message;
+            }
+            else
+            {
+                resultLabel.Text = "Done!";
+            }
+        }
+
+        private void backgroundWorker6_DoWork(object sender, DoWorkEventArgs e)
+        {
+            BackgroundWorker worker = sender as BackgroundWorker;
+            string sMsg = string.Empty;
+            int nCnt = 0;
+
+            while (true)
+            {
+                if (worker.CancellationPending == true)
+                {
+                    e.Cancel = true;
+                    break;
+                }
+                else
+                {
+                    // Perform a time consuming operation and report progress.
+                    System.Threading.Thread.Sleep(200);
+                    string sTmp = string.Empty; ;
+
+                    try
+                    {
+                        sTmp = _serialPort6.ReadExisting();
+                    }
+                    catch (TimeoutException) { }
+
+                    if (sTmp.Length > 0)
+                    {
+                        sTmp = sTmp.TrimEnd('\r');
+                        sMsg += sTmp;
+
+                        if (sMsg.Length > 15)
+                        {
+                            string log;
+                            log = DeviceList.GetDevId(_serialPort6.PortName);
+                            log += " ; " + sMsg;
+                            FileLogger.Log(log, true);
+                            sMsg = string.Empty;
+                            label6.Text = (++nCnt).ToString();
+                        }
+                    }
+                }
+            }
+        }
+
+        private void backgroundWorker6_ProgressChanged(object sender, ProgressChangedEventArgs e) { }
+
+        private void backgroundWorker6_RunWorkerCompleted(object sender, RunWorkerCompletedEventArgs e)
+        {
+            if (e.Cancelled == true)
+            {
+                resultLabel.Text = "Canceled!";
+            }
+            else if (e.Error != null)
+            {
+                resultLabel.Text = "Error: " + e.Error.Message;
+            }
+            else
+            {
+                resultLabel.Text = "Done!";
+            }
+        }
+
+        private void backgroundWorker7_DoWork(object sender, DoWorkEventArgs e)
+        {
+            BackgroundWorker worker = sender as BackgroundWorker;
+            string sMsg = string.Empty;
+            int nCnt = 0;
+
+            while (true)
+            {
+                if (worker.CancellationPending == true)
+                {
+                    e.Cancel = true;
+                    break;
+                }
+                else
+                {
+                    // Perform a time consuming operation and report progress.
+                    System.Threading.Thread.Sleep(200);
+                    string sTmp = string.Empty; ;
+
+                    try
+                    {
+                        sTmp = _serialPort7.ReadExisting();
+                    }
+                    catch (TimeoutException) { }
+
+                    if (sTmp.Length > 0)
+                    {
+                        sTmp = sTmp.TrimEnd('\r');
+                        sMsg += sTmp;
+
+                        if (sMsg.Length > 15)
+                        {
+                            string log;
+                            log = DeviceList.GetDevId(_serialPort7.PortName);
+                            log += " ; " + sMsg;
+                            FileLogger.Log(log, true);
+                            sMsg = string.Empty;
+                            label7.Text = (++nCnt).ToString();
+                        }
+                    }
+                }
+            }
+        }
+
+        private void backgroundWorker7_ProgressChanged(object sender, ProgressChangedEventArgs e) { }
+
+        private void backgroundWorker7_RunWorkerCompleted(object sender, RunWorkerCompletedEventArgs e)
+        {
+            if (e.Cancelled == true)
+            {
+                resultLabel.Text = "Canceled!";
+            }
+            else if (e.Error != null)
+            {
+                resultLabel.Text = "Error: " + e.Error.Message;
+            }
+            else
+            {
+                resultLabel.Text = "Done!";
+            }
+        }
+
+        private void backgroundWorker8_DoWork(object sender, DoWorkEventArgs e)
+        {
+            BackgroundWorker worker = sender as BackgroundWorker;
+            string sMsg = string.Empty;
+            int nCnt = 0;
+
+            while (true)
+            {
+                if (worker.CancellationPending == true)
+                {
+                    e.Cancel = true;
+                    break;
+                }
+                else
+                {
+                    // Perform a time consuming operation and report progress.
+                    System.Threading.Thread.Sleep(200);
+                    string sTmp = string.Empty; ;
+
+                    try
+                    {
+                        sTmp = _serialPort8.ReadExisting();
+                    }
+                    catch (TimeoutException) { }
+
+                    if (sTmp.Length > 0)
+                    {
+                        sTmp = sTmp.TrimEnd('\r');
+                        sMsg += sTmp;
+
+                        if (sMsg.Length > 15)
+                        {
+                            string log;
+                            log = DeviceList.GetDevId(_serialPort8.PortName);
+                            log += " ; " + sMsg;
+                            FileLogger.Log(log, true);
+                            sMsg = string.Empty;
+                            label8.Text = (++nCnt).ToString();
+                        }
+                    }
+                }
+            }
+        }
+
+        private void backgroundWorker8_ProgressChanged(object sender, ProgressChangedEventArgs e) { }
+
+        private void backgroundWorker8_RunWorkerCompleted(object sender, RunWorkerCompletedEventArgs e)
+        {
+            if (e.Cancelled == true)
+            {
+                resultLabel.Text = "Canceled!";
+            }
+            else if (e.Error != null)
+            {
+                resultLabel.Text = "Error: " + e.Error.Message;
+            }
+            else
+            {
+                resultLabel.Text = "Done!";
+            }
+        }
+
+        private void backgroundWorker9_DoWork(object sender, DoWorkEventArgs e)
+        {
+            BackgroundWorker worker = sender as BackgroundWorker;
+            string sMsg = string.Empty;
+            int nCnt = 0;
+
+            while (true)
+            {
+                if (worker.CancellationPending == true)
+                {
+                    e.Cancel = true;
+                    break;
+                }
+                else
+                {
+                    // Perform a time consuming operation and report progress.
+                    System.Threading.Thread.Sleep(200);
+                    string sTmp = string.Empty; ;
+
+                    try
+                    {
+                        sTmp = _serialPort9.ReadExisting();
+                    }
+                    catch (TimeoutException) { }
+
+                    if (sTmp.Length > 0)
+                    {
+                        sTmp = sTmp.TrimEnd('\r');
+                        sMsg += sTmp;
+
+                        if (sMsg.Length > 15)
+                        {
+                            string log;
+                            log = DeviceList.GetDevId(_serialPort9.PortName);
+                            log += " ; " + sMsg;
+                            FileLogger.Log(log, true);
+                            sMsg = string.Empty;
+                            label9.Text = (++nCnt).ToString();
+                        }
+                    }
+                }
+            }
+        }
+
+        private void backgroundWorker9_ProgressChanged(object sender, ProgressChangedEventArgs e) { }
+
+        private void backgroundWorker9_RunWorkerCompleted(object sender, RunWorkerCompletedEventArgs e)
+        {
+            if (e.Cancelled == true)
+            {
+                resultLabel.Text = "Canceled!";
+            }
+            else if (e.Error != null)
+            {
+                resultLabel.Text = "Error: " + e.Error.Message;
+            }
+            else
+            {
+                resultLabel.Text = "Done!";
+            }
+        }
     }
 }
