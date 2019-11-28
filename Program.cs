@@ -62,12 +62,14 @@ namespace trail01
         public string s_id    { get; set; }
         public string s_com   { get; set; }
         public bool   bActive { get; set; }
+        public bool   bGroupA { get; set; }
 
         public FtdiDevice(string devid, string com, bool bAct)
         {
             s_id = devid;
             s_com = com;
             bActive = bAct;
+            bGroupA = true;
         }
     }
 

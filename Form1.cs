@@ -15,7 +15,7 @@ using System.IO.Ports;
 
 namespace trail01
 {
-    public struct EventLog
+    /*public struct EventLog
     {
         public DateTime ts;
         public int devTyp, devId, channel, value;
@@ -28,7 +28,7 @@ namespace trail01
             channel = p3;
             value = p4;
         }
-    };
+    };*/
 
     enum MachineState
     {
@@ -41,6 +41,8 @@ namespace trail01
 
     public partial class Form1 : Form
     {
+        public const int MaxDev = 10;
+
         public SerialPort _serialPort0;
         public SerialPort _serialPort1;
         public SerialPort _serialPort2;
@@ -51,6 +53,8 @@ namespace trail01
         public SerialPort _serialPort7;
         public SerialPort _serialPort8;
         public SerialPort _serialPort9;
+
+        private bool bGroupA;                // groupA active
 
         //MachineState state = MachineState.PowerOff;
 
@@ -68,10 +72,16 @@ namespace trail01
                     buttonDevices.Enabled = true;
                     break;
                 case MachineState.Initialized:
+                    // scan ports
+                    // get strings
                     buttonDevices.Enabled = false;
                     buttonOpen.Enabled = true;
                     break;
                 case MachineState.PortsOpen:
+                    disableCheckboxes();
+                    openAvailablePorts();
+                    activateAvailablePorts();
+                    setBackColorLabelOpened();
                     buttonOpen.Enabled = false;
                     startAsyncButton.Enabled = true;
                     break;
@@ -82,6 +92,82 @@ namespace trail01
                     break;
             }
         }
+
+        private CheckBox indexedCheckBox(int i)
+        {
+            switch (i)
+            {
+                case 0: return checkBox0;
+                case 1: return checkBox1;
+                case 2: return checkBox2;
+                case 3: return checkBox3;
+                case 4: return checkBox4;
+                case 5: return checkBox5;
+                case 6: return checkBox6;
+                case 7: return checkBox7;
+                case 8: return checkBox8;
+                case 9: return checkBox9;
+                default: return null;    
+            }
+        }
+
+        // indexed access to labelNum0 .. labelNum9
+        private Label indexedLabelNum(int i)
+        {
+            switch (i)
+            {
+                case 0: return labelNum0;
+                case 1: return labelNum1;
+                case 2: return labelNum2;
+                case 3: return labelNum3;
+                case 4: return labelNum4;
+                case 5: return labelNum5;
+                case 6: return labelNum6;
+                case 7: return labelNum7;
+                case 8: return labelNum8;
+                case 9: return labelNum9;
+                default: return null;
+            }
+        }
+
+        // indexed access to labelPort0 .. labelPort9
+        private Label indexedLabelPort(int i)
+        {
+            switch (i)
+            {
+                case 0: return labelPort0;
+                case 1: return labelPort1;
+                case 2: return labelPort2;
+                case 3: return labelPort3;
+                case 4: return labelPort4;
+                case 5: return labelPort5;
+                case 6: return labelPort6;
+                case 7: return labelPort7;
+                case 8: return labelPort8;
+                case 9: return labelPort9;
+                default: return null;
+            }
+        }
+
+        // indexed access to label0 .. label9
+        private Label indexedLabel(int i)
+        {
+            switch (i)
+            {
+                case 0: return label0;
+                case 1: return label1;
+                case 2: return label2;
+                case 3: return label3;
+                case 4: return label4;
+                case 5: return label5;
+                case 6: return label6;
+                case 7: return label7;
+                case 8: return label8;
+                case 9: return label9;
+                default: return null;
+            }
+        }
+
 
         public Form1()
         {
@@ -102,8 +188,8 @@ namespace trail01
             _serialPort8 = new SerialPort();
             _serialPort9 = new SerialPort();
 
-            backgroundWorker1.WorkerReportsProgress = true;
-            backgroundWorker1.WorkerSupportsCancellation = true;
+            this.timer1.Interval = Int32.Parse(textBox1.Text);
+            bGroupA = true;     // status groupA or groupB active
         }
 
         private string GetVCP_COMPort(ManagementObject Device)
@@ -123,6 +209,8 @@ namespace trail01
         {
             Trace.TraceInformation("Form1_Load");
             SetState(MachineState.PowerOff);
+
+            this.timer1.Start();
         }
 
         private void buttonDevices_Click(object sender, EventArgs e)
@@ -136,137 +224,42 @@ namespace trail01
                 Console.WriteLine((string)o["Description"]);
                 if (((string)o["DeviceID"]).Contains("FTDIBUS"))
                 {
-                    Console.WriteLine((string)o["Name"]);
-                    // extract COM Port
-                    string device = (string)o["DeviceID"];
-                    Trace.WriteLine("found" + device);
-                    string pattern = "(.*PID_6001\\+)";
-                    string sTmp = Regex.Replace(device, pattern, String.Empty);
-                    string devid = sTmp.Substring(0, 4);  // serial number is S001, S002, ..
-                    string port = GetVCP_COMPort(o);
-                    Trace.WriteLine("found devid " + devid + "  at " + port);
-                    //Console.WriteLine((string)o["DeviceID"]);
-                    //Console.WriteLine((string)o["PNPDeviceID"]);
-                    //Console.WriteLine("VCP ComPort " + GetVCP_COMPort(o));
+                    if (DeviceList.Count() < MaxDev) {
+                        Console.WriteLine((string)o["Name"]);
+                        // extract COM Port
+                        string device = (string)o["DeviceID"];
+                        Trace.WriteLine("found " + device);
+                        string pattern = "(.*PID_6001\\+)";
+                        string sTmp = Regex.Replace(device, pattern, String.Empty);
+                        string devid = sTmp.Substring(0, 4);  // serial number is S001, S002, ..
+                        string port = GetVCP_COMPort(o);
+                        Trace.WriteLine("found devid " + devid + " at " + port);
+                        //Console.WriteLine((string)o["DeviceID"]);
+                        //Console.WriteLine((string)o["PNPDeviceID"]);
+                        //Console.WriteLine("VCP ComPort " + GetVCP_COMPort(o));
 
-                    FtdiDevice ftdev = new FtdiDevice(devid, port, false);
-                    DeviceList.Record(ftdev);
-                }
-            }
-
-            for (var i = 0; i < DeviceList.Count(); i++)
-            {
-                switch (i)
-                {
-                    case 0:
-                        labelNum0.Text = DeviceList.GetContent()[i].s_id;
-                        labelPort0.Text = DeviceList.GetContent()[i].s_com;
-                        break;
-                    case 1:
-                        labelNum1.Text = DeviceList.GetContent()[i].s_id;
-                        labelPort1.Text = DeviceList.GetContent()[i].s_com;
-                        break;
-                    case 2:
-                        labelNum2.Text = DeviceList.GetContent()[i].s_id;
-                        labelPort2.Text = DeviceList.GetContent()[i].s_com;
-                        break;
-                    case 3:
-                        labelNum3.Text = DeviceList.GetContent()[i].s_id;
-                        labelPort3.Text = DeviceList.GetContent()[i].s_com;
-                        break;
-                    case 4:
-                        labelNum4.Text = DeviceList.GetContent()[i].s_id;
-                        labelPort4.Text = DeviceList.GetContent()[i].s_com;
-                        break;
-                    case 5:
-                        labelNum5.Text = DeviceList.GetContent()[i].s_id;
-                        labelPort5.Text = DeviceList.GetContent()[i].s_com;
-                        break;
-                    case 6:
-                        labelNum6.Text = DeviceList.GetContent()[i].s_id;
-                        labelPort6.Text = DeviceList.GetContent()[i].s_com;
-                        break;
-                    case 7:
-                        labelNum7.Text = DeviceList.GetContent()[i].s_id;
-                        labelPort7.Text = DeviceList.GetContent()[i].s_com;
-                        break;
-                    case 8:
-                        labelNum8.Text = DeviceList.GetContent()[i].s_id;
-                        labelPort8.Text = DeviceList.GetContent()[i].s_com;
-                        break;
-                    case 9:
-                        labelNum9.Text = DeviceList.GetContent()[i].s_id;
-                        labelPort9.Text = DeviceList.GetContent()[i].s_com;
-                        break;
-                    default:
-                        break;
+                        FtdiDevice ftdev = new FtdiDevice(devid, port, false);
+                        DeviceList.Record(ftdev);
+                    }
                 }
             }
             coll.Dispose();
+
+
+            // fill Labels with serial port names
+            for (var i = 0; i < DeviceList.Count(); i++) {
+                indexedLabelNum(i).Text = DeviceList.GetContent()[i].s_id;
+                indexedLabelPort(i).Text = DeviceList.GetContent()[i].s_com;
+                indexedCheckBox(i).Enabled = true;
+                indexedCheckBox(i).CheckState = CheckState.Checked;
+            }
+            checkBoxMux.Enabled = true;
+
             SetState(MachineState.Initialized);
         }
 
         private void buttonOpen1_Click(object sender, EventArgs e)
         {
-            for (var i = 0; i < DeviceList.Count(); i++)
-            {
-                switch (i)
-                {
-                    case 0:
-                        if (openPort(0, _serialPort0)) {
-                            label0.BackColor = Color.FromName("LightSteelBlue");
-                        }
-                        break;
-                    case 1:
-                        if (openPort(1, _serialPort1)) {
-                            label1.BackColor = Color.FromName("LightSteelBlue");
-                        }
-                        break;
-                    case 2:
-                        if (openPort(2, _serialPort2)) {
-                            label2.BackColor = Color.FromName("LightSteelBlue");
-                        }
-                        break;
-                    case 3:
-                        if (openPort(3, _serialPort3)) {
-                            label3.BackColor = Color.FromName("LightSteelBlue");
-                        }
-                        break;
-                    case 4:
-                        if (openPort(4, _serialPort4)) {
-                            label4.BackColor = Color.FromName("LightSteelBlue");
-                        }
-                        break;
-                    case 5:
-                        if (openPort(5, _serialPort5)) {
-                            label5.BackColor = Color.FromName("LightSteelBlue");
-                        }
-                        break;
-                    case 6:
-                        if (openPort(6, _serialPort6)) {
-                            label6.BackColor = Color.FromName("LightSteelBlue");
-                        }
-                        break;
-                    case 7:
-                        if (openPort(7, _serialPort7)) {
-                            label7.BackColor = Color.FromName("LightSteelBlue");
-                        }
-                        break;
-                    case 8:
-                        if (openPort(8, _serialPort8)) {
-                            label8.BackColor = Color.FromName("LightSteelBlue");
-                        }
-                        break;
-                    case 9:
-                        if (openPort(9, _serialPort9)) {
-                            label9.BackColor = Color.FromName("LightSteelBlue");
-                        }
-                        break;
-
-                    default:
-                        break;
-                }
-            }
             SetState(MachineState.PortsOpen);
         }
 
@@ -368,6 +361,121 @@ namespace trail01
         // end buttons
         //#########################################################################
 
+        private void openAvailablePorts()
+        {
+            for (var i = 0; i < DeviceList.Count(); i++)
+            {
+                switch (i)
+                {
+                    case 0:     openPort(i, _serialPort0);       break;
+                    case 1:     openPort(i, _serialPort1);       break;
+                    case 2:     openPort(i, _serialPort2);       break;
+                    case 3:     openPort(i, _serialPort3);       break;
+                    case 4:     openPort(i, _serialPort4);       break;
+                    case 5:     openPort(i, _serialPort5);       break;
+                    case 6:     openPort(i, _serialPort6);       break;
+                    case 7:     openPort(i, _serialPort7);       break;
+                    case 8:     openPort(i, _serialPort8);       break;
+                    case 9:     openPort(i, _serialPort9);       break;
+                    default:
+                        break;
+                }
+            }
+        }
+
+        private void activateAvailablePorts()
+        {
+            for (var i = 0; i < DeviceList.Count(); i++)
+            {
+                if (DeviceList.GetContent()[i].bActive != true) continue;
+                switch (i)
+                {
+                    case 0: if (checkBox0.CheckState == CheckState.Unchecked)
+                            {    _serialPort0.WriteLine("SRD"); closePort(0); }
+                            else _serialPort0.WriteLine("SRA");
+                        break;
+                    case 1: if (checkBox1.CheckState == CheckState.Unchecked)
+                            {    _serialPort1.WriteLine("SRD"); closePort(1); }
+                            else _serialPort1.WriteLine("SRA");
+                        break;
+                    case 2: if (checkBox2.CheckState == CheckState.Unchecked)
+                            {    _serialPort2.WriteLine("SRD"); closePort(2); }
+                            else _serialPort2.WriteLine("SRA");
+                        break;
+                    case 3: if (checkBox3.CheckState == CheckState.Unchecked)
+                            {    _serialPort3.WriteLine("SRD"); closePort(3); }
+                            else _serialPort3.WriteLine("SRA");
+                        break;
+                    case 4: if (checkBox4.CheckState == CheckState.Unchecked)
+                            {    _serialPort4.WriteLine("SRD"); closePort(4); }
+                            else _serialPort4.WriteLine("SRA");
+                        break;
+                    case 5: if (checkBox5.CheckState == CheckState.Unchecked)
+                            {    _serialPort5.WriteLine("SRD"); closePort(5); }
+                            else _serialPort5.WriteLine("SRA");
+                        break;
+                    case 6: if (checkBox6.CheckState == CheckState.Unchecked)
+                            {    _serialPort6.WriteLine("SRD"); closePort(6); }
+                            else _serialPort6.WriteLine("SRA");
+                        break;
+                    case 7: if (checkBox7.CheckState == CheckState.Unchecked)
+                            {    _serialPort7.WriteLine("SRD"); closePort(7); }
+                            else _serialPort7.WriteLine("SRA");
+                        break;
+                    case 8: if (checkBox8.CheckState == CheckState.Unchecked)
+                            {    _serialPort8.WriteLine("SRD"); closePort(8); }
+                            else _serialPort8.WriteLine("SRA");
+                        break;
+                    case 9: if (checkBox9.CheckState == CheckState.Unchecked)
+                            {    _serialPort9.WriteLine("SRD"); closePort(9); }
+                            else _serialPort9.WriteLine("SRA");
+                        break;
+                    default:
+                        break;
+                }
+            }
+        }
+
+        private void toggleAvailablePorts(bool bA)
+        {
+            string sWrite = "";
+            for (var i = 0; i < DeviceList.Count(); i++)
+            {
+                if (DeviceList.GetContent()[i].bActive != true) continue;
+
+                if (indexedCheckBox(i).CheckState == CheckState.Checked)
+                     sWrite = (bA ? "SRD" : "SRA");
+                else sWrite = (bA ? "SRA" : "SRD");
+                switch (i)
+                {
+                    case 0: _serialPort0.WriteLine(sWrite); break;
+                    case 1: _serialPort1.WriteLine(sWrite); break;
+                    case 2: _serialPort2.WriteLine(sWrite); break;
+                    case 3: _serialPort3.WriteLine(sWrite); break;
+                    case 4: _serialPort4.WriteLine(sWrite); break;
+                    case 5: _serialPort5.WriteLine(sWrite); break;
+                    case 6: _serialPort6.WriteLine(sWrite); break;
+                    case 7: _serialPort7.WriteLine(sWrite); break;
+                    case 8: _serialPort8.WriteLine(sWrite); break;
+                    case 9: _serialPort9.WriteLine(sWrite); break;
+                    default:
+                        break;
+                }
+            }
+        }
+
+        private void setBackColorLabelOpened()
+        {
+            for (var i = 0; i<DeviceList.Count(); i++)
+            {
+                if (DeviceList.GetContent()[i].bActive != true) continue;
+
+                if (indexedCheckBox(i).CheckState != CheckState.Unchecked)
+                    indexedLabel(i).BackColor = Color.FromName("LightSteelBlue");
+            }
+        }
+
+
         private bool openPort(int idx, SerialPort port)
         {
             if (! port.IsOpen)
@@ -376,6 +484,7 @@ namespace trail01
                 port.PortName = scom;
                 port.BaudRate = 9600;
                 port.ReadTimeout = 200;
+                port.NewLine = "\r";
                 try
                 {
                     port.Open();
@@ -389,6 +498,26 @@ namespace trail01
                 return true;
             }
                 return false;
+        }
+
+        private void closePort(int idx)
+        {
+            switch (idx)
+            {
+                case 0:     _serialPort0.Close();   break;
+                case 1:     _serialPort1.Close();   break;
+                case 2:     _serialPort2.Close();   break;
+                case 3:     _serialPort3.Close();   break;
+                case 4:     _serialPort0.Close();   break;
+                case 5:     _serialPort0.Close();   break;
+                case 6:     _serialPort0.Close();   break;
+                case 7:     _serialPort0.Close();   break;
+                case 8:     _serialPort0.Close();   break;
+                case 9:     _serialPort0.Close();   break;
+                default:
+                    break;
+            }
+            DeviceList.SetStatus(DeviceList.GetContent()[idx].s_com, false);
         }
 
         private void closeAllPorts()
@@ -411,57 +540,24 @@ namespace trail01
         {
             for (var i = 0; i < DeviceList.Count(); i++)
             {
-                switch (i)
-                {
-                    case 0:
-                        labelNum0.Text = "";
-                        labelPort0.Text = "";
-                        break;
-                    case 1:
-                        labelNum1.Text = "";
-                        labelPort1.Text = "";
-                        break;
-                    case 2:
-                        labelNum2.Text = "";
-                        labelPort2.Text = "";
-                        break;
-                    case 3:
-                        labelNum3.Text = "";
-                        labelPort3.Text = "";
-                        break;
-                    case 4:
-                        labelNum4.Text = "";
-                        labelPort4.Text = "";
-                        break;
-                    case 5:
-                        labelNum5.Text = "";
-                        labelPort5.Text = "";
-                        break;
-                    case 6:
-                        labelNum6.Text = "";
-                        labelPort6.Text = "";
-                        break;
-                    case 7:
-                        labelNum7.Text = "";
-                        labelPort7.Text = "";
-                        break;
-                    case 8:
-                        labelNum8.Text = "";
-                        labelPort8.Text = "";
-                        break;
-                    case 9:
-                        labelNum9.Text = "";
-                        labelPort9.Text = "";
-                        break;
-                    default:
-                        break;
-                }
+                indexedLabelNum(i).Text  = "";
+                indexedLabelPort(i).Text = "";
+                indexedCheckBox(i).CheckState = CheckState.Unchecked;
             }
+            checkBoxMux.CheckState = CheckState.Unchecked;
+        }
+
+        private void disableCheckboxes()
+        {
+            for (var i = 0; i < MaxDev; i++)
+                indexedCheckBox(i).Enabled = false;
+            checkBoxMux.Enabled = false;
         }
 
         private void backgroundWorker0_DoWork(object sender, DoWorkEventArgs e)
         {
             BackgroundWorker worker = sender as BackgroundWorker;
+            string sRaw = string.Empty;
             string sMsg = string.Empty;
             int    nCnt = 0;
 
@@ -476,20 +572,15 @@ namespace trail01
                 {
                     // Perform a time consuming operation and report progress.
                     System.Threading.Thread.Sleep(200);
-                    string sTmp = string.Empty;
 
                     try {
-                        sTmp = _serialPort0.ReadExisting();
+                        sRaw = _serialPort0.ReadExisting();
                     }
                     catch (TimeoutException) { }
-
-                    // debug
-                    //sTmp = "serialPort0_debug";
-                    // end debug
+                    string sTmp = Regex.Replace(sRaw, "[okOK\r]", "");
 
                     if (sTmp.Length > 0)
                     {
-                        sTmp = sTmp.TrimEnd('\r');
                         sMsg += sTmp;
 
                         if (sMsg.Length > 15)
@@ -527,6 +618,7 @@ namespace trail01
         private void backgroundWorker1_DoWork(object sender, DoWorkEventArgs e)
         {
             BackgroundWorker worker = sender as BackgroundWorker;
+            string sRaw = string.Empty;
             string sMsg = string.Empty;
             int nCnt = 0;
 
@@ -541,22 +633,16 @@ namespace trail01
                 {
                     // Perform a time consuming operation and report progress.
                     System.Threading.Thread.Sleep(200);
-                    string sTmp = string.Empty; ;
 
                     try
                     {
-                        sTmp = _serialPort1.ReadExisting();
+                        sRaw = _serialPort1.ReadExisting();
                     }
                     catch (TimeoutException) { }
-
-                    // debug
-                    //System.Threading.Thread.Sleep(13);
-                    //sTmp = "serialPort1_debug";
-                    // end debug
+                    string sTmp = Regex.Replace(sRaw, "[okOK\r]", "");
 
                     if (sTmp.Length > 0)
                     {
-                        sTmp = sTmp.TrimEnd('\r');
                         sMsg += sTmp;
 
                         if (sMsg.Length > 15)
@@ -594,6 +680,7 @@ namespace trail01
         private void backgroundWorker2_DoWork(object sender, DoWorkEventArgs e)
         {
             BackgroundWorker worker = sender as BackgroundWorker;
+            string sRaw = string.Empty;
             string sMsg = string.Empty;
             int nCnt = 0;
 
@@ -608,23 +695,16 @@ namespace trail01
                 {
                     // Perform a time consuming operation and report progress.
                     System.Threading.Thread.Sleep(200);
-                    string sTmp = string.Empty; ;
 
                     try
                     {
-                        sTmp = _serialPort2.ReadExisting();
+                        sRaw = _serialPort2.ReadExisting();
                     }
                     catch (TimeoutException) { }
-
-                    // debug
-                    //System.Threading.Thread.Sleep(37);
-                    //sTmp = "serialPort2_debug";
-                    // end debug
-
+                    string sTmp = Regex.Replace(sRaw, "[okOK\r]", "");
 
                     if (sTmp.Length > 0)
                     {
-                        sTmp = sTmp.TrimEnd('\r');
                         sMsg += sTmp;
 
                         if (sMsg.Length > 15)
@@ -662,6 +742,7 @@ namespace trail01
         private void backgroundWorker3_DoWork(object sender, DoWorkEventArgs e)
         {
             BackgroundWorker worker = sender as BackgroundWorker;
+            string sRaw = string.Empty;
             string sMsg = string.Empty;
             int nCnt = 0;
 
@@ -676,22 +757,16 @@ namespace trail01
                 {
                     // Perform a time consuming operation and report progress.
                     System.Threading.Thread.Sleep(200);
-                    string sTmp = string.Empty; ;
 
                     try
                     {
-                        sTmp = _serialPort3.ReadExisting();
+                        sRaw = _serialPort3.ReadExisting();
                     }
                     catch (TimeoutException) { }
-
-                    // debug
-                    //System.Threading.Thread.Sleep(51);
-                    //sTmp = "serialPort3_debug";
-                    // end debug
+                    string sTmp = Regex.Replace(sRaw, "[okOK\r]", "");
 
                     if (sTmp.Length > 0)
                     {
-                        sTmp = sTmp.TrimEnd('\r');
                         sMsg += sTmp;
 
                         if (sMsg.Length > 15)
@@ -729,6 +804,7 @@ namespace trail01
         private void backgroundWorker4_DoWork(object sender, DoWorkEventArgs e)
         {
             BackgroundWorker worker = sender as BackgroundWorker;
+            string sRaw = string.Empty;
             string sMsg = string.Empty;
             int nCnt = 0;
 
@@ -743,22 +819,16 @@ namespace trail01
                 {
                     // Perform a time consuming operation and report progress.
                     System.Threading.Thread.Sleep(200);
-                    string sTmp = string.Empty; ;
 
                     try
                     {
-                        sTmp = _serialPort4.ReadExisting();
+                        sRaw = _serialPort4.ReadExisting();
                     }
                     catch (TimeoutException) { }
-
-                    // debug
-                    //System.Threading.Thread.Sleep(29);
-                    //sTmp = "serialPort4_debug";
-                    // end debug
+                    string sTmp = Regex.Replace(sRaw, "[okOK\r]", "");
 
                     if (sTmp.Length > 0)
                     {
-                        sTmp = sTmp.TrimEnd('\r');
                         sMsg += sTmp;
 
                         if (sMsg.Length > 15)
@@ -796,6 +866,7 @@ namespace trail01
         private void backgroundWorker5_DoWork(object sender, DoWorkEventArgs e)
         {
             BackgroundWorker worker = sender as BackgroundWorker;
+            string sRaw = string.Empty;
             string sMsg = string.Empty;
             int nCnt = 0;
 
@@ -810,17 +881,16 @@ namespace trail01
                 {
                     // Perform a time consuming operation and report progress.
                     System.Threading.Thread.Sleep(200);
-                    string sTmp = string.Empty; ;
 
                     try
                     {
-                        sTmp = _serialPort5.ReadExisting();
+                        sRaw = _serialPort5.ReadExisting();
                     }
                     catch (TimeoutException) { }
+                    string sTmp = Regex.Replace(sRaw, "[okOK\r]", "");
 
                     if (sTmp.Length > 0)
                     {
-                        sTmp = sTmp.TrimEnd('\r');
                         sMsg += sTmp;
 
                         if (sMsg.Length > 15)
@@ -858,6 +928,7 @@ namespace trail01
         private void backgroundWorker6_DoWork(object sender, DoWorkEventArgs e)
         {
             BackgroundWorker worker = sender as BackgroundWorker;
+            string sRaw = string.Empty;
             string sMsg = string.Empty;
             int nCnt = 0;
 
@@ -872,17 +943,16 @@ namespace trail01
                 {
                     // Perform a time consuming operation and report progress.
                     System.Threading.Thread.Sleep(200);
-                    string sTmp = string.Empty; ;
 
                     try
                     {
-                        sTmp = _serialPort6.ReadExisting();
+                        sRaw = _serialPort6.ReadExisting();
                     }
                     catch (TimeoutException) { }
+                    string sTmp = Regex.Replace(sRaw, "[okOK\r]", "");
 
                     if (sTmp.Length > 0)
                     {
-                        sTmp = sTmp.TrimEnd('\r');
                         sMsg += sTmp;
 
                         if (sMsg.Length > 15)
@@ -920,6 +990,7 @@ namespace trail01
         private void backgroundWorker7_DoWork(object sender, DoWorkEventArgs e)
         {
             BackgroundWorker worker = sender as BackgroundWorker;
+            string sRaw = string.Empty;
             string sMsg = string.Empty;
             int nCnt = 0;
 
@@ -934,17 +1005,16 @@ namespace trail01
                 {
                     // Perform a time consuming operation and report progress.
                     System.Threading.Thread.Sleep(200);
-                    string sTmp = string.Empty; ;
 
                     try
                     {
-                        sTmp = _serialPort7.ReadExisting();
+                        sRaw = _serialPort7.ReadExisting();
                     }
                     catch (TimeoutException) { }
+                    string sTmp = Regex.Replace(sRaw, "[okOK\r]", "");
 
                     if (sTmp.Length > 0)
                     {
-                        sTmp = sTmp.TrimEnd('\r');
                         sMsg += sTmp;
 
                         if (sMsg.Length > 15)
@@ -982,6 +1052,7 @@ namespace trail01
         private void backgroundWorker8_DoWork(object sender, DoWorkEventArgs e)
         {
             BackgroundWorker worker = sender as BackgroundWorker;
+            string sRaw = string.Empty;
             string sMsg = string.Empty;
             int nCnt = 0;
 
@@ -996,17 +1067,16 @@ namespace trail01
                 {
                     // Perform a time consuming operation and report progress.
                     System.Threading.Thread.Sleep(200);
-                    string sTmp = string.Empty; ;
 
                     try
                     {
-                        sTmp = _serialPort8.ReadExisting();
+                        sRaw = _serialPort8.ReadExisting();
                     }
                     catch (TimeoutException) { }
+                    string sTmp = Regex.Replace(sRaw, "[okOK\r]", "");
 
                     if (sTmp.Length > 0)
                     {
-                        sTmp = sTmp.TrimEnd('\r');
                         sMsg += sTmp;
 
                         if (sMsg.Length > 15)
@@ -1044,6 +1114,7 @@ namespace trail01
         private void backgroundWorker9_DoWork(object sender, DoWorkEventArgs e)
         {
             BackgroundWorker worker = sender as BackgroundWorker;
+            string sRaw = string.Empty;
             string sMsg = string.Empty;
             int nCnt = 0;
 
@@ -1058,17 +1129,16 @@ namespace trail01
                 {
                     // Perform a time consuming operation and report progress.
                     System.Threading.Thread.Sleep(200);
-                    string sTmp = string.Empty; ;
 
                     try
                     {
-                        sTmp = _serialPort9.ReadExisting();
+                        sRaw = _serialPort9.ReadExisting();
                     }
                     catch (TimeoutException) { }
+                    string sTmp = Regex.Replace(sRaw, "[okOK\r]", "");
 
                     if (sTmp.Length > 0)
                     {
-                        sTmp = sTmp.TrimEnd('\r');
                         sMsg += sTmp;
 
                         if (sMsg.Length > 15)
@@ -1100,6 +1170,195 @@ namespace trail01
             else
             {
                 resultLabel.Text = "Done!";
+            }
+        }
+
+        private void Timer1_Tick(object sender, EventArgs e)
+        {
+            if (this.checkBoxMux.Checked)
+            {
+                labelTimer.Text = (bGroupA ? "" : "X");
+                if (bGroupA) labelTimer.BackColor = Color.FromName("LightSteelBlue");
+                else labelTimer.BackColor = Color.FromName("IndianRed");
+            }
+            bGroupA = !bGroupA;
+            toggleAvailablePorts(bGroupA);
+        }
+
+
+        private void checkBox0_CheckStateChanged(object sender, EventArgs e)
+        {
+            switch (checkBox0.CheckState)
+            {
+                case CheckState.Unchecked:      labelNum0.BackColor = Color.FromName("AthensGrey"); break;
+                case CheckState.Checked:        labelNum0.BackColor = Color.FromName("LightSteelBlue"); break;
+                case CheckState.Indeterminate:  labelNum0.BackColor = Color.FromName("IndianRed"); break;
+            }
+        }
+
+
+        private void checkBox1_CheckStateChanged(object sender, EventArgs e)
+        {
+            switch (checkBox1.CheckState)
+            {
+                case CheckState.Unchecked:      labelNum1.BackColor = Color.FromName("AthensGrey"); break;
+                case CheckState.Checked:        labelNum1.BackColor = Color.FromName("LightSteelBlue"); break;
+                case CheckState.Indeterminate:  labelNum1.BackColor = Color.FromName("IndianRed"); break;
+            }
+        }
+
+
+        private void checkBox2_CheckStateChanged(object sender, EventArgs e)
+        {
+            switch (checkBox2.CheckState)
+            {
+                case CheckState.Unchecked:      labelNum2.BackColor = Color.FromName("AthensGrey"); break;
+                case CheckState.Checked:        labelNum2.BackColor = Color.FromName("LightSteelBlue"); break;
+                case CheckState.Indeterminate:  labelNum2.BackColor = Color.FromName("IndianRed"); break;
+            }
+        }
+
+
+        private void checkBox3_CheckStateChanged(object sender, EventArgs e)
+        {
+            switch (checkBox3.CheckState)
+            {
+                case CheckState.Unchecked: labelNum3.BackColor = Color.FromName("AthensGrey"); break;
+                case CheckState.Checked: labelNum3.BackColor = Color.FromName("LightSteelBlue"); break;
+                case CheckState.Indeterminate: labelNum3.BackColor = Color.FromName("IndianRed"); break;
+            }
+        }
+
+
+        private void checkBox4_CheckStateChanged(object sender, EventArgs e)
+        {
+            switch (checkBox4.CheckState)
+            {
+                case CheckState.Unchecked: labelNum4.BackColor = Color.FromName("AthensGrey"); break;
+                case CheckState.Checked: labelNum4.BackColor = Color.FromName("LightSteelBlue"); break;
+                case CheckState.Indeterminate: labelNum4.BackColor = Color.FromName("IndianRed"); break;
+            }
+        }
+
+
+        private void checkBox5_CheckStateChanged(object sender, EventArgs e)
+        {
+            switch (checkBox5.CheckState)
+            {
+                case CheckState.Unchecked: labelNum5.BackColor = Color.FromName("AthensGrey"); break;
+                case CheckState.Checked: labelNum5.BackColor = Color.FromName("LightSteelBlue"); break;
+                case CheckState.Indeterminate: labelNum5.BackColor = Color.FromName("IndianRed"); break;
+            }
+        }
+
+
+        private void checkBox6_CheckStateChanged(object sender, EventArgs e)
+        {
+            switch (checkBox6.CheckState)
+            {
+                case CheckState.Unchecked: labelNum6.BackColor = Color.FromName("AthensGrey"); break;
+                case CheckState.Checked: labelNum6.BackColor = Color.FromName("LightSteelBlue"); break;
+                case CheckState.Indeterminate: labelNum6.BackColor = Color.FromName("IndianRed"); break;
+            }
+        }
+
+
+        private void checkBox7_CheckStateChanged(object sender, EventArgs e)
+        {
+            switch (checkBox7.CheckState)
+            {
+                case CheckState.Unchecked: labelNum7.BackColor = Color.FromName("AthensGrey"); break;
+                case CheckState.Checked: labelNum7.BackColor = Color.FromName("LightSteelBlue"); break;
+                case CheckState.Indeterminate: labelNum7.BackColor = Color.FromName("IndianRed"); break;
+            }
+        }
+
+
+        private void checkBox8_CheckStateChanged(object sender, EventArgs e)
+        {
+            switch (checkBox8.CheckState)
+            {
+                case CheckState.Unchecked: labelNum8.BackColor = Color.FromName("AthensGrey"); break;
+                case CheckState.Checked: labelNum8.BackColor = Color.FromName("LightSteelBlue"); break;
+                case CheckState.Indeterminate: labelNum8.BackColor = Color.FromName("IndianRed"); break;
+            }
+        }
+
+
+        private void checkBox9_CheckStateChanged(object sender, EventArgs e)
+        {
+            switch (checkBox9.CheckState)
+            {
+                case CheckState.Unchecked: labelNum9.BackColor = Color.FromName("AthensGrey"); break;
+                case CheckState.Checked: labelNum9.BackColor = Color.FromName("LightSteelBlue"); break;
+                case CheckState.Indeterminate: labelNum9.BackColor = Color.FromName("IndianRed"); break;
+            }
+        }
+
+
+        private void checkBoxMux_CheckedChanged(object sender, EventArgs e)
+        {
+            if (this.checkBoxMux.Checked == false)
+            {
+                checkBox0.ThreeState = false;
+                checkBox1.ThreeState = false;
+                checkBox2.ThreeState = false;
+                checkBox3.ThreeState = false;
+                checkBox4.ThreeState = false;
+                checkBox5.ThreeState = false;
+                checkBox6.ThreeState = false;
+                checkBox7.ThreeState = false;
+                checkBox8.ThreeState = false;
+                checkBox9.ThreeState = false;
+                labelStatic1.BackColor = Color.FromName("AthensGrey");
+                labelStatic1.Text = "";
+            }
+            else
+            {
+                checkBox0.ThreeState = true;
+                checkBox1.ThreeState = true;
+                checkBox2.ThreeState = true;
+                checkBox3.ThreeState = true;
+                checkBox4.ThreeState = true;
+                checkBox5.ThreeState = true;
+                checkBox6.ThreeState = true;
+                checkBox7.ThreeState = true;
+                checkBox8.ThreeState = true;
+                checkBox9.ThreeState = true;
+                labelStatic1.BackColor = Color.FromName("IndianRed");
+                labelStatic1.Text = "group B";
+            }
+
+            this.checkBox0.CheckState = System.Windows.Forms.CheckState.Unchecked;
+            this.checkBox1.CheckState = System.Windows.Forms.CheckState.Unchecked;
+            this.checkBox2.CheckState = System.Windows.Forms.CheckState.Unchecked;
+            this.checkBox3.CheckState = System.Windows.Forms.CheckState.Unchecked;
+            this.checkBox4.CheckState = System.Windows.Forms.CheckState.Unchecked;
+            this.checkBox5.CheckState = System.Windows.Forms.CheckState.Unchecked;
+            this.checkBox6.CheckState = System.Windows.Forms.CheckState.Unchecked;
+            this.checkBox7.CheckState = System.Windows.Forms.CheckState.Unchecked;
+            this.checkBox8.CheckState = System.Windows.Forms.CheckState.Unchecked;
+            this.checkBox9.CheckState = System.Windows.Forms.CheckState.Unchecked;
+        }
+
+        private void textBox1_KeyPress(object sender, KeyPressEventArgs e)
+        {
+            if (!char.IsControl(e.KeyChar) && !char.IsDigit(e.KeyChar))
+            {
+                e.Handled = true;
+            }
+        }
+
+        private void textBox1_TextChanged(object sender, EventArgs e)
+        {
+            try
+            {
+                int interval = Int32.Parse(textBox1.Text);
+                if (interval > 10)  this.timer1.Interval = interval;
+            }
+            catch (FormatException)
+            {
+                Console.WriteLine("Unable to parse '{input}'");
             }
         }
     }

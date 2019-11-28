@@ -30,6 +30,7 @@ namespace trail01
         /// </summary>
         private void InitializeComponent()
         {
+            this.components = new System.ComponentModel.Container();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Form1));
             this.labelVersion = new System.Windows.Forms.Label();
             this.buttonDevices = new System.Windows.Forms.Button();
@@ -77,16 +78,32 @@ namespace trail01
             this.label7 = new System.Windows.Forms.Label();
             this.label8 = new System.Windows.Forms.Label();
             this.label9 = new System.Windows.Forms.Label();
-
+            this.timer1 = new System.Windows.Forms.Timer(this.components);
+            this.labelTimer = new System.Windows.Forms.Label();
+            this.checkBox0 = new System.Windows.Forms.CheckBox();
+            this.checkBox1 = new System.Windows.Forms.CheckBox();
+            this.checkBox2 = new System.Windows.Forms.CheckBox();
+            this.checkBox3 = new System.Windows.Forms.CheckBox();
+            this.checkBox4 = new System.Windows.Forms.CheckBox();
+            this.checkBox5 = new System.Windows.Forms.CheckBox();
+            this.checkBox6 = new System.Windows.Forms.CheckBox();
+            this.checkBox7 = new System.Windows.Forms.CheckBox();
+            this.checkBox8 = new System.Windows.Forms.CheckBox();
+            this.checkBox9 = new System.Windows.Forms.CheckBox();
+            this.checkBoxMux = new System.Windows.Forms.CheckBox();
+            this.labelStatic0 = new System.Windows.Forms.Label();
+            this.labelStatic1 = new System.Windows.Forms.Label();
+            this.labelTinterval = new System.Windows.Forms.Label();
+            this.textBox1 = new System.Windows.Forms.TextBox();
             this.SuspendLayout();
             // 
             // labelVersion
             // 
             this.labelVersion.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.labelVersion.Location = new System.Drawing.Point(360, 60);
+            this.labelVersion.Location = new System.Drawing.Point(382, 60);
             this.labelVersion.Margin = new System.Windows.Forms.Padding(6, 0, 6, 0);
             this.labelVersion.Name = "labelVersion";
-            this.labelVersion.Size = new System.Drawing.Size(140, 26);
+            this.labelVersion.Size = new System.Drawing.Size(107, 26);
             this.labelVersion.TabIndex = 38;
             this.labelVersion.Text = "version";
             this.labelVersion.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
@@ -119,7 +136,7 @@ namespace trail01
             // resultLabel
             // 
             this.resultLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.resultLabel.Location = new System.Drawing.Point(360, 110);
+            this.resultLabel.Location = new System.Drawing.Point(382, 110);
             this.resultLabel.Margin = new System.Windows.Forms.Padding(6, 0, 6, 0);
             this.resultLabel.Name = "resultLabel";
             this.resultLabel.Size = new System.Drawing.Size(100, 52);
@@ -186,17 +203,12 @@ namespace trail01
             this.backgroundWorker9.DoWork += new System.ComponentModel.DoWorkEventHandler(this.backgroundWorker9_DoWork);
             this.backgroundWorker9.ProgressChanged += new System.ComponentModel.ProgressChangedEventHandler(this.backgroundWorker9_ProgressChanged);
             this.backgroundWorker9.RunWorkerCompleted += new System.ComponentModel.RunWorkerCompletedEventHandler(this.backgroundWorker9_RunWorkerCompleted);
-
-
-
-
-
             // 
             // startAsyncButton
             // 
             this.startAsyncButton.Enabled = false;
             this.startAsyncButton.Image = ((System.Drawing.Image)(resources.GetObject("startAsyncButton.Image")));
-            this.startAsyncButton.Location = new System.Drawing.Point(360, 14);
+            this.startAsyncButton.Location = new System.Drawing.Point(382, 14);
             this.startAsyncButton.Name = "startAsyncButton";
             this.startAsyncButton.Size = new System.Drawing.Size(30, 30);
             this.startAsyncButton.TabIndex = 46;
@@ -207,7 +219,7 @@ namespace trail01
             // 
             this.cancelAsyncButton.Enabled = false;
             this.cancelAsyncButton.Image = ((System.Drawing.Image)(resources.GetObject("cancelAsyncButton.Image")));
-            this.cancelAsyncButton.Location = new System.Drawing.Point(410, 14);
+            this.cancelAsyncButton.Location = new System.Drawing.Point(427, 14);
             this.cancelAsyncButton.Name = "cancelAsyncButton";
             this.cancelAsyncButton.Size = new System.Drawing.Size(30, 30);
             this.cancelAsyncButton.TabIndex = 47;
@@ -341,7 +353,7 @@ namespace trail01
             this.labelPort0.Location = new System.Drawing.Point(110, 60);
             this.labelPort0.Margin = new System.Windows.Forms.Padding(6, 0, 6, 0);
             this.labelPort0.Name = "labelPort0";
-            this.labelPort0.Size = new System.Drawing.Size(90, 26);
+            this.labelPort0.Size = new System.Drawing.Size(67, 26);
             this.labelPort0.TabIndex = 48;
             this.labelPort0.Text = "...";
             this.labelPort0.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
@@ -353,7 +365,7 @@ namespace trail01
             this.labelPort1.Location = new System.Drawing.Point(110, 86);
             this.labelPort1.Margin = new System.Windows.Forms.Padding(6, 0, 6, 0);
             this.labelPort1.Name = "labelPort1";
-            this.labelPort1.Size = new System.Drawing.Size(90, 26);
+            this.labelPort1.Size = new System.Drawing.Size(67, 26);
             this.labelPort1.TabIndex = 49;
             this.labelPort1.Text = "...";
             this.labelPort1.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
@@ -365,7 +377,7 @@ namespace trail01
             this.labelPort2.Location = new System.Drawing.Point(110, 112);
             this.labelPort2.Margin = new System.Windows.Forms.Padding(6, 0, 6, 0);
             this.labelPort2.Name = "labelPort2";
-            this.labelPort2.Size = new System.Drawing.Size(90, 26);
+            this.labelPort2.Size = new System.Drawing.Size(67, 26);
             this.labelPort2.TabIndex = 50;
             this.labelPort2.Text = "...";
             this.labelPort2.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
@@ -377,7 +389,7 @@ namespace trail01
             this.labelPort3.Location = new System.Drawing.Point(110, 138);
             this.labelPort3.Margin = new System.Windows.Forms.Padding(6, 0, 6, 0);
             this.labelPort3.Name = "labelPort3";
-            this.labelPort3.Size = new System.Drawing.Size(90, 26);
+            this.labelPort3.Size = new System.Drawing.Size(67, 26);
             this.labelPort3.TabIndex = 51;
             this.labelPort3.Text = "...";
             this.labelPort3.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
@@ -389,7 +401,7 @@ namespace trail01
             this.labelPort4.Location = new System.Drawing.Point(110, 164);
             this.labelPort4.Margin = new System.Windows.Forms.Padding(6, 0, 6, 0);
             this.labelPort4.Name = "labelPort4";
-            this.labelPort4.Size = new System.Drawing.Size(90, 26);
+            this.labelPort4.Size = new System.Drawing.Size(67, 26);
             this.labelPort4.TabIndex = 52;
             this.labelPort4.Text = "...";
             this.labelPort4.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
@@ -401,7 +413,7 @@ namespace trail01
             this.labelPort5.Location = new System.Drawing.Point(110, 190);
             this.labelPort5.Margin = new System.Windows.Forms.Padding(6, 0, 6, 0);
             this.labelPort5.Name = "labelPort5";
-            this.labelPort5.Size = new System.Drawing.Size(90, 26);
+            this.labelPort5.Size = new System.Drawing.Size(67, 26);
             this.labelPort5.TabIndex = 52;
             this.labelPort5.Text = "...";
             this.labelPort5.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
@@ -413,7 +425,7 @@ namespace trail01
             this.labelPort6.Location = new System.Drawing.Point(110, 216);
             this.labelPort6.Margin = new System.Windows.Forms.Padding(6, 0, 6, 0);
             this.labelPort6.Name = "labelPort6";
-            this.labelPort6.Size = new System.Drawing.Size(90, 26);
+            this.labelPort6.Size = new System.Drawing.Size(67, 26);
             this.labelPort6.TabIndex = 52;
             this.labelPort6.Text = "...";
             this.labelPort6.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
@@ -425,7 +437,7 @@ namespace trail01
             this.labelPort7.Location = new System.Drawing.Point(110, 242);
             this.labelPort7.Margin = new System.Windows.Forms.Padding(6, 0, 6, 0);
             this.labelPort7.Name = "labelPort7";
-            this.labelPort7.Size = new System.Drawing.Size(90, 26);
+            this.labelPort7.Size = new System.Drawing.Size(67, 26);
             this.labelPort7.TabIndex = 52;
             this.labelPort7.Text = "...";
             this.labelPort7.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
@@ -437,7 +449,7 @@ namespace trail01
             this.labelPort8.Location = new System.Drawing.Point(110, 268);
             this.labelPort8.Margin = new System.Windows.Forms.Padding(6, 0, 6, 0);
             this.labelPort8.Name = "labelPort8";
-            this.labelPort8.Size = new System.Drawing.Size(90, 26);
+            this.labelPort8.Size = new System.Drawing.Size(67, 26);
             this.labelPort8.TabIndex = 52;
             this.labelPort8.Text = "...";
             this.labelPort8.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
@@ -449,7 +461,7 @@ namespace trail01
             this.labelPort9.Location = new System.Drawing.Point(110, 294);
             this.labelPort9.Margin = new System.Windows.Forms.Padding(6, 0, 6, 0);
             this.labelPort9.Name = "labelPort9";
-            this.labelPort9.Size = new System.Drawing.Size(90, 26);
+            this.labelPort9.Size = new System.Drawing.Size(67, 26);
             this.labelPort9.TabIndex = 52;
             this.labelPort9.Text = "...";
             this.labelPort9.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
@@ -573,13 +585,212 @@ namespace trail01
             this.label9.TabIndex = 52;
             this.label9.Text = "...";
             this.label9.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
-
+            // 
+            // timer1
+            // 
+            this.timer1.Interval = 1000;
+            this.timer1.Tick += new System.EventHandler(this.Timer1_Tick);
+            // 
+            // labelTimer
+            // 
+            this.labelTimer.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.labelTimer.Location = new System.Drawing.Point(364, 313);
+            this.labelTimer.Margin = new System.Windows.Forms.Padding(6, 0, 6, 0);
+            this.labelTimer.Name = "labelTimer";
+            this.labelTimer.Size = new System.Drawing.Size(30, 26);
+            this.labelTimer.TabIndex = 53;
+            this.labelTimer.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            // 
+            // checkBox0
+            // 
+            this.checkBox0.AutoSize = true;
+            this.checkBox0.Enabled = false;
+            this.checkBox0.Location = new System.Drawing.Point(191, 66);
+            this.checkBox0.Name = "checkBox0";
+            this.checkBox0.Size = new System.Drawing.Size(18, 17);
+            this.checkBox0.TabIndex = 54;
+            this.checkBox0.UseVisualStyleBackColor = false;
+            this.checkBox0.CheckStateChanged += new System.EventHandler(this.checkBox0_CheckStateChanged);
+            // 
+            // checkBox1
+            // 
+            this.checkBox1.AutoSize = true;
+            this.checkBox1.Enabled = false;
+            this.checkBox1.Location = new System.Drawing.Point(191, 92);
+            this.checkBox1.Name = "checkBox1";
+            this.checkBox1.Size = new System.Drawing.Size(18, 17);
+            this.checkBox1.TabIndex = 55;
+            this.checkBox1.UseVisualStyleBackColor = true;
+            this.checkBox1.CheckStateChanged += new System.EventHandler(this.checkBox1_CheckStateChanged);
+            // 
+            // checkBox2
+            // 
+            this.checkBox2.AutoSize = true;
+            this.checkBox2.Enabled = false;
+            this.checkBox2.Location = new System.Drawing.Point(191, 118);
+            this.checkBox2.Name = "checkBox2";
+            this.checkBox2.Size = new System.Drawing.Size(18, 17);
+            this.checkBox2.TabIndex = 55;
+            this.checkBox2.UseVisualStyleBackColor = true;
+            this.checkBox2.CheckStateChanged += new System.EventHandler(this.checkBox2_CheckStateChanged);
+            // 
+            // checkBox3
+            // 
+            this.checkBox3.AutoSize = true;
+            this.checkBox3.Enabled = false;
+            this.checkBox3.Location = new System.Drawing.Point(191, 144);
+            this.checkBox3.Name = "checkBox3";
+            this.checkBox3.Size = new System.Drawing.Size(18, 17);
+            this.checkBox3.TabIndex = 55;
+            this.checkBox3.UseVisualStyleBackColor = true;
+            this.checkBox3.CheckStateChanged += new System.EventHandler(this.checkBox3_CheckStateChanged);
+            // 
+            // checkBox4
+            // 
+            this.checkBox4.AutoSize = true;
+            this.checkBox4.Enabled = false;
+            this.checkBox4.Location = new System.Drawing.Point(191, 172);
+            this.checkBox4.Name = "checkBox4";
+            this.checkBox4.Size = new System.Drawing.Size(18, 17);
+            this.checkBox4.TabIndex = 54;
+            this.checkBox4.UseVisualStyleBackColor = true;
+            this.checkBox4.CheckStateChanged += new System.EventHandler(this.checkBox4_CheckStateChanged);
+            // 
+            // checkBox5
+            // 
+            this.checkBox5.AutoSize = true;
+            this.checkBox5.Enabled = false;
+            this.checkBox5.Location = new System.Drawing.Point(191, 196);
+            this.checkBox5.Name = "checkBox5";
+            this.checkBox5.Size = new System.Drawing.Size(18, 17);
+            this.checkBox5.TabIndex = 54;
+            this.checkBox5.UseVisualStyleBackColor = true;
+            this.checkBox5.CheckStateChanged += new System.EventHandler(this.checkBox5_CheckStateChanged);
+            // 
+            // checkBox6
+            // 
+            this.checkBox6.AutoSize = true;
+            this.checkBox6.Enabled = false;
+            this.checkBox6.Location = new System.Drawing.Point(191, 222);
+            this.checkBox6.Name = "checkBox6";
+            this.checkBox6.Size = new System.Drawing.Size(18, 17);
+            this.checkBox6.TabIndex = 54;
+            this.checkBox6.UseVisualStyleBackColor = true;
+            this.checkBox6.CheckStateChanged += new System.EventHandler(this.checkBox6_CheckStateChanged);
+            // 
+            // checkBox7
+            // 
+            this.checkBox7.AutoSize = true;
+            this.checkBox7.Enabled = false;
+            this.checkBox7.Location = new System.Drawing.Point(191, 248);
+            this.checkBox7.Name = "checkBox7";
+            this.checkBox7.Size = new System.Drawing.Size(18, 17);
+            this.checkBox7.TabIndex = 54;
+            this.checkBox7.UseVisualStyleBackColor = true;
+            this.checkBox7.CheckStateChanged += new System.EventHandler(this.checkBox7_CheckStateChanged);
+            // 
+            // checkBox8
+            // 
+            this.checkBox8.AutoSize = true;
+            this.checkBox8.Enabled = false;
+            this.checkBox8.Location = new System.Drawing.Point(191, 274);
+            this.checkBox8.Name = "checkBox8";
+            this.checkBox8.Size = new System.Drawing.Size(18, 17);
+            this.checkBox8.TabIndex = 54;
+            this.checkBox8.UseVisualStyleBackColor = true;
+            this.checkBox8.CheckStateChanged += new System.EventHandler(this.checkBox8_CheckStateChanged);
+            // 
+            // checkBox9
+            // 
+            this.checkBox9.AutoSize = true;
+            this.checkBox9.Enabled = false;
+            this.checkBox9.Location = new System.Drawing.Point(191, 300);
+            this.checkBox9.Name = "checkBox9";
+            this.checkBox9.Size = new System.Drawing.Size(18, 17);
+            this.checkBox9.TabIndex = 54;
+            this.checkBox9.UseVisualStyleBackColor = true;
+            this.checkBox9.CheckStateChanged += new System.EventHandler(this.checkBox9_CheckStateChanged);
+            // 
+            // checkBoxMux
+            // 
+            this.checkBoxMux.AutoSize = true;
+            this.checkBoxMux.Location = new System.Drawing.Point(191, 350);
+            this.checkBoxMux.Name = "checkBoxMux";
+            this.checkBoxMux.Size = new System.Drawing.Size(168, 28);
+            this.checkBoxMux.TabIndex = 56;
+            this.checkBoxMux.Text = "2 sensor groups";
+            this.checkBoxMux.UseVisualStyleBackColor = true;
+            this.checkBoxMux.CheckedChanged += new System.EventHandler(this.checkBoxMux_CheckedChanged);
+            // 
+            // labelStatic0
+            // 
+            this.labelStatic0.BackColor = System.Drawing.Color.LightSteelBlue;
+            this.labelStatic0.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.labelStatic0.Location = new System.Drawing.Point(364, 349);
+            this.labelStatic0.Margin = new System.Windows.Forms.Padding(6, 0, 6, 0);
+            this.labelStatic0.Name = "labelStatic0";
+            this.labelStatic0.Size = new System.Drawing.Size(61, 26);
+            this.labelStatic0.TabIndex = 57;
+            this.labelStatic0.Text = "group A";
+            this.labelStatic0.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            // 
+            // labelStatic1
+            // 
+            this.labelStatic1.BackColor = System.Drawing.SystemColors.Control;
+            this.labelStatic1.Enabled = false;
+            this.labelStatic1.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.labelStatic1.Location = new System.Drawing.Point(426, 349);
+            this.labelStatic1.Margin = new System.Windows.Forms.Padding(6, 0, 6, 0);
+            this.labelStatic1.Name = "labelStatic1";
+            this.labelStatic1.Size = new System.Drawing.Size(61, 26);
+            this.labelStatic1.TabIndex = 58;
+            this.labelStatic1.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            // 
+            // labelTinterval
+            // 
+            this.labelTinterval.BackColor = System.Drawing.SystemColors.Menu;
+            this.labelTinterval.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.labelTinterval.Location = new System.Drawing.Point(459, 313);
+            this.labelTinterval.Margin = new System.Windows.Forms.Padding(6, 0, 6, 0);
+            this.labelTinterval.Name = "labelTinterval";
+            this.labelTinterval.Size = new System.Drawing.Size(30, 26);
+            this.labelTinterval.TabIndex = 59;
+            this.labelTinterval.Text = "ms";
+            this.labelTinterval.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            // 
+            // textBox1
+            // 
+            this.textBox1.Font = new System.Drawing.Font("Microsoft Sans Serif", 10.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.textBox1.Location = new System.Drawing.Point(407, 313);
+            this.textBox1.MaxLength = 4;
+            this.textBox1.Name = "textBox1";
+            this.textBox1.Size = new System.Drawing.Size(50, 27);
+            this.textBox1.TabIndex = 60;
+            this.textBox1.Text = "150";
+            this.textBox1.TextChanged += new System.EventHandler(this.textBox1_TextChanged);
+            this.textBox1.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.textBox1_KeyPress);
             // 
             // Form1
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(14F, 29F);
+            this.AutoScaleDimensions = new System.Drawing.SizeF(11F, 24F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(500, 390);
+            this.Controls.Add(this.textBox1);
+            this.Controls.Add(this.labelTinterval);
+            this.Controls.Add(this.labelStatic1);
+            this.Controls.Add(this.labelStatic0);
+            this.Controls.Add(this.checkBoxMux);
+            this.Controls.Add(this.checkBox0);
+            this.Controls.Add(this.checkBox1);
+            this.Controls.Add(this.checkBox2);
+            this.Controls.Add(this.checkBox3);
+            this.Controls.Add(this.checkBox4);
+            this.Controls.Add(this.checkBox5);
+            this.Controls.Add(this.checkBox6);
+            this.Controls.Add(this.checkBox7);
+            this.Controls.Add(this.checkBox8);
+            this.Controls.Add(this.checkBox9);
+            this.Controls.Add(this.labelTimer);
             this.Controls.Add(this.labelNum0);
             this.Controls.Add(this.labelNum1);
             this.Controls.Add(this.labelNum2);
@@ -622,6 +833,8 @@ namespace trail01
             this.Text = "Track RFID";
             this.Load += new System.EventHandler(this.Form1_Load);
             this.ResumeLayout(false);
+            this.PerformLayout();
+
         }
 
         #endregion
@@ -672,6 +885,23 @@ namespace trail01
         private System.ComponentModel.BackgroundWorker backgroundWorker7;
         private System.ComponentModel.BackgroundWorker backgroundWorker8;
         private System.ComponentModel.BackgroundWorker backgroundWorker9;
+        private System.Windows.Forms.Timer timer1;
+        private System.Windows.Forms.Label labelTimer;
+        private System.Windows.Forms.CheckBox checkBox0;
+        private System.Windows.Forms.CheckBox checkBox1;
+        private System.Windows.Forms.CheckBox checkBox2;
+        private System.Windows.Forms.CheckBox checkBox3;
+        private System.Windows.Forms.CheckBox checkBox4;
+        private System.Windows.Forms.CheckBox checkBox5;
+        private System.Windows.Forms.CheckBox checkBox6;
+        private System.Windows.Forms.CheckBox checkBox7;
+        private System.Windows.Forms.CheckBox checkBox8;
+        private System.Windows.Forms.CheckBox checkBox9;
+        private System.Windows.Forms.CheckBox checkBoxMux;
+        private System.Windows.Forms.Label labelStatic0;
+        private System.Windows.Forms.Label labelStatic1;
+        private System.Windows.Forms.Label labelTinterval;
+        private System.Windows.Forms.TextBox textBox1;
     }
 }
 
