@@ -100,10 +100,10 @@ namespace trail01
             // labelVersion
             // 
             this.labelVersion.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.labelVersion.Location = new System.Drawing.Point(382, 60);
+            this.labelVersion.Location = new System.Drawing.Point(391, 0);
             this.labelVersion.Margin = new System.Windows.Forms.Padding(6, 0, 6, 0);
             this.labelVersion.Name = "labelVersion";
-            this.labelVersion.Size = new System.Drawing.Size(107, 26);
+            this.labelVersion.Size = new System.Drawing.Size(107, 27);
             this.labelVersion.TabIndex = 38;
             this.labelVersion.Text = "version";
             this.labelVersion.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
@@ -111,7 +111,7 @@ namespace trail01
             // buttonDevices
             // 
             this.buttonDevices.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.buttonDevices.Location = new System.Drawing.Point(16, 16);
+            this.buttonDevices.Location = new System.Drawing.Point(16, 38);
             this.buttonDevices.Margin = new System.Windows.Forms.Padding(6, 7, 6, 7);
             this.buttonDevices.Name = "buttonDevices";
             this.buttonDevices.Size = new System.Drawing.Size(90, 26);
@@ -124,7 +124,7 @@ namespace trail01
             // 
             this.buttonOpen.Enabled = false;
             this.buttonOpen.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.buttonOpen.Location = new System.Drawing.Point(220, 16);
+            this.buttonOpen.Location = new System.Drawing.Point(220, 38);
             this.buttonOpen.Margin = new System.Windows.Forms.Padding(6, 7, 6, 7);
             this.buttonOpen.Name = "buttonOpen";
             this.buttonOpen.Size = new System.Drawing.Size(90, 26);
@@ -208,7 +208,7 @@ namespace trail01
             // 
             this.startAsyncButton.Enabled = false;
             this.startAsyncButton.Image = ((System.Drawing.Image)(resources.GetObject("startAsyncButton.Image")));
-            this.startAsyncButton.Location = new System.Drawing.Point(382, 14);
+            this.startAsyncButton.Location = new System.Drawing.Point(385, 38);
             this.startAsyncButton.Name = "startAsyncButton";
             this.startAsyncButton.Size = new System.Drawing.Size(30, 30);
             this.startAsyncButton.TabIndex = 46;
@@ -219,7 +219,7 @@ namespace trail01
             // 
             this.cancelAsyncButton.Enabled = false;
             this.cancelAsyncButton.Image = ((System.Drawing.Image)(resources.GetObject("cancelAsyncButton.Image")));
-            this.cancelAsyncButton.Location = new System.Drawing.Point(427, 14);
+            this.cancelAsyncButton.Location = new System.Drawing.Point(427, 38);
             this.cancelAsyncButton.Name = "cancelAsyncButton";
             this.cancelAsyncButton.Size = new System.Drawing.Size(30, 30);
             this.cancelAsyncButton.TabIndex = 47;
@@ -230,7 +230,7 @@ namespace trail01
             // 
             this.labelNum0.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
             this.labelNum0.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.labelNum0.Location = new System.Drawing.Point(16, 60);
+            this.labelNum0.Location = new System.Drawing.Point(16, 79);
             this.labelNum0.Margin = new System.Windows.Forms.Padding(6, 0, 6, 0);
             this.labelNum0.Name = "labelNum0";
             this.labelNum0.Size = new System.Drawing.Size(90, 26);
@@ -242,7 +242,7 @@ namespace trail01
             // 
             this.labelNum1.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
             this.labelNum1.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.labelNum1.Location = new System.Drawing.Point(16, 86);
+            this.labelNum1.Location = new System.Drawing.Point(16, 105);
             this.labelNum1.Margin = new System.Windows.Forms.Padding(6, 0, 6, 0);
             this.labelNum1.Name = "labelNum1";
             this.labelNum1.Size = new System.Drawing.Size(90, 26);
@@ -254,7 +254,7 @@ namespace trail01
             // 
             this.labelNum2.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
             this.labelNum2.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.labelNum2.Location = new System.Drawing.Point(16, 112);
+            this.labelNum2.Location = new System.Drawing.Point(16, 131);
             this.labelNum2.Margin = new System.Windows.Forms.Padding(6, 0, 6, 0);
             this.labelNum2.Name = "labelNum2";
             this.labelNum2.Size = new System.Drawing.Size(90, 26);
@@ -266,7 +266,7 @@ namespace trail01
             // 
             this.labelNum3.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
             this.labelNum3.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.labelNum3.Location = new System.Drawing.Point(16, 138);
+            this.labelNum3.Location = new System.Drawing.Point(16, 157);
             this.labelNum3.Margin = new System.Windows.Forms.Padding(6, 0, 6, 0);
             this.labelNum3.Name = "labelNum3";
             this.labelNum3.Size = new System.Drawing.Size(90, 26);
@@ -278,7 +278,7 @@ namespace trail01
             // 
             this.labelNum4.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
             this.labelNum4.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.labelNum4.Location = new System.Drawing.Point(16, 164);
+            this.labelNum4.Location = new System.Drawing.Point(16, 183);
             this.labelNum4.Margin = new System.Windows.Forms.Padding(6, 0, 6, 0);
             this.labelNum4.Name = "labelNum4";
             this.labelNum4.Size = new System.Drawing.Size(90, 26);
@@ -290,7 +290,7 @@ namespace trail01
             // 
             this.labelNum5.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
             this.labelNum5.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.labelNum5.Location = new System.Drawing.Point(16, 190);
+            this.labelNum5.Location = new System.Drawing.Point(16, 209);
             this.labelNum5.Margin = new System.Windows.Forms.Padding(6, 0, 6, 0);
             this.labelNum5.Name = "labelNum5";
             this.labelNum5.Size = new System.Drawing.Size(90, 26);
@@ -302,7 +302,7 @@ namespace trail01
             // 
             this.labelNum6.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
             this.labelNum6.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.labelNum6.Location = new System.Drawing.Point(16, 216);
+            this.labelNum6.Location = new System.Drawing.Point(16, 235);
             this.labelNum6.Margin = new System.Windows.Forms.Padding(6, 0, 6, 0);
             this.labelNum6.Name = "labelNum6";
             this.labelNum6.Size = new System.Drawing.Size(90, 26);
@@ -314,7 +314,7 @@ namespace trail01
             // 
             this.labelNum7.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
             this.labelNum7.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.labelNum7.Location = new System.Drawing.Point(16, 242);
+            this.labelNum7.Location = new System.Drawing.Point(16, 261);
             this.labelNum7.Margin = new System.Windows.Forms.Padding(6, 0, 6, 0);
             this.labelNum7.Name = "labelNum7";
             this.labelNum7.Size = new System.Drawing.Size(90, 26);
@@ -326,7 +326,7 @@ namespace trail01
             // 
             this.labelNum8.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
             this.labelNum8.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.labelNum8.Location = new System.Drawing.Point(16, 268);
+            this.labelNum8.Location = new System.Drawing.Point(16, 287);
             this.labelNum8.Margin = new System.Windows.Forms.Padding(6, 0, 6, 0);
             this.labelNum8.Name = "labelNum8";
             this.labelNum8.Size = new System.Drawing.Size(90, 26);
@@ -338,7 +338,7 @@ namespace trail01
             // 
             this.labelNum9.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
             this.labelNum9.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.labelNum9.Location = new System.Drawing.Point(16, 294);
+            this.labelNum9.Location = new System.Drawing.Point(16, 313);
             this.labelNum9.Margin = new System.Windows.Forms.Padding(6, 0, 6, 0);
             this.labelNum9.Name = "labelNum9";
             this.labelNum9.Size = new System.Drawing.Size(90, 26);
@@ -350,7 +350,7 @@ namespace trail01
             // 
             this.labelPort0.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
             this.labelPort0.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.labelPort0.Location = new System.Drawing.Point(110, 60);
+            this.labelPort0.Location = new System.Drawing.Point(110, 79);
             this.labelPort0.Margin = new System.Windows.Forms.Padding(6, 0, 6, 0);
             this.labelPort0.Name = "labelPort0";
             this.labelPort0.Size = new System.Drawing.Size(67, 26);
@@ -362,7 +362,7 @@ namespace trail01
             // 
             this.labelPort1.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
             this.labelPort1.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.labelPort1.Location = new System.Drawing.Point(110, 86);
+            this.labelPort1.Location = new System.Drawing.Point(110, 105);
             this.labelPort1.Margin = new System.Windows.Forms.Padding(6, 0, 6, 0);
             this.labelPort1.Name = "labelPort1";
             this.labelPort1.Size = new System.Drawing.Size(67, 26);
@@ -374,7 +374,7 @@ namespace trail01
             // 
             this.labelPort2.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
             this.labelPort2.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.labelPort2.Location = new System.Drawing.Point(110, 112);
+            this.labelPort2.Location = new System.Drawing.Point(110, 131);
             this.labelPort2.Margin = new System.Windows.Forms.Padding(6, 0, 6, 0);
             this.labelPort2.Name = "labelPort2";
             this.labelPort2.Size = new System.Drawing.Size(67, 26);
@@ -386,7 +386,7 @@ namespace trail01
             // 
             this.labelPort3.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
             this.labelPort3.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.labelPort3.Location = new System.Drawing.Point(110, 138);
+            this.labelPort3.Location = new System.Drawing.Point(110, 157);
             this.labelPort3.Margin = new System.Windows.Forms.Padding(6, 0, 6, 0);
             this.labelPort3.Name = "labelPort3";
             this.labelPort3.Size = new System.Drawing.Size(67, 26);
@@ -398,7 +398,7 @@ namespace trail01
             // 
             this.labelPort4.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
             this.labelPort4.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.labelPort4.Location = new System.Drawing.Point(110, 164);
+            this.labelPort4.Location = new System.Drawing.Point(110, 183);
             this.labelPort4.Margin = new System.Windows.Forms.Padding(6, 0, 6, 0);
             this.labelPort4.Name = "labelPort4";
             this.labelPort4.Size = new System.Drawing.Size(67, 26);
@@ -410,7 +410,7 @@ namespace trail01
             // 
             this.labelPort5.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
             this.labelPort5.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.labelPort5.Location = new System.Drawing.Point(110, 190);
+            this.labelPort5.Location = new System.Drawing.Point(110, 209);
             this.labelPort5.Margin = new System.Windows.Forms.Padding(6, 0, 6, 0);
             this.labelPort5.Name = "labelPort5";
             this.labelPort5.Size = new System.Drawing.Size(67, 26);
@@ -422,7 +422,7 @@ namespace trail01
             // 
             this.labelPort6.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
             this.labelPort6.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.labelPort6.Location = new System.Drawing.Point(110, 216);
+            this.labelPort6.Location = new System.Drawing.Point(110, 235);
             this.labelPort6.Margin = new System.Windows.Forms.Padding(6, 0, 6, 0);
             this.labelPort6.Name = "labelPort6";
             this.labelPort6.Size = new System.Drawing.Size(67, 26);
@@ -434,7 +434,7 @@ namespace trail01
             // 
             this.labelPort7.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
             this.labelPort7.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.labelPort7.Location = new System.Drawing.Point(110, 242);
+            this.labelPort7.Location = new System.Drawing.Point(110, 261);
             this.labelPort7.Margin = new System.Windows.Forms.Padding(6, 0, 6, 0);
             this.labelPort7.Name = "labelPort7";
             this.labelPort7.Size = new System.Drawing.Size(67, 26);
@@ -446,7 +446,7 @@ namespace trail01
             // 
             this.labelPort8.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
             this.labelPort8.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.labelPort8.Location = new System.Drawing.Point(110, 268);
+            this.labelPort8.Location = new System.Drawing.Point(110, 287);
             this.labelPort8.Margin = new System.Windows.Forms.Padding(6, 0, 6, 0);
             this.labelPort8.Name = "labelPort8";
             this.labelPort8.Size = new System.Drawing.Size(67, 26);
@@ -458,7 +458,7 @@ namespace trail01
             // 
             this.labelPort9.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
             this.labelPort9.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.labelPort9.Location = new System.Drawing.Point(110, 294);
+            this.labelPort9.Location = new System.Drawing.Point(110, 313);
             this.labelPort9.Margin = new System.Windows.Forms.Padding(6, 0, 6, 0);
             this.labelPort9.Name = "labelPort9";
             this.labelPort9.Size = new System.Drawing.Size(67, 26);
@@ -470,7 +470,7 @@ namespace trail01
             // 
             this.label0.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
             this.label0.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label0.Location = new System.Drawing.Point(220, 60);
+            this.label0.Location = new System.Drawing.Point(220, 79);
             this.label0.Margin = new System.Windows.Forms.Padding(6, 0, 6, 0);
             this.label0.Name = "label0";
             this.label0.Size = new System.Drawing.Size(89, 26);
@@ -482,7 +482,7 @@ namespace trail01
             // 
             this.label1.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
             this.label1.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label1.Location = new System.Drawing.Point(220, 86);
+            this.label1.Location = new System.Drawing.Point(220, 105);
             this.label1.Margin = new System.Windows.Forms.Padding(6, 0, 6, 0);
             this.label1.Name = "label1";
             this.label1.Size = new System.Drawing.Size(89, 26);
@@ -494,7 +494,7 @@ namespace trail01
             // 
             this.label2.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
             this.label2.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label2.Location = new System.Drawing.Point(220, 112);
+            this.label2.Location = new System.Drawing.Point(220, 131);
             this.label2.Margin = new System.Windows.Forms.Padding(6, 0, 6, 0);
             this.label2.Name = "label2";
             this.label2.Size = new System.Drawing.Size(89, 26);
@@ -506,7 +506,7 @@ namespace trail01
             // 
             this.label3.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
             this.label3.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label3.Location = new System.Drawing.Point(220, 138);
+            this.label3.Location = new System.Drawing.Point(220, 157);
             this.label3.Margin = new System.Windows.Forms.Padding(6, 0, 6, 0);
             this.label3.Name = "label3";
             this.label3.Size = new System.Drawing.Size(89, 26);
@@ -518,7 +518,7 @@ namespace trail01
             // 
             this.label4.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
             this.label4.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label4.Location = new System.Drawing.Point(220, 164);
+            this.label4.Location = new System.Drawing.Point(220, 183);
             this.label4.Margin = new System.Windows.Forms.Padding(6, 0, 6, 0);
             this.label4.Name = "label4";
             this.label4.Size = new System.Drawing.Size(89, 26);
@@ -530,7 +530,7 @@ namespace trail01
             // 
             this.label5.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
             this.label5.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label5.Location = new System.Drawing.Point(220, 190);
+            this.label5.Location = new System.Drawing.Point(220, 209);
             this.label5.Margin = new System.Windows.Forms.Padding(6, 0, 6, 0);
             this.label5.Name = "label5";
             this.label5.Size = new System.Drawing.Size(89, 26);
@@ -542,7 +542,7 @@ namespace trail01
             // 
             this.label6.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
             this.label6.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label6.Location = new System.Drawing.Point(220, 216);
+            this.label6.Location = new System.Drawing.Point(220, 235);
             this.label6.Margin = new System.Windows.Forms.Padding(6, 0, 6, 0);
             this.label6.Name = "label6";
             this.label6.Size = new System.Drawing.Size(89, 26);
@@ -554,7 +554,7 @@ namespace trail01
             // 
             this.label7.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
             this.label7.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label7.Location = new System.Drawing.Point(220, 242);
+            this.label7.Location = new System.Drawing.Point(220, 261);
             this.label7.Margin = new System.Windows.Forms.Padding(6, 0, 6, 0);
             this.label7.Name = "label7";
             this.label7.Size = new System.Drawing.Size(89, 26);
@@ -566,7 +566,7 @@ namespace trail01
             // 
             this.label8.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
             this.label8.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label8.Location = new System.Drawing.Point(220, 268);
+            this.label8.Location = new System.Drawing.Point(220, 287);
             this.label8.Margin = new System.Windows.Forms.Padding(6, 0, 6, 0);
             this.label8.Name = "label8";
             this.label8.Size = new System.Drawing.Size(89, 26);
@@ -578,7 +578,7 @@ namespace trail01
             // 
             this.label9.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
             this.label9.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label9.Location = new System.Drawing.Point(220, 294);
+            this.label9.Location = new System.Drawing.Point(220, 313);
             this.label9.Margin = new System.Windows.Forms.Padding(6, 0, 6, 0);
             this.label9.Name = "label9";
             this.label9.Size = new System.Drawing.Size(89, 26);
@@ -605,7 +605,7 @@ namespace trail01
             // 
             this.checkBox0.AutoSize = true;
             this.checkBox0.Enabled = false;
-            this.checkBox0.Location = new System.Drawing.Point(191, 66);
+            this.checkBox0.Location = new System.Drawing.Point(191, 85);
             this.checkBox0.Name = "checkBox0";
             this.checkBox0.Size = new System.Drawing.Size(18, 17);
             this.checkBox0.TabIndex = 54;
@@ -616,7 +616,7 @@ namespace trail01
             // 
             this.checkBox1.AutoSize = true;
             this.checkBox1.Enabled = false;
-            this.checkBox1.Location = new System.Drawing.Point(191, 92);
+            this.checkBox1.Location = new System.Drawing.Point(191, 111);
             this.checkBox1.Name = "checkBox1";
             this.checkBox1.Size = new System.Drawing.Size(18, 17);
             this.checkBox1.TabIndex = 55;
@@ -627,7 +627,7 @@ namespace trail01
             // 
             this.checkBox2.AutoSize = true;
             this.checkBox2.Enabled = false;
-            this.checkBox2.Location = new System.Drawing.Point(191, 118);
+            this.checkBox2.Location = new System.Drawing.Point(191, 137);
             this.checkBox2.Name = "checkBox2";
             this.checkBox2.Size = new System.Drawing.Size(18, 17);
             this.checkBox2.TabIndex = 55;
@@ -638,7 +638,7 @@ namespace trail01
             // 
             this.checkBox3.AutoSize = true;
             this.checkBox3.Enabled = false;
-            this.checkBox3.Location = new System.Drawing.Point(191, 144);
+            this.checkBox3.Location = new System.Drawing.Point(191, 163);
             this.checkBox3.Name = "checkBox3";
             this.checkBox3.Size = new System.Drawing.Size(18, 17);
             this.checkBox3.TabIndex = 55;
@@ -649,7 +649,7 @@ namespace trail01
             // 
             this.checkBox4.AutoSize = true;
             this.checkBox4.Enabled = false;
-            this.checkBox4.Location = new System.Drawing.Point(191, 172);
+            this.checkBox4.Location = new System.Drawing.Point(191, 191);
             this.checkBox4.Name = "checkBox4";
             this.checkBox4.Size = new System.Drawing.Size(18, 17);
             this.checkBox4.TabIndex = 54;
@@ -660,7 +660,7 @@ namespace trail01
             // 
             this.checkBox5.AutoSize = true;
             this.checkBox5.Enabled = false;
-            this.checkBox5.Location = new System.Drawing.Point(191, 196);
+            this.checkBox5.Location = new System.Drawing.Point(191, 215);
             this.checkBox5.Name = "checkBox5";
             this.checkBox5.Size = new System.Drawing.Size(18, 17);
             this.checkBox5.TabIndex = 54;
@@ -671,7 +671,7 @@ namespace trail01
             // 
             this.checkBox6.AutoSize = true;
             this.checkBox6.Enabled = false;
-            this.checkBox6.Location = new System.Drawing.Point(191, 222);
+            this.checkBox6.Location = new System.Drawing.Point(191, 241);
             this.checkBox6.Name = "checkBox6";
             this.checkBox6.Size = new System.Drawing.Size(18, 17);
             this.checkBox6.TabIndex = 54;
@@ -682,7 +682,7 @@ namespace trail01
             // 
             this.checkBox7.AutoSize = true;
             this.checkBox7.Enabled = false;
-            this.checkBox7.Location = new System.Drawing.Point(191, 248);
+            this.checkBox7.Location = new System.Drawing.Point(191, 267);
             this.checkBox7.Name = "checkBox7";
             this.checkBox7.Size = new System.Drawing.Size(18, 17);
             this.checkBox7.TabIndex = 54;
@@ -693,7 +693,7 @@ namespace trail01
             // 
             this.checkBox8.AutoSize = true;
             this.checkBox8.Enabled = false;
-            this.checkBox8.Location = new System.Drawing.Point(191, 274);
+            this.checkBox8.Location = new System.Drawing.Point(191, 293);
             this.checkBox8.Name = "checkBox8";
             this.checkBox8.Size = new System.Drawing.Size(18, 17);
             this.checkBox8.TabIndex = 54;
@@ -704,7 +704,7 @@ namespace trail01
             // 
             this.checkBox9.AutoSize = true;
             this.checkBox9.Enabled = false;
-            this.checkBox9.Location = new System.Drawing.Point(191, 300);
+            this.checkBox9.Location = new System.Drawing.Point(191, 319);
             this.checkBox9.Name = "checkBox9";
             this.checkBox9.Size = new System.Drawing.Size(18, 17);
             this.checkBox9.TabIndex = 54;
@@ -714,7 +714,8 @@ namespace trail01
             // checkBoxMux
             // 
             this.checkBoxMux.AutoSize = true;
-            this.checkBoxMux.Location = new System.Drawing.Point(191, 350);
+            this.checkBoxMux.Enabled = false;
+            this.checkBoxMux.Location = new System.Drawing.Point(191, 357);
             this.checkBoxMux.Name = "checkBoxMux";
             this.checkBoxMux.Size = new System.Drawing.Size(168, 28);
             this.checkBoxMux.TabIndex = 56;
@@ -726,7 +727,7 @@ namespace trail01
             // 
             this.labelStatic0.BackColor = System.Drawing.Color.LightSteelBlue;
             this.labelStatic0.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.labelStatic0.Location = new System.Drawing.Point(364, 349);
+            this.labelStatic0.Location = new System.Drawing.Point(364, 356);
             this.labelStatic0.Margin = new System.Windows.Forms.Padding(6, 0, 6, 0);
             this.labelStatic0.Name = "labelStatic0";
             this.labelStatic0.Size = new System.Drawing.Size(61, 26);
@@ -739,10 +740,10 @@ namespace trail01
             this.labelStatic1.BackColor = System.Drawing.SystemColors.Control;
             this.labelStatic1.Enabled = false;
             this.labelStatic1.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.labelStatic1.Location = new System.Drawing.Point(426, 349);
+            this.labelStatic1.Location = new System.Drawing.Point(426, 356);
             this.labelStatic1.Margin = new System.Windows.Forms.Padding(6, 0, 6, 0);
             this.labelStatic1.Name = "labelStatic1";
-            this.labelStatic1.Size = new System.Drawing.Size(61, 26);
+            this.labelStatic1.Size = new System.Drawing.Size(60, 26);
             this.labelStatic1.TabIndex = 58;
             this.labelStatic1.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             // 
@@ -766,7 +767,8 @@ namespace trail01
             this.textBox1.Name = "textBox1";
             this.textBox1.Size = new System.Drawing.Size(50, 27);
             this.textBox1.TabIndex = 60;
-            this.textBox1.Text = "150";
+            this.textBox1.Enabled = false;
+            this.textBox1.Text = "---";
             this.textBox1.TextChanged += new System.EventHandler(this.textBox1_TextChanged);
             this.textBox1.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.textBox1_KeyPress);
             // 

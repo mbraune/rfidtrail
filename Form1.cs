@@ -11,6 +11,9 @@ using System.Diagnostics;
 using System.Management;
 using System.Text.RegularExpressions;
 using System.IO.Ports;
+using System.IO;
+using IniParser;
+using IniParser.Model;
 
 
 namespace trail01
@@ -168,10 +171,122 @@ namespace trail01
             }
         }
 
+        //###############################################################################
+        //
+        //  section config (ini) file read, write
+        //
+
+        // read data from ini file
+        private void loadConfig()
+        {
+            FileIniDataParser parser = new FileIniDataParser();
+            Globals.iniData = parser.ReadFile(Globals.sConfigFile);
+
+            // set 2 vars read from section [general]
+            string sTwo = Globals.iniData["general"]["twoGroups"];
+            checkBoxMux.Checked = bool.Parse(sTwo);
+            // timer
+            textBox1.Text = Globals.iniData["general"]["timer"];
+        }
+
+        // search for s_device in iniData, if found read matching status
+        private int getStoredCheckState(string s_device)
+        {
+            int ret = 0;
+            bool found = false;
+            string s1 = "";
+
+            KeyDataCollection keyCol = Globals.iniData["devices"];
+            foreach (KeyData key in keyCol)
+                if (key.Value.Equals(s_device)) {
+                    found = true;
+                    s1 = key.KeyName;
+                    break;
+                }
+            if (found) {
+                string si = Regex.Replace(s1, @"\D","");
+                string stat = "status" + si;
+                Int32.TryParse(Globals.iniData["devices"][stat], out ret);
+            }
+            return ret;
+        }
+
+        // write data to ini file
+        private void saveConfig()
+        {
+            // [general]
+            if (checkBoxMux.Checked == false)
+                Globals.iniData["general"]["twoGroups"] = "false";
+            else
+                Globals.iniData["general"]["twoGroups"] = "true";
+            Globals.iniData["general"]["timer"] = textBox1.Text;
+
+            // [devices]
+            for (var i = 0; i < DeviceList.Count(); i++)
+            {
+                if (DeviceList.GetContent()[i].bActive != true) continue;
+                switch (i)
+                {
+                    case 0:
+                        Globals.iniData["devices"]["device0"] = labelNum0.Text;
+                        Globals.iniData["devices"]["status0"] = checkBox0.CheckState.GetHashCode().ToString();
+                        break;
+                    case 1:
+                        Globals.iniData["devices"]["device1"] = labelNum1.Text;
+                        Globals.iniData["devices"]["status1"] = checkBox1.CheckState.GetHashCode().ToString();
+                        break;
+                    case 2:
+                        Globals.iniData["devices"]["device2"] = labelNum2.Text;
+                        Globals.iniData["devices"]["status2"] = checkBox2.CheckState.GetHashCode().ToString();
+                        break;
+                    case 3:
+                        Globals.iniData["devices"]["device3"] = labelNum3.Text;
+                        Globals.iniData["devices"]["status3"] = checkBox3.CheckState.GetHashCode().ToString();
+                        break;
+                    case 4:
+                        Globals.iniData["devices"]["device4"] = labelNum4.Text;
+                        Globals.iniData["devices"]["status4"] = checkBox4.CheckState.GetHashCode().ToString();
+                        break;
+                    case 5:
+                        Globals.iniData["devices"]["device5"] = labelNum5.Text;
+                        Globals.iniData["devices"]["status5"] = checkBox5.CheckState.GetHashCode().ToString();
+                        break;
+                    case 6:
+                        Globals.iniData["devices"]["device6"] = labelNum6.Text;
+                        Globals.iniData["devices"]["status6"] = checkBox6.CheckState.GetHashCode().ToString();
+                        break;
+                    case 7:
+                        Globals.iniData["devices"]["device7"] = labelNum7.Text;
+                        Globals.iniData["devices"]["status7"] = checkBox7.CheckState.GetHashCode().ToString();
+                        break;
+                    case 8:
+                        Globals.iniData["devices"]["device8"] = labelNum8.Text;
+                        Globals.iniData["devices"]["status8"] = checkBox8.CheckState.GetHashCode().ToString();
+                        break;
+                    case 9:
+                        Globals.iniData["devices"]["device9"] = labelNum9.Text;
+                        Globals.iniData["devices"]["status9"] = checkBox9.CheckState.GetHashCode().ToString();
+                        break;
+                    default:
+                        break;
+                }
+            }
+            FileIniDataParser parser = new FileIniDataParser();
+            parser.WriteFile(Globals.sConfigFile, Globals.iniData);
+        }
+        //
+        //  end section config (ini) file read, write
+        //
+        //###############################################################################
+
 
         public Form1()
         {
             InitializeComponent();
+            
+            // write instance to title bar
+            string title = "rftrail_" + (Globals.instance).ToString("D2");
+            this.Text = title;
 
             // get the version object for this assembly
             Version v = System.Reflection.Assembly.GetExecutingAssembly().GetName().Version;
@@ -188,7 +303,6 @@ namespace trail01
             _serialPort8 = new SerialPort();
             _serialPort9 = new SerialPort();
 
-            this.timer1.Interval = Int32.Parse(textBox1.Text);
             bGroupA = true;     // status groupA or groupB active
         }
 
@@ -216,6 +330,8 @@ namespace trail01
         private void buttonDevices_Click(object sender, EventArgs e)
         {
             Trace.WriteLine("Click Devices");
+            loadConfig();   // read ini file 
+
             var searcher = new ManagementObjectSearcher("Select * from Win32_PnPEntity");
             var coll = searcher.Get();
 
@@ -245,15 +361,18 @@ namespace trail01
             }
             coll.Dispose();
 
+            // check if device in config --> yes set CheckState 
+
 
             // fill Labels with serial port names
             for (var i = 0; i < DeviceList.Count(); i++) {
                 indexedLabelNum(i).Text = DeviceList.GetContent()[i].s_id;
                 indexedLabelPort(i).Text = DeviceList.GetContent()[i].s_com;
                 indexedCheckBox(i).Enabled = true;
-                indexedCheckBox(i).CheckState = CheckState.Checked;
+                indexedCheckBox(i).CheckState = (CheckState)getStoredCheckState(DeviceList.GetContent()[i].s_id);//CheckState.Checked; // getStoredCheckState( devicename);
             }
             checkBoxMux.Enabled = true;
+            textBox1.Enabled = true;
 
             SetState(MachineState.Initialized);
         }
@@ -320,6 +439,7 @@ namespace trail01
                 }
 
             SetState(MachineState.Running);
+            saveConfig();             // store config to ini file
         }
 
         private void cancelAsyncButton_Click(object sender, EventArgs e)
@@ -475,7 +595,6 @@ namespace trail01
             }
         }
 
-
         private bool openPort(int idx, SerialPort port)
         {
             if (! port.IsOpen)
@@ -552,6 +671,7 @@ namespace trail01
             for (var i = 0; i < MaxDev; i++)
                 indexedCheckBox(i).Enabled = false;
             checkBoxMux.Enabled = false;
+            textBox1.Enabled = false;
         }
 
         private void backgroundWorker0_DoWork(object sender, DoWorkEventArgs e)
@@ -1354,12 +1474,18 @@ namespace trail01
             try
             {
                 int interval = Int32.Parse(textBox1.Text);
-                if (interval > 10)  this.timer1.Interval = interval;
+                // allow only numbers > 50
+                if (interval < 50) {
+                    textBox1.Text = "50";
+                    interval = 50;
+                }
+                this.timer1.Interval = interval;
             }
             catch (FormatException)
             {
                 Console.WriteLine("Unable to parse '{input}'");
             }
         }
+
     }
 }
