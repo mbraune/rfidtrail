@@ -678,7 +678,6 @@ namespace trail01
         {
             BackgroundWorker worker = sender as BackgroundWorker;
             string sRaw = string.Empty;
-            string sMsg = string.Empty;
             int    nCnt = 0;
 
             while (true)
@@ -697,21 +696,15 @@ namespace trail01
                         sRaw = _serialPort0.ReadExisting();
                     }
                     catch (TimeoutException) { }
+
                     string sTmp = Regex.Replace(sRaw, "[okOK\r]", "");
-
-                    if (sTmp.Length > 0)
+                    if (sTmp.Length > 15)
                     {
-                        sMsg += sTmp;
-
-                        if (sMsg.Length > 15)
-                        {
-                            string log;
-                            log = DeviceList.GetDevId(_serialPort0.PortName);
-                            log += " ; " + sMsg;
-                            FileLogger.Log(log, true);
-                            sMsg = string.Empty;
-                            label0.Text = (++nCnt).ToString();
-                        }
+                        string log;
+                        log = DeviceList.GetDevId(_serialPort0.PortName);
+                        log += " ; " + sTmp;
+                        FileLogger.Log(log, true);
+                        label0.Text = (++nCnt).ToString();
                     }
                 }
             }
@@ -739,7 +732,6 @@ namespace trail01
         {
             BackgroundWorker worker = sender as BackgroundWorker;
             string sRaw = string.Empty;
-            string sMsg = string.Empty;
             int nCnt = 0;
 
             while (true)
@@ -759,21 +751,15 @@ namespace trail01
                         sRaw = _serialPort1.ReadExisting();
                     }
                     catch (TimeoutException) { }
+
                     string sTmp = Regex.Replace(sRaw, "[okOK\r]", "");
-
-                    if (sTmp.Length > 0)
+                    if (sTmp.Length > 15)
                     {
-                        sMsg += sTmp;
-
-                        if (sMsg.Length > 15)
-                        {
-                            string log;
-                            log = DeviceList.GetDevId(_serialPort1.PortName);
-                            log += " ; " + sMsg;
-                            FileLogger.Log(log, true);
-                            sMsg = string.Empty;
-                            label1.Text = (++nCnt).ToString();
-                        }
+                        string log;
+                        log = DeviceList.GetDevId(_serialPort1.PortName);
+                        log += " ; " + sTmp;
+                        FileLogger.Log(log, true);
+                        label1.Text = (++nCnt).ToString();
                     }
                 }
             }
@@ -801,7 +787,6 @@ namespace trail01
         {
             BackgroundWorker worker = sender as BackgroundWorker;
             string sRaw = string.Empty;
-            string sMsg = string.Empty;
             int nCnt = 0;
 
             while (true)
@@ -821,21 +806,15 @@ namespace trail01
                         sRaw = _serialPort2.ReadExisting();
                     }
                     catch (TimeoutException) { }
+
                     string sTmp = Regex.Replace(sRaw, "[okOK\r]", "");
-
-                    if (sTmp.Length > 0)
+                    if (sTmp.Length > 15)
                     {
-                        sMsg += sTmp;
-
-                        if (sMsg.Length > 15)
-                        {
-                            string log;
-                            log = DeviceList.GetDevId(_serialPort2.PortName);
-                            log += " ; " + sMsg;
-                            FileLogger.Log(log, true);
-                            sMsg = string.Empty;
-                            label2.Text = (++nCnt).ToString();
-                        }
+                        string log;
+                        log = DeviceList.GetDevId(_serialPort2.PortName);
+                        log += " ; " + sTmp;
+                        FileLogger.Log(log, true);
+                        label2.Text = (++nCnt).ToString();
                     }
                 }
             }
@@ -863,7 +842,6 @@ namespace trail01
         {
             BackgroundWorker worker = sender as BackgroundWorker;
             string sRaw = string.Empty;
-            string sMsg = string.Empty;
             int nCnt = 0;
 
             while (true)
@@ -883,21 +861,15 @@ namespace trail01
                         sRaw = _serialPort3.ReadExisting();
                     }
                     catch (TimeoutException) { }
+
                     string sTmp = Regex.Replace(sRaw, "[okOK\r]", "");
-
-                    if (sTmp.Length > 0)
+                    if (sTmp.Length > 15)
                     {
-                        sMsg += sTmp;
-
-                        if (sMsg.Length > 15)
-                        {
-                            string log;
-                            log = DeviceList.GetDevId(_serialPort3.PortName);
-                            log += " ; " + sMsg;
-                            FileLogger.Log(log, true);
-                            sMsg = string.Empty;
-                            label3.Text = (++nCnt).ToString();
-                        }
+                        string log;
+                        log = DeviceList.GetDevId(_serialPort3.PortName);
+                        log += " ; " + sTmp;
+                        FileLogger.Log(log, true);
+                        label3.Text = (++nCnt).ToString();
                     }
                 }
             }
@@ -925,7 +897,6 @@ namespace trail01
         {
             BackgroundWorker worker = sender as BackgroundWorker;
             string sRaw = string.Empty;
-            string sMsg = string.Empty;
             int nCnt = 0;
 
             while (true)
@@ -945,21 +916,15 @@ namespace trail01
                         sRaw = _serialPort4.ReadExisting();
                     }
                     catch (TimeoutException) { }
+
                     string sTmp = Regex.Replace(sRaw, "[okOK\r]", "");
-
-                    if (sTmp.Length > 0)
+                    if (sTmp.Length > 15)
                     {
-                        sMsg += sTmp;
-
-                        if (sMsg.Length > 15)
-                        {
-                            string log;
-                            log = DeviceList.GetDevId(_serialPort4.PortName);
-                            log += " ; " + sMsg;
-                            FileLogger.Log(log, true);
-                            sMsg = string.Empty;
-                            label4.Text = (++nCnt).ToString();
-                        }
+                        string log;
+                        log = DeviceList.GetDevId(_serialPort4.PortName);
+                        log += " ; " + sTmp;
+                        FileLogger.Log(log, true);
+                        label4.Text = (++nCnt).ToString();
                     }
                 }
             }
@@ -987,7 +952,6 @@ namespace trail01
         {
             BackgroundWorker worker = sender as BackgroundWorker;
             string sRaw = string.Empty;
-            string sMsg = string.Empty;
             int nCnt = 0;
 
             while (true)
@@ -1007,21 +971,15 @@ namespace trail01
                         sRaw = _serialPort5.ReadExisting();
                     }
                     catch (TimeoutException) { }
+
                     string sTmp = Regex.Replace(sRaw, "[okOK\r]", "");
-
-                    if (sTmp.Length > 0)
+                    if (sTmp.Length > 15)
                     {
-                        sMsg += sTmp;
-
-                        if (sMsg.Length > 15)
-                        {
-                            string log;
-                            log = DeviceList.GetDevId(_serialPort5.PortName);
-                            log += " ; " + sMsg;
-                            FileLogger.Log(log, true);
-                            sMsg = string.Empty;
-                            label5.Text = (++nCnt).ToString();
-                        }
+                        string log;
+                        log = DeviceList.GetDevId(_serialPort5.PortName);
+                        log += " ; " + sTmp;
+                        FileLogger.Log(log, true);
+                        label5.Text = (++nCnt).ToString();
                     }
                 }
             }
@@ -1049,7 +1007,6 @@ namespace trail01
         {
             BackgroundWorker worker = sender as BackgroundWorker;
             string sRaw = string.Empty;
-            string sMsg = string.Empty;
             int nCnt = 0;
 
             while (true)
@@ -1069,21 +1026,15 @@ namespace trail01
                         sRaw = _serialPort6.ReadExisting();
                     }
                     catch (TimeoutException) { }
+
                     string sTmp = Regex.Replace(sRaw, "[okOK\r]", "");
-
-                    if (sTmp.Length > 0)
+                    if (sTmp.Length > 15)
                     {
-                        sMsg += sTmp;
-
-                        if (sMsg.Length > 15)
-                        {
-                            string log;
-                            log = DeviceList.GetDevId(_serialPort6.PortName);
-                            log += " ; " + sMsg;
-                            FileLogger.Log(log, true);
-                            sMsg = string.Empty;
-                            label6.Text = (++nCnt).ToString();
-                        }
+                        string log;
+                        log = DeviceList.GetDevId(_serialPort6.PortName);
+                        log += " ; " + sTmp;
+                        FileLogger.Log(log, true);
+                        label6.Text = (++nCnt).ToString();
                     }
                 }
             }
@@ -1111,7 +1062,6 @@ namespace trail01
         {
             BackgroundWorker worker = sender as BackgroundWorker;
             string sRaw = string.Empty;
-            string sMsg = string.Empty;
             int nCnt = 0;
 
             while (true)
@@ -1131,21 +1081,15 @@ namespace trail01
                         sRaw = _serialPort7.ReadExisting();
                     }
                     catch (TimeoutException) { }
+
                     string sTmp = Regex.Replace(sRaw, "[okOK\r]", "");
-
-                    if (sTmp.Length > 0)
+                    if (sTmp.Length > 15)
                     {
-                        sMsg += sTmp;
-
-                        if (sMsg.Length > 15)
-                        {
-                            string log;
-                            log = DeviceList.GetDevId(_serialPort7.PortName);
-                            log += " ; " + sMsg;
-                            FileLogger.Log(log, true);
-                            sMsg = string.Empty;
-                            label7.Text = (++nCnt).ToString();
-                        }
+                        string log;
+                        log = DeviceList.GetDevId(_serialPort7.PortName);
+                        log += " ; " + sTmp;
+                        FileLogger.Log(log, true);
+                        label7.Text = (++nCnt).ToString();
                     }
                 }
             }
@@ -1173,7 +1117,6 @@ namespace trail01
         {
             BackgroundWorker worker = sender as BackgroundWorker;
             string sRaw = string.Empty;
-            string sMsg = string.Empty;
             int nCnt = 0;
 
             while (true)
@@ -1193,21 +1136,15 @@ namespace trail01
                         sRaw = _serialPort8.ReadExisting();
                     }
                     catch (TimeoutException) { }
+
                     string sTmp = Regex.Replace(sRaw, "[okOK\r]", "");
-
-                    if (sTmp.Length > 0)
+                    if (sTmp.Length > 15)
                     {
-                        sMsg += sTmp;
-
-                        if (sMsg.Length > 15)
-                        {
-                            string log;
-                            log = DeviceList.GetDevId(_serialPort8.PortName);
-                            log += " ; " + sMsg;
-                            FileLogger.Log(log, true);
-                            sMsg = string.Empty;
-                            label8.Text = (++nCnt).ToString();
-                        }
+                        string log;
+                        log = DeviceList.GetDevId(_serialPort8.PortName);
+                        log += " ; " + sTmp;
+                        FileLogger.Log(log, true);
+                        label8.Text = (++nCnt).ToString();
                     }
                 }
             }
@@ -1235,7 +1172,6 @@ namespace trail01
         {
             BackgroundWorker worker = sender as BackgroundWorker;
             string sRaw = string.Empty;
-            string sMsg = string.Empty;
             int nCnt = 0;
 
             while (true)
@@ -1255,21 +1191,15 @@ namespace trail01
                         sRaw = _serialPort9.ReadExisting();
                     }
                     catch (TimeoutException) { }
+
                     string sTmp = Regex.Replace(sRaw, "[okOK\r]", "");
-
-                    if (sTmp.Length > 0)
+                    if (sTmp.Length > 15)
                     {
-                        sMsg += sTmp;
-
-                        if (sMsg.Length > 15)
-                        {
-                            string log;
-                            log = DeviceList.GetDevId(_serialPort9.PortName);
-                            log += " ; " + sMsg;
-                            FileLogger.Log(log, true);
-                            sMsg = string.Empty;
-                            label9.Text = (++nCnt).ToString();
-                        }
+                        string log;
+                        log = DeviceList.GetDevId(_serialPort9.PortName);
+                        log += " ; " + sTmp;
+                        FileLogger.Log(log, true);
+                        label9.Text = (++nCnt).ToString();
                     }
                 }
             }

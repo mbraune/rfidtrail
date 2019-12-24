@@ -123,9 +123,9 @@ namespace trail01
 
         public static void Reset()
         {
-            string sPath = "rf_trail_";
+            string sPath = "rftrail_" + (Globals.instance).ToString("D2") + "_";
             DateTime now = DateTime.Now;
-            string sTime = String.Format("{0:yyyy_MM_dd_HHmmss}", now);
+            string sTime = String.Format("{0:yyyyMMdd_HHmmss}", now);
             filePath = sPath + sTime + ".txt";
         }
     }
