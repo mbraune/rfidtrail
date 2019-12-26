@@ -33,7 +33,7 @@ namespace trail01
             Trace.TraceInformation("Program Main");
             Trace.Flush();
 
-            // set the instance ID, default is 00
+            // set instance ID, default is 00
             Globals.instance = 0;
             if (args.Length == 1) {
                 Int32 i = 0;
@@ -41,19 +41,19 @@ namespace trail01
                 Globals.instance = i;
             }
 
+            // todo move to config class
+            // set ConfigFile name
             Globals.sConfigFile = "rfidtrail_" + (Globals.instance).ToString("D2") + ".ini";
             Trace.TraceInformation("config file name : " + Globals.sConfigFile);
 
-            if (Globals.iniData == null) Globals.iniData = new IniData();
-
-            FileIniDataParser parser;
-            parser = new FileIniDataParser();
             // create config file if not exist
             if (!File.Exists(Globals.sConfigFile))
             {
                 Trace.TraceInformation("file " + Globals.sConfigFile + " does not exist");
-                // create 
-                createDefaultConfig();
+                createDefaultConfig();  // create Globals.iniData
+
+                FileIniDataParser parser;
+                parser = new FileIniDataParser();
                 parser.WriteFile(Globals.sConfigFile, Globals.iniData);
             }
 
@@ -63,13 +63,12 @@ namespace trail01
         }
 
 
-        // read data from config file
-        //
-
-        // helper 
+        // todo move to config class
         // create default config data
         private static void createDefaultConfig()
         {
+            if (Globals.iniData == null) Globals.iniData = new IniData();
+
             //Add a new section and some keys
             Globals.iniData.Sections.AddSection("general");
             Globals.iniData["general"].AddKey("twoGroups", "true");
@@ -101,24 +100,45 @@ namespace trail01
 
     public static class FileLogger
     {
-        public static string filePath; // = "D:\\work\\RFTrail_Log.txt";
+        public static string filePath; 
         static ReaderWriterLock rwl = new ReaderWriterLock();
+        static List<string> _tmpLogList;     // to avoid duplicates
 
-        public static void Log(string message, bool bAddTime)
+        // time resolution is 1sec, 
+        // if bNoDuplicate is set, every second a list is created with check if message was already written
+        public static bool Log(string message, bool bNoDuplicate)
         {
-            rwl.AcquireWriterLock(Timeout.Infinite);
-            if (bAddTime)
-            {
-                DateTime now = DateTime.Now;
-                string sTime = String.Format("{0:yyyy.MM.dd HH:mm:ss}", now);
-                message = sTime + " ; " + message;
+            bool bWritten = false;
+            DateTime now = DateTime.Now;
+            string sTime = String.Format("{0:yyyy.MM.dd HH:mm:ss}", now);
+            if (bNoDuplicate) {
+                if (_tmpLogList.First() != sTime) {
+                    _tmpLogList.Clear();
+                    _tmpLogList.Add(sTime);
+                }
             }
+            message = sTime + " ; " + message;
+
+            rwl.AcquireWriterLock(Timeout.Infinite);
             using (StreamWriter streamWriter = new StreamWriter(filePath, true))
             {
-                streamWriter.WriteLine(message);
-                streamWriter.Close();
+                if (bNoDuplicate) {
+                    if (!_tmpLogList.Contains(message)){
+                        _tmpLogList.Add(message);
+                        streamWriter.WriteLine(message);
+                        streamWriter.Close();
+                        bWritten = true;
+                    }
+                }
+                else {
+                    streamWriter.WriteLine(message);
+                    streamWriter.Close();
+                    bWritten = true;
+                }
             }
             rwl.ReleaseWriterLock();
+
+            return bWritten;
         }
 
         public static void Reset()
@@ -127,6 +147,10 @@ namespace trail01
             DateTime now = DateTime.Now;
             string sTime = String.Format("{0:yyyyMMdd_HHmmss}", now);
             filePath = sPath + sTime + ".txt";
+
+            if(_tmpLogList == null) _tmpLogList = new List<string>();
+            _tmpLogList.Clear();
+            _tmpLogList.Add("init");
         }
     }
 

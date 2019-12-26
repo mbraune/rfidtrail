@@ -703,8 +703,7 @@ namespace trail01
                         string log;
                         log = DeviceList.GetDevId(_serialPort0.PortName);
                         log += " ; " + sTmp;
-                        FileLogger.Log(log, true);
-                        label0.Text = (++nCnt).ToString();
+                        if (FileLogger.Log(log, true))label0.Text = (++nCnt).ToString();
                     }
                 }
             }
@@ -758,8 +757,7 @@ namespace trail01
                         string log;
                         log = DeviceList.GetDevId(_serialPort1.PortName);
                         log += " ; " + sTmp;
-                        FileLogger.Log(log, true);
-                        label1.Text = (++nCnt).ToString();
+                        if (FileLogger.Log(log, true)) label1.Text = (++nCnt).ToString();
                     }
                 }
             }
@@ -813,8 +811,7 @@ namespace trail01
                         string log;
                         log = DeviceList.GetDevId(_serialPort2.PortName);
                         log += " ; " + sTmp;
-                        FileLogger.Log(log, true);
-                        label2.Text = (++nCnt).ToString();
+                        if (FileLogger.Log(log, true)) label2.Text = (++nCnt).ToString();
                     }
                 }
             }
@@ -868,8 +865,7 @@ namespace trail01
                         string log;
                         log = DeviceList.GetDevId(_serialPort3.PortName);
                         log += " ; " + sTmp;
-                        FileLogger.Log(log, true);
-                        label3.Text = (++nCnt).ToString();
+                        if (FileLogger.Log(log, true)) label3.Text = (++nCnt).ToString();
                     }
                 }
             }
@@ -923,8 +919,7 @@ namespace trail01
                         string log;
                         log = DeviceList.GetDevId(_serialPort4.PortName);
                         log += " ; " + sTmp;
-                        FileLogger.Log(log, true);
-                        label4.Text = (++nCnt).ToString();
+                        if (FileLogger.Log(log, true)) label4.Text = (++nCnt).ToString();
                     }
                 }
             }
@@ -978,8 +973,7 @@ namespace trail01
                         string log;
                         log = DeviceList.GetDevId(_serialPort5.PortName);
                         log += " ; " + sTmp;
-                        FileLogger.Log(log, true);
-                        label5.Text = (++nCnt).ToString();
+                        if (FileLogger.Log(log, true)) label5.Text = (++nCnt).ToString();
                     }
                 }
             }
@@ -1033,8 +1027,7 @@ namespace trail01
                         string log;
                         log = DeviceList.GetDevId(_serialPort6.PortName);
                         log += " ; " + sTmp;
-                        FileLogger.Log(log, true);
-                        label6.Text = (++nCnt).ToString();
+                        if (FileLogger.Log(log, true)) label6.Text = (++nCnt).ToString();
                     }
                 }
             }
@@ -1088,8 +1081,7 @@ namespace trail01
                         string log;
                         log = DeviceList.GetDevId(_serialPort7.PortName);
                         log += " ; " + sTmp;
-                        FileLogger.Log(log, true);
-                        label7.Text = (++nCnt).ToString();
+                        if (FileLogger.Log(log, true)) label7.Text = (++nCnt).ToString();
                     }
                 }
             }
@@ -1143,8 +1135,7 @@ namespace trail01
                         string log;
                         log = DeviceList.GetDevId(_serialPort8.PortName);
                         log += " ; " + sTmp;
-                        FileLogger.Log(log, true);
-                        label8.Text = (++nCnt).ToString();
+                        if (FileLogger.Log(log, true)) label8.Text = (++nCnt).ToString();
                     }
                 }
             }
@@ -1198,8 +1189,7 @@ namespace trail01
                         string log;
                         log = DeviceList.GetDevId(_serialPort9.PortName);
                         log += " ; " + sTmp;
-                        FileLogger.Log(log, true);
-                        label9.Text = (++nCnt).ToString();
+                        if (FileLogger.Log(log, true)) label9.Text = (++nCnt).ToString();
                     }
                 }
             }
