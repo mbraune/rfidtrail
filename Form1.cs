@@ -18,21 +18,6 @@ using IniParser.Model;
 
 namespace trail01
 {
-    /*public struct EventLog
-    {
-        public DateTime ts;
-        public int devTyp, devId, channel, value;
-
-        public EventLog(DateTime time, int p1, int p2, int p3, int p4)
-        {
-            ts = time;
-            devTyp = p1;
-            devId = p2;
-            channel = p3;
-            value = p4;
-        }
-    };*/
-
     enum MachineState
     {
         PowerOff    = 0,
@@ -59,7 +44,7 @@ namespace trail01
 
         private bool bGroupA;                // groupA active
 
-        //MachineState state = MachineState.PowerOff;
+        MachineState state = MachineState.PowerOff;
 
         private void SetState(MachineState _state)
         {
@@ -94,6 +79,7 @@ namespace trail01
                     cancelAsyncButton.Enabled = true;
                     break;
             }
+            state = _state;
         }
 
         private CheckBox indexedCheckBox(int i)
@@ -189,7 +175,7 @@ namespace trail01
             textBox1.Text = Globals.iniData["general"]["timer"];
         }
 
-        // search for s_device in iniData, if found read matching status
+        // search for s_device in iniData, if found read its status
         private int getStoredCheckState(string s_device)
         {
             int ret = 0;
@@ -205,7 +191,7 @@ namespace trail01
                 }
             if (found) {
                 string si = Regex.Replace(s1, @"\D","");
-                string stat = "status" + si;
+                string stat = "status" + si;  // status0 .. status9
                 Int32.TryParse(Globals.iniData["devices"][stat], out ret);
             }
             return ret;
@@ -222,54 +208,105 @@ namespace trail01
             Globals.iniData["general"]["timer"] = textBox1.Text;
 
             // [devices]
-            for (var i = 0; i < DeviceList.Count(); i++)
+            if (checkBox0.CheckState == CheckState.Unchecked)
             {
-                if (DeviceList.GetContent()[i].bActive != true) continue;
-                switch (i)
-                {
-                    case 0:
-                        Globals.iniData["devices"]["device0"] = labelNum0.Text;
-                        Globals.iniData["devices"]["status0"] = checkBox0.CheckState.GetHashCode().ToString();
-                        break;
-                    case 1:
-                        Globals.iniData["devices"]["device1"] = labelNum1.Text;
-                        Globals.iniData["devices"]["status1"] = checkBox1.CheckState.GetHashCode().ToString();
-                        break;
-                    case 2:
-                        Globals.iniData["devices"]["device2"] = labelNum2.Text;
-                        Globals.iniData["devices"]["status2"] = checkBox2.CheckState.GetHashCode().ToString();
-                        break;
-                    case 3:
-                        Globals.iniData["devices"]["device3"] = labelNum3.Text;
-                        Globals.iniData["devices"]["status3"] = checkBox3.CheckState.GetHashCode().ToString();
-                        break;
-                    case 4:
-                        Globals.iniData["devices"]["device4"] = labelNum4.Text;
-                        Globals.iniData["devices"]["status4"] = checkBox4.CheckState.GetHashCode().ToString();
-                        break;
-                    case 5:
-                        Globals.iniData["devices"]["device5"] = labelNum5.Text;
-                        Globals.iniData["devices"]["status5"] = checkBox5.CheckState.GetHashCode().ToString();
-                        break;
-                    case 6:
-                        Globals.iniData["devices"]["device6"] = labelNum6.Text;
-                        Globals.iniData["devices"]["status6"] = checkBox6.CheckState.GetHashCode().ToString();
-                        break;
-                    case 7:
-                        Globals.iniData["devices"]["device7"] = labelNum7.Text;
-                        Globals.iniData["devices"]["status7"] = checkBox7.CheckState.GetHashCode().ToString();
-                        break;
-                    case 8:
-                        Globals.iniData["devices"]["device8"] = labelNum8.Text;
-                        Globals.iniData["devices"]["status8"] = checkBox8.CheckState.GetHashCode().ToString();
-                        break;
-                    case 9:
-                        Globals.iniData["devices"]["device9"] = labelNum9.Text;
-                        Globals.iniData["devices"]["status9"] = checkBox9.CheckState.GetHashCode().ToString();
-                        break;
-                    default:
-                        break;
-                }
+                Globals.iniData["devices"]["device0"] = "";
+                Globals.iniData["devices"]["status0"] = "0";
+            }
+            else
+            {
+                Globals.iniData["devices"]["device0"] = labelNum0.Text;
+                Globals.iniData["devices"]["status0"] = checkBox0.CheckState.GetHashCode().ToString();
+            }
+            if (checkBox1.CheckState == CheckState.Unchecked)
+            {
+                Globals.iniData["devices"]["device1"] = "";
+                Globals.iniData["devices"]["status1"] = "0";
+            }
+            else
+            {
+                Globals.iniData["devices"]["device1"] = labelNum1.Text;
+                Globals.iniData["devices"]["status1"] = checkBox1.CheckState.GetHashCode().ToString();
+            }
+            if (checkBox2.CheckState == CheckState.Unchecked)
+            {
+                Globals.iniData["devices"]["device2"] = "";
+                Globals.iniData["devices"]["status2"] = "0";
+            }
+            else
+            {
+                Globals.iniData["devices"]["device2"] = labelNum2.Text;
+                Globals.iniData["devices"]["status2"] = checkBox2.CheckState.GetHashCode().ToString();
+            }
+            if (checkBox3.CheckState == CheckState.Unchecked)
+            {
+                Globals.iniData["devices"]["device3"] = "";
+                Globals.iniData["devices"]["status3"] = "0";
+            }
+            else
+            {
+                Globals.iniData["devices"]["device3"] = labelNum3.Text;
+                Globals.iniData["devices"]["status3"] = checkBox3.CheckState.GetHashCode().ToString();
+            }
+            if (checkBox4.CheckState == CheckState.Unchecked)
+            {
+                Globals.iniData["devices"]["device4"] = "";
+                Globals.iniData["devices"]["status4"] = "0";
+            }
+            else
+            {
+                Globals.iniData["devices"]["device4"] = labelNum4.Text;
+                Globals.iniData["devices"]["status4"] = checkBox4.CheckState.GetHashCode().ToString();
+            }
+            if (checkBox5.CheckState == CheckState.Unchecked)
+            {
+                Globals.iniData["devices"]["device5"] = "";
+                Globals.iniData["devices"]["status5"] = "0";
+            }
+            else
+            {
+                Globals.iniData["devices"]["device5"] = labelNum5.Text;
+                Globals.iniData["devices"]["status5"] = checkBox5.CheckState.GetHashCode().ToString();
+            }
+            if (checkBox6.CheckState == CheckState.Unchecked)
+            {
+                Globals.iniData["devices"]["device6"] = "";
+                Globals.iniData["devices"]["status6"] = "0";
+            }
+            else
+            {
+                Globals.iniData["devices"]["device6"] = labelNum6.Text;
+                Globals.iniData["devices"]["status6"] = checkBox6.CheckState.GetHashCode().ToString();
+            }
+            if (checkBox7.CheckState == CheckState.Unchecked)
+            {
+                Globals.iniData["devices"]["device7"] = "";
+                Globals.iniData["devices"]["status7"] = "0";
+            }
+            else
+            {
+                Globals.iniData["devices"]["device7"] = labelNum7.Text;
+                Globals.iniData["devices"]["status7"] = checkBox7.CheckState.GetHashCode().ToString();
+            }
+            if (checkBox8.CheckState == CheckState.Unchecked)
+            {
+                Globals.iniData["devices"]["device8"] = "";
+                Globals.iniData["devices"]["status8"] = "0";
+            }
+            else
+            {
+                Globals.iniData["devices"]["device8"] = labelNum8.Text;
+                Globals.iniData["devices"]["status8"] = checkBox8.CheckState.GetHashCode().ToString();
+            }
+            if (checkBox9.CheckState == CheckState.Unchecked)
+            {
+                Globals.iniData["devices"]["device9"] = "";
+                Globals.iniData["devices"]["status9"] = "0";
+            }
+            else
+            {
+                Globals.iniData["devices"]["device9"] = labelNum9.Text;
+                Globals.iniData["devices"]["status9"] = checkBox9.CheckState.GetHashCode().ToString();
             }
             FileIniDataParser parser = new FileIniDataParser();
             parser.WriteFile(Globals.sConfigFile, Globals.iniData);
@@ -361,15 +398,14 @@ namespace trail01
             }
             coll.Dispose();
 
-            // check if device in config --> yes set CheckState 
-
+            // check if device in config --> if yes set CheckState 1 or 2 (devices with checkState 0 not stored)
 
             // fill Labels with serial port names
             for (var i = 0; i < DeviceList.Count(); i++) {
                 indexedLabelNum(i).Text = DeviceList.GetContent()[i].s_id;
                 indexedLabelPort(i).Text = DeviceList.GetContent()[i].s_com;
                 indexedCheckBox(i).Enabled = true;
-                indexedCheckBox(i).CheckState = (CheckState)getStoredCheckState(DeviceList.GetContent()[i].s_id);//CheckState.Checked; // getStoredCheckState( devicename);
+                indexedCheckBox(i).CheckState = (CheckState)getStoredCheckState(DeviceList.GetContent()[i].s_id);
             }
             checkBoxMux.Enabled = true;
             textBox1.Enabled = true;
@@ -700,16 +736,19 @@ namespace trail01
                     string sTmp = Regex.Replace(sRaw, "[okOK\r]", "");
                     if (sTmp.Length > 15)
                     {
-                        string log;
-                        log = DeviceList.GetDevId(_serialPort0.PortName);
-                        log += " ; " + sTmp;
-                        if (FileLogger.Log(log, true))label0.Text = (++nCnt).ToString();
+                        if (FileLogger.Log(0, sTmp, true))
+                        {
+                            worker.ReportProgress(++nCnt);
+                        }
                     }
                 }
             }
         }
 
-        private void backgroundWorker0_ProgressChanged(object sender, ProgressChangedEventArgs e) {}
+        private void backgroundWorker0_ProgressChanged(object sender, ProgressChangedEventArgs e)
+        {
+            label0.Text = e.ProgressPercentage.ToString();
+        }
 
         private void backgroundWorker0_RunWorkerCompleted(object sender, RunWorkerCompletedEventArgs e)
         {
@@ -725,6 +764,7 @@ namespace trail01
             {
                 resultLabel.Text = "Done!";
             }
+            label0.Text = "-";
         }
 
         private void backgroundWorker1_DoWork(object sender, DoWorkEventArgs e)
@@ -754,16 +794,18 @@ namespace trail01
                     string sTmp = Regex.Replace(sRaw, "[okOK\r]", "");
                     if (sTmp.Length > 15)
                     {
-                        string log;
-                        log = DeviceList.GetDevId(_serialPort1.PortName);
-                        log += " ; " + sTmp;
-                        if (FileLogger.Log(log, true)) label1.Text = (++nCnt).ToString();
+                        if (FileLogger.Log(1, sTmp, true))
+                        {
+                            worker.ReportProgress(++nCnt);
+                        }
                     }
                 }
             }
         }
 
-        private void backgroundWorker1_ProgressChanged(object sender, ProgressChangedEventArgs e) {}
+        private void backgroundWorker1_ProgressChanged(object sender, ProgressChangedEventArgs e) {
+            label1.Text = e.ProgressPercentage.ToString();
+        }
 
         private void backgroundWorker1_RunWorkerCompleted(object sender, RunWorkerCompletedEventArgs e)
         {
@@ -779,6 +821,7 @@ namespace trail01
             {
                 resultLabel.Text = "Done!";
             }
+            label1.Text = "-";
         }
 
         private void backgroundWorker2_DoWork(object sender, DoWorkEventArgs e)
@@ -808,16 +851,18 @@ namespace trail01
                     string sTmp = Regex.Replace(sRaw, "[okOK\r]", "");
                     if (sTmp.Length > 15)
                     {
-                        string log;
-                        log = DeviceList.GetDevId(_serialPort2.PortName);
-                        log += " ; " + sTmp;
-                        if (FileLogger.Log(log, true)) label2.Text = (++nCnt).ToString();
+                        if (FileLogger.Log(2, sTmp, true))
+                        {
+                            worker.ReportProgress(++nCnt);
+                        }
                     }
                 }
             }
         }
 
-        private void backgroundWorker2_ProgressChanged(object sender, ProgressChangedEventArgs e) {}
+        private void backgroundWorker2_ProgressChanged(object sender, ProgressChangedEventArgs e) {
+            label2.Text = e.ProgressPercentage.ToString();
+        }
 
         private void backgroundWorker2_RunWorkerCompleted(object sender, RunWorkerCompletedEventArgs e)
         {
@@ -833,6 +878,7 @@ namespace trail01
             {
                 resultLabel.Text = "Done!";
             }
+            label2.Text = "-";
         }
 
         private void backgroundWorker3_DoWork(object sender, DoWorkEventArgs e)
@@ -862,16 +908,18 @@ namespace trail01
                     string sTmp = Regex.Replace(sRaw, "[okOK\r]", "");
                     if (sTmp.Length > 15)
                     {
-                        string log;
-                        log = DeviceList.GetDevId(_serialPort3.PortName);
-                        log += " ; " + sTmp;
-                        if (FileLogger.Log(log, true)) label3.Text = (++nCnt).ToString();
+                        if (FileLogger.Log(3, sTmp, true))
+                        {
+                            worker.ReportProgress(++nCnt);
+                        }
                     }
                 }
             }
         }
 
-        private void backgroundWorker3_ProgressChanged(object sender, ProgressChangedEventArgs e) { }
+        private void backgroundWorker3_ProgressChanged(object sender, ProgressChangedEventArgs e) {
+            label3.Text = e.ProgressPercentage.ToString();
+        }
 
         private void backgroundWorker3_RunWorkerCompleted(object sender, RunWorkerCompletedEventArgs e)
         {
@@ -887,6 +935,7 @@ namespace trail01
             {
                 resultLabel.Text = "Done!";
             }
+            label3.Text = "-";
         }
 
         private void backgroundWorker4_DoWork(object sender, DoWorkEventArgs e)
@@ -916,16 +965,18 @@ namespace trail01
                     string sTmp = Regex.Replace(sRaw, "[okOK\r]", "");
                     if (sTmp.Length > 15)
                     {
-                        string log;
-                        log = DeviceList.GetDevId(_serialPort4.PortName);
-                        log += " ; " + sTmp;
-                        if (FileLogger.Log(log, true)) label4.Text = (++nCnt).ToString();
+                        if (FileLogger.Log(4, sTmp, true))
+                        {
+                            worker.ReportProgress(++nCnt);
+                        }
                     }
                 }
             }
         }
 
-        private void backgroundWorker4_ProgressChanged(object sender, ProgressChangedEventArgs e) { }
+        private void backgroundWorker4_ProgressChanged(object sender, ProgressChangedEventArgs e) {
+            label4.Text = e.ProgressPercentage.ToString();
+        }
 
         private void backgroundWorker4_RunWorkerCompleted(object sender, RunWorkerCompletedEventArgs e)
         {
@@ -941,6 +992,7 @@ namespace trail01
             {
                 resultLabel.Text = "Done!";
             }
+            label4.Text = "-";
         }
 
         private void backgroundWorker5_DoWork(object sender, DoWorkEventArgs e)
@@ -970,16 +1022,18 @@ namespace trail01
                     string sTmp = Regex.Replace(sRaw, "[okOK\r]", "");
                     if (sTmp.Length > 15)
                     {
-                        string log;
-                        log = DeviceList.GetDevId(_serialPort5.PortName);
-                        log += " ; " + sTmp;
-                        if (FileLogger.Log(log, true)) label5.Text = (++nCnt).ToString();
+                        if (FileLogger.Log(5, sTmp, true))
+                        {
+                            worker.ReportProgress(++nCnt);
+                        }
                     }
                 }
             }
         }
 
-        private void backgroundWorker5_ProgressChanged(object sender, ProgressChangedEventArgs e) { }
+        private void backgroundWorker5_ProgressChanged(object sender, ProgressChangedEventArgs e) {
+            label5.Text = e.ProgressPercentage.ToString();
+        }
 
         private void backgroundWorker5_RunWorkerCompleted(object sender, RunWorkerCompletedEventArgs e)
         {
@@ -995,6 +1049,7 @@ namespace trail01
             {
                 resultLabel.Text = "Done!";
             }
+            label5.Text = "-";
         }
 
         private void backgroundWorker6_DoWork(object sender, DoWorkEventArgs e)
@@ -1024,16 +1079,18 @@ namespace trail01
                     string sTmp = Regex.Replace(sRaw, "[okOK\r]", "");
                     if (sTmp.Length > 15)
                     {
-                        string log;
-                        log = DeviceList.GetDevId(_serialPort6.PortName);
-                        log += " ; " + sTmp;
-                        if (FileLogger.Log(log, true)) label6.Text = (++nCnt).ToString();
+                        if (FileLogger.Log(6, sTmp, true))
+                        {
+                            worker.ReportProgress(++nCnt);
+                        }
                     }
                 }
             }
         }
 
-        private void backgroundWorker6_ProgressChanged(object sender, ProgressChangedEventArgs e) { }
+        private void backgroundWorker6_ProgressChanged(object sender, ProgressChangedEventArgs e) {
+            label6.Text = e.ProgressPercentage.ToString();
+        }
 
         private void backgroundWorker6_RunWorkerCompleted(object sender, RunWorkerCompletedEventArgs e)
         {
@@ -1049,6 +1106,7 @@ namespace trail01
             {
                 resultLabel.Text = "Done!";
             }
+            label6.Text = "-";
         }
 
         private void backgroundWorker7_DoWork(object sender, DoWorkEventArgs e)
@@ -1078,16 +1136,18 @@ namespace trail01
                     string sTmp = Regex.Replace(sRaw, "[okOK\r]", "");
                     if (sTmp.Length > 15)
                     {
-                        string log;
-                        log = DeviceList.GetDevId(_serialPort7.PortName);
-                        log += " ; " + sTmp;
-                        if (FileLogger.Log(log, true)) label7.Text = (++nCnt).ToString();
+                        if (FileLogger.Log(7, sTmp, true))
+                        {
+                            worker.ReportProgress(++nCnt);
+                        }
                     }
                 }
             }
         }
 
-        private void backgroundWorker7_ProgressChanged(object sender, ProgressChangedEventArgs e) { }
+        private void backgroundWorker7_ProgressChanged(object sender, ProgressChangedEventArgs e) {
+            label7.Text = e.ProgressPercentage.ToString();
+        }
 
         private void backgroundWorker7_RunWorkerCompleted(object sender, RunWorkerCompletedEventArgs e)
         {
@@ -1103,6 +1163,7 @@ namespace trail01
             {
                 resultLabel.Text = "Done!";
             }
+            label7.Text = "-";
         }
 
         private void backgroundWorker8_DoWork(object sender, DoWorkEventArgs e)
@@ -1132,16 +1193,18 @@ namespace trail01
                     string sTmp = Regex.Replace(sRaw, "[okOK\r]", "");
                     if (sTmp.Length > 15)
                     {
-                        string log;
-                        log = DeviceList.GetDevId(_serialPort8.PortName);
-                        log += " ; " + sTmp;
-                        if (FileLogger.Log(log, true)) label8.Text = (++nCnt).ToString();
+                        if (FileLogger.Log(8, sTmp, true))
+                        {
+                            worker.ReportProgress(++nCnt);
+                        }
                     }
                 }
             }
         }
 
-        private void backgroundWorker8_ProgressChanged(object sender, ProgressChangedEventArgs e) { }
+        private void backgroundWorker8_ProgressChanged(object sender, ProgressChangedEventArgs e) {
+            label8.Text = e.ProgressPercentage.ToString();
+        }
 
         private void backgroundWorker8_RunWorkerCompleted(object sender, RunWorkerCompletedEventArgs e)
         {
@@ -1157,6 +1220,7 @@ namespace trail01
             {
                 resultLabel.Text = "Done!";
             }
+            label8.Text = "-";
         }
 
         private void backgroundWorker9_DoWork(object sender, DoWorkEventArgs e)
@@ -1186,16 +1250,18 @@ namespace trail01
                     string sTmp = Regex.Replace(sRaw, "[okOK\r]", "");
                     if (sTmp.Length > 15)
                     {
-                        string log;
-                        log = DeviceList.GetDevId(_serialPort9.PortName);
-                        log += " ; " + sTmp;
-                        if (FileLogger.Log(log, true)) label9.Text = (++nCnt).ToString();
+                        if (FileLogger.Log(9, sTmp, true))
+                        {
+                            worker.ReportProgress(++nCnt);
+                        }
                     }
                 }
             }
         }
 
-        private void backgroundWorker9_ProgressChanged(object sender, ProgressChangedEventArgs e) { }
+        private void backgroundWorker9_ProgressChanged(object sender, ProgressChangedEventArgs e) {
+            label9.Text = e.ProgressPercentage.ToString();
+        }
 
         private void backgroundWorker9_RunWorkerCompleted(object sender, RunWorkerCompletedEventArgs e)
         {
@@ -1211,6 +1277,7 @@ namespace trail01
             {
                 resultLabel.Text = "Done!";
             }
+            label9.Text = "-";
         }
 
         private void Timer1_Tick(object sender, EventArgs e)
@@ -1222,7 +1289,8 @@ namespace trail01
                 else labelTimer.BackColor = Color.FromName("IndianRed");
             }
             bGroupA = !bGroupA;
-            toggleAvailablePorts(bGroupA);
+            if (state == MachineState.Running)
+                toggleAvailablePorts(bGroupA);
         }
 
 

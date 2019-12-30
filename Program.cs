@@ -105,32 +105,39 @@ namespace trail01
         static List<string> _tmpLogList;     // to avoid duplicates
 
         // time resolution is 1sec, 
+        // idx is index in DeviceList
         // if bNoDuplicate is set, every second a list is created with check if message was already written
-        public static bool Log(string message, bool bNoDuplicate)
+        public static bool Log(int idx, string message, bool bNoDuplicate)
         {
             bool bWritten = false;
             DateTime now = DateTime.Now;
             string sTime = String.Format("{0:yyyy.MM.dd HH:mm:ss}", now);
-            if (bNoDuplicate) {
-                if (_tmpLogList.First() != sTime) {
+            if (bNoDuplicate)
+            {
+                if (_tmpLogList.First() != sTime)
+                {
                     _tmpLogList.Clear();
                     _tmpLogList.Add(sTime);
                 }
             }
-            message = sTime + " ; " + message;
+
+            message = sTime + " ; " + DeviceList.GetDevId(idx) + " ; " + message;
 
             rwl.AcquireWriterLock(Timeout.Infinite);
             using (StreamWriter streamWriter = new StreamWriter(filePath, true))
             {
-                if (bNoDuplicate) {
-                    if (!_tmpLogList.Contains(message)){
+                if (bNoDuplicate)
+                {
+                    if (!_tmpLogList.Contains(message))
+                    {
                         _tmpLogList.Add(message);
                         streamWriter.WriteLine(message);
                         streamWriter.Close();
                         bWritten = true;
                     }
                 }
-                else {
+                else
+                {
                     streamWriter.WriteLine(message);
                     streamWriter.Close();
                     bWritten = true;
@@ -206,6 +213,16 @@ namespace trail01
         {
             FtdiDevice ftdev = _devList.Find(x => x.s_com == ComPort);
             return ftdev.s_id;
+        }
+
+        public static string GetDevId(int idx)
+        {
+            if (idx < _devList.Count)
+            {
+                FtdiDevice ftdev = _devList.ElementAt(idx);
+                return ftdev.s_id;
+            }
+            else return "";
         }
 
         public static void SetStatus(string ComPort, bool stat)
